@@ -29,6 +29,9 @@
     "@types/node": "^20.5.7",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
+    "@unocss/preset-attributify": "^0.55.3",
+    "@unocss/preset-icons": "^0.55.3",
+    "@unocss/preset-uno": "^0.55.3",
     "@vitejs/plugin-vue": "^4.2.3",
     "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
@@ -38,6 +41,7 @@
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.2",
     "typescript": "^5.0.2",
+    "unocss": "^0.55.3",
     "vite": "^4.4.5",
     "vite-plugin-style-import": "^2.0.0",
     "vue-tsc": "^1.8.5"

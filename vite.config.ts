@@ -3,6 +3,10 @@ import vue from '@vitejs/plugin-vue';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
+// 引入Unocss
+import Unocss from 'unocss/vite';
+import { presetUno, presetAttributify, presetIcons } from 'unocss'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
@@ -12,7 +16,14 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     }
   },
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    Unocss({ // 使用Unocss
+      presets: [
+        presetUno(),
+        presetAttributify(),
+        presetIcons()],
+    })],
   server: {
     port: 8080, //启动端口
     hmr: {

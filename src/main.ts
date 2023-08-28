@@ -3,6 +3,9 @@ import App from './App.vue'
 import store from './store'
 import router from '@/router';
 
+// 导入Unocss
+import 'uno.css'
+
 // 创建vue实例
 const app = createApp(App)
 
