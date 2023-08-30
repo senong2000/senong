@@ -10,6 +10,10 @@ import { presetUno, presetAttributify, presetIcons } from 'unocss'
 // 引入vuetify
 import vuetify from 'vite-plugin-vuetify';
 
+// 自动引入
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -22,7 +26,19 @@ export default defineConfig({
         presetUno(),
         presetAttributify(),
         presetIcons()],
-    })
+    }),
+    AutoImport({
+      imports: ['vue', '@vueuse/core', 'vue-router', 'pinia'],
+      exclude: [
+        '**/dist/**',
+      ],
+      dts: true,
+      vueTemplate: true,
+    }),
+    Components({
+      dirs: ['./src/components'],
+      dts: true,
+    }),
   ],
   resolve: {
     //设置别名
@@ -47,7 +63,7 @@ export default defineConfig({
       }
     }
   },
-  
+
   optimizeDeps: {
     exclude: ['vuetify'],
     entries: [

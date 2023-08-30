@@ -47,6 +47,8 @@
     "sass": "^1.66.1",
     "typescript": "^5.0.2",
     "unocss": "^0.55.3",
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.2",
     "vite": "^4.4.5",
     "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-vuetify": "^1.0.2",

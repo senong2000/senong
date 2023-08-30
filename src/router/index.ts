@@ -30,21 +30,111 @@ const routes: Array<RouteRecordRaw> = [
         },
         children: [
             {
-                path: 'home',
+                path: '/',
                 name: 'Home',
-                component: () => import('@/views/Home/home.vue'),
+                component: () => import('@/views/home/home.vue'),
                 meta: {
                     title: '首页',
                 }
             }
 
         ],
-    }
+    },
+    {
+        path: '/blog',
+        name: 'Blog',
+        component: Layout,
+        meta: {
+            title: '博客',
+        },
+        children: [
+            {
+                path: '/blog',
+                name: 'Blog',
+                component: () => import('@/views/blog/blog.vue'),
+                meta: {
+                    title: '博客',
+                }
+            }
+
+        ],
+    },
+    {
+        path: '/projects',
+        name: 'Projects',
+        component: Layout,
+        meta: {
+            title: '项目',
+        },
+        children: [
+            {
+                path: '/projects',
+                name: 'Projects',
+                component: () => import('@/views/projects/projects.vue'),
+                meta: {
+                    title: '项目',
+                }
+            }
+
+        ],
+    },
+    {
+        path: '/tools',
+        name: 'Tools',
+        component: Layout,
+        meta: {
+            title: '工具',
+        },
+        children: [
+            {
+                path: '/tools',
+                name: 'Tools',
+                component: () => import('@/views/tools/tools.vue'),
+                meta: {
+                    title: '工具',
+                }
+            },
+            {
+                path: '/tools/bonfire',
+                name: 'Bonfire',
+                component: () => import('@/views/tools/bonfire/bonfire.vue'),
+                meta: {
+                    title: '篝火',
+                }
+            }
+
+        ],
+    },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: Layout,
+        meta: {
+            title: '设置',
+        },
+        children: [
+            {
+                path: '/settings',
+                name: 'Settings',
+                component: () => import('@/views/projects/projects.vue'),
+                meta: {
+                    title: '设置',
+                }
+            }
+
+        ],
+    },
 
 ]
+
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [...routes, ...errorRoutes]
 });
+
+router.beforeEach((to, from, next) => {
+    next()
+})
+
 export default router;

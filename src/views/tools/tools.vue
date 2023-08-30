@@ -2,8 +2,8 @@
 
 </script>
 <template>
-    <div class="blog">
-        blog
+    <div class="tools">
+        tools
     </div>
 </template>
 <style lang="" scoped>

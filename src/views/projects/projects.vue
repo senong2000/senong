@@ -2,7 +2,9 @@
 
 </script>
 <template>
-
+    <div class="projects">
+        projects
+    </div>
 </template>
 <style lang="" scoped>
 

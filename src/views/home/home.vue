@@ -5,7 +5,7 @@
 
 </style>
 <template>
-    <div>
-        Hello, World!
+    <div class="home">
+        home
     </div>
 </template>
