@@ -7,8 +7,23 @@ import { fileURLToPath } from 'url';
 import Unocss from 'unocss/vite';
 import { presetUno, presetAttributify, presetIcons } from 'unocss'
 
+// 引入vuetify
+import vuetify from 'vite-plugin-vuetify';
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  plugins: [
+    vue(),
+    vuetify({
+      autoImport: true,
+    }),
+    Unocss({ // 使用Unocss
+      presets: [
+        presetUno(),
+        presetAttributify(),
+        presetIcons()],
+    })
+  ],
   resolve: {
     //设置别名
     alias: {
@@ -16,14 +31,7 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     }
   },
-  plugins: [
-    vue(),
-    Unocss({ // 使用Unocss
-      presets: [
-        presetUno(),
-        presetAttributify(),
-        presetIcons()],
-    })],
+
   server: {
     port: 8080, //启动端口
     hmr: {
@@ -38,5 +46,12 @@ export default defineConfig({
         rewrite: (path: string) => path.replace(/^\/api/, '')
       }
     }
-  }
+  },
+  
+  optimizeDeps: {
+    exclude: ['vuetify'],
+    entries: [
+      './src/**/*.vue',
+    ],
+  },
 });
