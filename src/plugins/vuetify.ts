@@ -5,10 +5,9 @@
  */
 
 // Styles
-// 字体样式已经改为CDN方式引入了
-// import '@mdi/fonts/css/materialdesignicons.css'
+
 import 'vuetify/styles'
-import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
+// import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
 // Composables
 import { createVuetify } from 'vuetify'
@@ -63,7 +62,7 @@ const vuetify = createVuetify({
         },
     },
     theme: {
-        defaultTheme: 'dark'
+        defaultTheme: 'light'
     }
 })
 

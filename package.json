@@ -19,8 +19,10 @@
     ]
   },
   "dependencies": {
+    "@rollup/plugin-inject": "^5.0.3",
     "@vueuse/core": "^10.4.1",
     "axios": "^1.5.0",
+    "core-js": "^3.32.1",
     "pinia": "^2.1.6",
     "three": "^0.155.0",
     "vue": "^3.3.4",

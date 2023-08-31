@@ -6,6 +6,6 @@
         tools
     </div>
 </template>
-<style lang="" scoped>
+<style lang="scss" scoped>
 
 </style>

@@ -1,10 +1,5 @@
 <script lang="ts" setup>
 
 </script>
-<template>
-
-    
-</template>
-<style lang="sass" scoped>
-
-</style>
+<template></template>
+<style lang="scss" scoped></style>

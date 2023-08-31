@@ -8,7 +8,7 @@ import Unocss from 'unocss/vite';
 import { presetUno, presetAttributify, presetIcons } from 'unocss'
 
 // 引入vuetify
-import vuetify from 'vite-plugin-vuetify';
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
 // 自动引入
 import AutoImport from 'unplugin-auto-import/vite'
@@ -19,13 +19,16 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "@/styles/index.scss";',
+        additionalData: '@import "@/styles/variables.scss";',
       },
     },
   },
 
   plugins: [
-    vue(),
+    vue({
+      template: { transformAssetUrls },
+      reactivityTransform: true,
+    }),
     vuetify({
       autoImport: true,
     }),
@@ -50,14 +53,25 @@ export default defineConfig({
     }),
   ],
 
+  base: "./",
 
+  define: { 'process.env': {} },
 
   resolve: {
     //设置别名
     alias: {
       // '@': path.resolve(__dirname, 'src'),
       "@": fileURLToPath(new URL("./src", import.meta.url)),
-    }
+    },
+    extensions: [
+      '.js',
+      '.json',
+      '.jsx',
+      '.mjs',
+      '.ts',
+      '.tsx',
+      '.vue',
+    ],
   },
 
   server: {
@@ -81,5 +95,26 @@ export default defineConfig({
     entries: [
       './src/**/*.vue',
     ],
+  },
+  build: {
+    chunkSizeWarningLimit: 1500,
+    rollupOptions: {
+      treeshake: true,
+      output: {
+        // 缩小打包体积
+        minifyInternalExports: true,
+        manualChunks: (id) => {
+          // 将 node_modules 中的代码单独打包成一个 JS 文件
+          // hash code 不变，浏览器将缓存 node_modules 的文件
+          if (id.includes('node_modules')) {
+            if (/.*\.css$/.test(id)) {
+              // 匹配是否将node_modules 中css打包
+              console.log('css', id)
+            }
+            return 'vendor'
+          }
+        }
+      }
+    }
   },
 });

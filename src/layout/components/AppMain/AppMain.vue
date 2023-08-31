@@ -10,14 +10,14 @@ const key = computed(() => {
 
 </script>
 <template>
-    <section class="appmain">
+    <main class="app-main ">
         <RouterView v-slot="{ Component }">
-            <Transition name="slide-fade" mode="out-in">
+            <Transition name="fade" mode="out-in">
                 <KeepAlive>
                     <component :is="Component" :key="key" />
                 </KeepAlive>
             </Transition>
         </RouterView>
-    </section>
+    </main>
 </template>
 <style lang="scss" scoped></style>

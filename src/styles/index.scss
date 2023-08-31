@@ -1,4 +1,31 @@
-@import "./mixins.scss";
 @import "./transition.scss";
-@import "./variables.scss";
+// 注册多主题
+@import "./theme/register.scss";
+// reset
 @import "./reset.scss";
+
+/* 主题动画切换 */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+    z-index: 1000;
+}
+::view-transition-new(root) {
+    z-index: 99999;
+}
+.dark::view-transition-old(root) {
+    z-index: 99999;
+}
+.dark::view-transition-new(root) {
+    z-index: 1000;
+}
+
+/* 文字单行省略号 */
+.sle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
