@@ -3,9 +3,9 @@ import { NavigationBar, AppMain } from "./components"
 
 </script>
 <template>
-    <NavigationBar />
-    <AppMain />
+    <div class="layout">
+        <NavigationBar />
+        <AppMain />
+    </div>
 </template>
-<style lang="" scoped>
-
-</style>
+<style lang="scss" scoped></style>

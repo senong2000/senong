@@ -8,25 +8,25 @@ const toPages = (path: string) => {
 }
 </script>
 <template>
-    <v-card class="navigationbar" w-auto h-16 flat rounded="0">
-        <v-toolbar>
-            <v-toolbar-title @click="toPages('')">
+    <v-toolbar class="bg-transparent">
+        <v-toolbar-title>
+            <v-chip size="x-large" variant="text" @click="toPages('')">
                 Senong
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn variant="plain" @click="toPages('blog')">
-                Blog
-            </v-btn>
-            <v-btn variant="plain" @click="toPages('projects')">
-                Projects
-            </v-btn>
-            <v-btn variant="plain" @click="toPages('tools')">
-                Tools
-            </v-btn>
-            <v-btn @click="toPages('settings')">
-                <v-icon>mdi-cog</v-icon>
-            </v-btn>
-        </v-toolbar>
-    </v-card>
+            </v-chip>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn variant="plain" @click="toPages('blog')">
+            Blog
+        </v-btn>
+        <v-btn variant="plain" @click="toPages('projects')">
+            Projects
+        </v-btn>
+        <v-btn variant="plain" @click="toPages('tools')">
+            Tools
+        </v-btn>
+        <v-btn @click="toPages('settings')">
+            <v-icon>mdi-cog</v-icon>
+        </v-btn>
+    </v-toolbar>
 </template>
 <style lang="scss" scoped></style>

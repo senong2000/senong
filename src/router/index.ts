@@ -116,12 +116,11 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: '/settings',
                 name: 'Settings',
-                component: () => import('@/views/projects/projects.vue'),
+                component: () => import('@/views/settings/settings.vue'),
                 meta: {
                     title: '设置',
                 }
             }
-
         ],
     },
 
