@@ -28,7 +28,7 @@ const platformsArray = [
     {
         icon: 'fab fa-steam',
         name: 'steam',
-        link: ''
+        link: 'https://steamcommunity.com/profiles/76561198919128154/'
     },
     {
         icon: 'fab fa-zhihu',

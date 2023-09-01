@@ -10,7 +10,7 @@ const key = computed(() => {
 
 </script>
 <template>
-    <main class="app-main ">
+    <main class="app-main">
         <RouterView v-slot="{ Component }">
             <Transition name="fade" mode="out-in">
                 <KeepAlive>

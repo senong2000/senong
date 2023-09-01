@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
+import NProgress from 'nprogress'
+
+import virtualRoutes from 'virtual:generated-pages';
+
 const Layout = () => import("@/layout/layout.vue")
 
 const errorRoutes: Array<RouteRecordRaw> = [
@@ -126,14 +130,24 @@ const routes: Array<RouteRecordRaw> = [
 
 ]
 
+// vue-router 手动引入方式
+// unplugin-pages 自动引入方式
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: [...routes, ...errorRoutes]
+    // routes: [...routes, ...errorRoutes] 
+    routes: virtualRoutes
 });
 
 router.beforeEach((to, from, next) => {
+    NProgress.start()
+
     next()
+})
+
+router.afterEach(() => {
+    NProgress.done()
+    
 })
 
 export default router;

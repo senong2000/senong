@@ -9,8 +9,6 @@ const toPages = (path: string) => {
     router.push(`/${path}`)
 }
 
-
-
 </script>
 <template>
     <v-toolbar class="navigation-bar" height="80">

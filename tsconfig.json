@@ -33,14 +33,5 @@
     }
   },
   "exclude": ["node_modules", "dist"],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "src/**/*.ts",
-    "src/**/*.js",
-    "./auto-imports.d.ts"
-  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

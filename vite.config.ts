@@ -1,11 +1,16 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
 
+import { fileURLToPath } from 'url';
+import { basename, dirname, resolve } from 'node:path'
 // 引入Unocss
 import Unocss from 'unocss/vite';
 import { presetUno, presetAttributify, presetIcons } from 'unocss'
+
+// page
+import Pages from 'vite-plugin-pages';
+import fs from 'fs-extra'
+import matter from 'gray-matter'
 
 // 引入vuetify
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
@@ -13,6 +18,15 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 // 自动引入
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+
+// markdown 
+import Markdown from 'unplugin-vue-markdown/vite'
+import MarkdownItAnchor from 'markdown-it-anchor'
+import MarkdownItPrism from 'markdown-it-prism'
+import MackdownItLinkAttributes from 'markdown-it-link-attributes'
+import MarkdownItEmoji from 'markdown-it-emoji';
+import MarkdownItToc from 'markdown-it-table-of-contents';
+import { slugify } from './src/utils/slugify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -51,6 +65,65 @@ export default defineConfig({
       dirs: ['./src/components'],
       dts: true,
     }),
+    Pages({
+      extensions: ['vue', 'md'],
+      dirs: [
+        'src/views',
+        { dir: 'src/views/home', baseRoute: '' },
+        { dir: 'src/views/blog/docs', baseRoute: 'docs' }
+      ],
+      extendRoute(route) {
+        const path = resolve(__dirname, route.component.slice(1))
+
+        if (!path.includes('projects.md') && path.endsWith('.md')) {
+          const md = fs.readFileSync(path, 'utf-8')
+          const { data } = matter(md)
+          route.meta = Object.assign(route.meta || {}, { frontmatter: data })
+        }
+
+        return route
+      },
+    }),
+    Markdown({
+      // default options passed to markdown-it
+      // see: https://markdown-it.github.io/markdown-it/
+      markdownItOptions: {
+        html: true,
+        linkify: true,
+        typographer: true,
+      },
+      // A function providing the Markdown It instance gets the ability to apply custom settings/plugins
+      async markdownItSetup(md) {
+        // for example
+        md.use(MarkdownItAnchor, {
+          slugify,
+          permalink: MarkdownItAnchor.permalink.linkInsideHeader({
+            symbol: '#',
+            renderAttrs: () => ({ 'aria-hidden': 'true' }),
+          }),
+        })
+        md.use(MarkdownItPrism)
+        md.use(MarkdownItPrism)
+        md.use(MarkdownItToc)
+        md.use(MarkdownItEmoji)
+
+
+        md.use(MackdownItLinkAttributes, {
+          matcher: (link: string) => /^https?:\/\//.test(link),
+          attrs: {
+            target: '_blank',
+            rel: 'noopener',
+          },
+        })
+
+      },
+      // Class names for the wrapper div
+      wrapperClasses: 'markdown-body',
+      wrapperComponent: id => id.includes('/blog/')
+        ? 'WrapperDemo'
+        : 'WrapperPost',
+
+    })
   ],
 
   base: "./",
