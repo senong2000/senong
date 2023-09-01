@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { NavigationBar, AppMain } from "./components"
+import { NavigationBar, AppMain, BottomBar } from "./components"
 
 </script>
 
@@ -7,6 +7,8 @@ import { NavigationBar, AppMain } from "./components"
     <div class="app-wrapper">
         <NavigationBar />
         <AppMain />
+        <BottomBar />
+
     </div>
 </template>
 <style lang="scss" scoped>

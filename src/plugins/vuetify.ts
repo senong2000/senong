@@ -11,7 +11,8 @@ import 'vuetify/styles'
 
 // Composables
 import { createVuetify } from 'vuetify'
-import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import { mdi } from 'vuetify/iconsets/mdi'
+import { aliases, fa } from 'vuetify/iconsets/fa'
 
 const customLightTheme = {
     dark: false,
@@ -55,10 +56,11 @@ const vuetify = createVuetify({
         },
     },
     icons: {
-        defaultSet: 'mdi',
+        defaultSet: 'fa',
         aliases,
         sets: {
-            mdi,
+            fa,
+            mdi
         },
     },
     theme: {

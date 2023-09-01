@@ -13,7 +13,7 @@ const toPages = (path: string) => {
 
 </script>
 <template>
-    <v-toolbar class="navigation-bar">
+    <v-toolbar class="navigation-bar" height="80">
         <v-toolbar-title>
             <v-btn variant="plain" @click="toPages('')">
                 <span>
@@ -32,12 +32,11 @@ const toPages = (path: string) => {
             Tools
         </v-btn>
         <v-btn variant="plain" @click="toPages('settings')">
-            <v-icon>mdi-cog</v-icon>
+            <v-icon>fas fa-gear</v-icon>
         </v-btn>
         <v-btn variant="plain" @click="toggleDark">
-            <v-icon :icon="`${isDark ? 'mdi-weather-night' : 'mdi-white-balance-sunny'}`"></v-icon>
+            <v-icon :icon="`${isDark ? 'fas fa-moon' : 'fas fa-sun'}`"></v-icon>
         </v-btn>
-
     </v-toolbar>
 </template>
 <style lang="scss" scoped></style>
