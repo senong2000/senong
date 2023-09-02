@@ -9,6 +9,7 @@
     "module": "ESNext",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+    "esModuleInterop": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -33,5 +34,6 @@
     }
   },
   "exclude": ["node_modules", "dist"],
+
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -20,4 +20,9 @@ const key = computed(() => {
         </RouterView>
     </main>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.app-main {
+    display: flex;
+    justify-content: center;
+}
+</style>

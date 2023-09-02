@@ -25,6 +25,10 @@ import MarkdownItAnchor from 'markdown-it-anchor'
 import MarkdownItPrism from 'markdown-it-prism'
 import MackdownItLinkAttributes from 'markdown-it-link-attributes'
 import MarkdownItEmoji from 'markdown-it-emoji';
+
+import { bundledLanguages, getHighlighter } from 'shikiji'
+
+// ts-expect-error missing types
 import MarkdownItToc from 'markdown-it-table-of-contents';
 import { slugify } from './src/utils/slugify'
 
@@ -41,7 +45,11 @@ export default defineConfig({
   plugins: [
     vue({
       template: { transformAssetUrls },
+      include: [/\.vue$/, /\.md$/],
       reactivityTransform: true,
+      script: {
+        defineModel: true,
+      },
     }),
     vuetify({
       autoImport: true,
@@ -54,7 +62,7 @@ export default defineConfig({
       ],
     }),
     AutoImport({
-      imports: ['vue', '@vueuse/core', 'vue-router', 'pinia'],
+      imports: ['vue', '@vueuse/core', 'vue-router', 'pinia', '@vueuse/head'],
       exclude: [
         '**/dist/**',
       ],
@@ -62,39 +70,73 @@ export default defineConfig({
       vueTemplate: true,
     }),
     Components({
-      dirs: ['./src/components'],
+      extensions: ['vue', 'md'],
       dts: true,
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+      dirs: ['./src/components'],
+
     }),
     Pages({
       extensions: ['vue', 'md'],
       dirs: [
         'src/views',
         { dir: 'src/views/home', baseRoute: '' },
-        { dir: 'src/views/blog/docs', baseRoute: 'docs' }
+        { dir: 'src/views/blog/post', baseRoute: 'blog' }
       ],
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1))
 
+        // 处理markdown文件
         if (!path.includes('projects.md') && path.endsWith('.md')) {
           const md = fs.readFileSync(path, 'utf-8')
           const { data } = matter(md)
           route.meta = Object.assign(route.meta || {}, { frontmatter: data })
+        } else {
+          // 处理其他文件
+          route.meta = Object.assign(route.meta || {}, { frontmatter: {} })
         }
 
         return route
       },
     }),
     Markdown({
+      // Class names for the wrapper div
+      wrapperClasses: (id, code) => code.includes('@layout-full-width')
+        ? ''
+        : 'prose m-auto slide-enter-content',
+      wrapperComponent: 'WrapperMarkdown',
+      headEnabled: true,
+      exportFrontmatter: false,
+      exposeFrontmatter: false,
+      exposeExcerpt: false,
       // default options passed to markdown-it
       // see: https://markdown-it.github.io/markdown-it/
       markdownItOptions: {
         html: true,
         linkify: true,
         typographer: true,
+        quotes: '""\'\'',
       },
       // A function providing the Markdown It instance gets the ability to apply custom settings/plugins
       async markdownItSetup(md) {
+        const shiki = await getHighlighter({
+          themes: ['vitesse-dark', 'vitesse-light'],
+          langs: Object.keys(bundledLanguages) as any,
+        })
+
         // for example
+        md.use((markdown) => {
+          markdown.options.highlight = (code, lang) => {
+            return shiki.codeToHtml(code, {
+              lang,
+              themes: {
+                light: 'vitesse-light',
+                dark: 'vitesse-dark',
+              },
+              cssVariablePrefix: '--s-',
+            })
+          }
+        })
         md.use(MarkdownItAnchor, {
           slugify,
           permalink: MarkdownItAnchor.permalink.linkInsideHeader({
@@ -103,11 +145,12 @@ export default defineConfig({
           }),
         })
         md.use(MarkdownItPrism)
-        md.use(MarkdownItPrism)
-        md.use(MarkdownItToc)
+        md.use(MarkdownItToc, {
+          includeLevel: [1, 2, 3, 4],
+          slugify,
+          containerHeaderHtml: '<div class="table-of-contents-anchor"><div class="i-ri-menu-2-fill" /></div>',
+        })
         md.use(MarkdownItEmoji)
-
-
         md.use(MackdownItLinkAttributes, {
           matcher: (link: string) => /^https?:\/\//.test(link),
           attrs: {
@@ -115,14 +158,31 @@ export default defineConfig({
             rel: 'noopener',
           },
         })
-
       },
-      // Class names for the wrapper div
-      wrapperClasses: 'markdown-body',
-      wrapperComponent: id => id.includes('/blog/')
-        ? 'WrapperDemo'
-        : 'WrapperPost',
+      frontmatterPreprocess(frontmatter, options, id, defaults) {
 
+        (() => {
+          if (!id.endsWith('.md'))
+            return
+          const route = basename(id, '.md')
+          if (route === 'index' || frontmatter.image || !frontmatter.title)
+            return
+          const path = `og/${route}.png`
+
+          // promises.push(
+          //   fs.existsSync(`${id.slice(0, -3)}.png`)
+          //     ? fs.copy(`${id.slice(0, -3)}.png`, `public/${path}`)
+          //     : generateOg(frontmatter.title!.replace(/\s-\s.*$/, '').trim(), `public/${path}`),
+          // )
+          // frontmatter.image = `https://antfu.me/${path}`
+        })()
+
+        // console.log(id)
+
+        const head = defaults(frontmatter, options)
+
+        return { head, frontmatter }
+      },
     })
   ],
 

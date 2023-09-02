@@ -2,20 +2,15 @@
 
 </script>
 <template>
-    <footer class="footer">
-        <div class="copyright" font-size-3>
-            <v-chip size="x-small" variant="text" class="time">2023 - PRENSENT</v-chip>
-            <v-chip size="x-small" variant="text"> © Senong</v-chip>
-        </div>
+    <footer class="footer proseflex slide-enter animate-delay-1200!">
+        <span class="text-sm op50">2023 - PRESENT © Senong</span>
+        <div class="flex-auto" />
     </footer>
 </template>
 <style lang="scss" scoped>
 .footer {
-    width: 100%;
-    position: absolute;
-    bottom: 4rem;
-    display: flex;
-    justify-content: center;
-    color: $greyColor;
+    position: fixed;
+    bottom: 0;
+    right: 0;
 }
 </style>

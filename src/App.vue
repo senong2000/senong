@@ -1,6 +1,6 @@
 
 <script lang="ts" setup>
-import { NavigationBar, AppMain, BottomBar } from "@/layout"
+import { NavigationBar, AppMain, BottomBar, MainBackground } from "@/layout"
 
 import { useTheme } from "@/hooks/useTheme"
 const { initTheme } = useTheme()
@@ -12,6 +12,7 @@ initTheme()
   <div class="app-wrapper">
     <NavigationBar />
     <AppMain />
+    <MainBackground />
     <BottomBar />
 
   </div>

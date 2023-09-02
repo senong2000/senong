@@ -51,13 +51,9 @@ const platformsArray = [
 </script>
 
 <template>
-    <div class="home">
-        <div class="background">
-            <div class="background-name" position-absolute font-semibold>
-                <span>Senong</span>
-            </div>
-        </div>
-        <div class="introduce">
+    <div class="home ">
+        
+        <div class="introduce slide-enter">
             <div class="preface">
                 <div>Hi, I'm <span font-size-8>Senong</span> , an ordinary office worker.</div>
                 <div>My name comes from a Chinese dragon named Shen Long, which represents a mirage and everything is
@@ -89,42 +85,9 @@ const platformsArray = [
 
 <style lang="scss" scoped>
 .home {
-    .background {
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        pointer-events: none;
-
-        &-name {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            span {
-                color: $PrimaryColor-default;
-                font-size: 16rem;
-                letter-spacing: 2rem;
-                opacity: 0.1;
-                pointer-events: auto;
-                user-select: none;
-                transition: all .5s;
-                z-index: 10;
-
-            }
-
-            span:hover {
-                opacity: 0.5;
-            }
-        }
-
-
-    }
 
     .introduce {
-        position: absolute;
+        position: relative;
         width: 100%;
         // background: grey;
         font-size: 20px;
@@ -138,6 +101,7 @@ const platformsArray = [
 
         .preface {
             max-width: 48rem;
+
             div {
                 margin: 1.5rem 0;
             }
