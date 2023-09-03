@@ -11,4 +11,5 @@ export interface Blog {
     video?: boolean
     inperson?: boolean
     redirect?: string
+    type?: string,
 }

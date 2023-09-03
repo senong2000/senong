@@ -81,7 +81,7 @@ export default defineConfig({
       dirs: [
         'src/views',
         { dir: 'src/views/home', baseRoute: '' },
-        { dir: 'src/views/blog/post', baseRoute: 'blog' }
+        { dir: 'src/views/blog/**', baseRoute: 'blog' }
       ],
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1))
@@ -95,7 +95,6 @@ export default defineConfig({
           // 处理其他文件
           route.meta = Object.assign(route.meta || {}, { frontmatter: {} })
         }
-
         return route
       },
     }),

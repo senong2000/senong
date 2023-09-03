@@ -52,7 +52,7 @@ const platformsArray = [
 
 <template>
     <div class="home ">
-        
+
         <div class="introduce slide-enter">
             <div class="preface">
                 <div>Hi, I'm <span font-size-8>Senong</span> , an ordinary office worker.</div>
@@ -89,7 +89,6 @@ const platformsArray = [
     .introduce {
         position: relative;
         width: 100%;
-        // background: grey;
         font-size: 20px;
         font-weight: 500;
         padding: 2rem;
@@ -100,6 +99,7 @@ const platformsArray = [
         align-items: center;
 
         .preface {
+            min-width: 48rem;
             max-width: 48rem;
 
             div {
@@ -109,6 +109,7 @@ const platformsArray = [
 
 
         .platforms {
+            min-width: 48rem;
             max-width: 48rem;
             margin-top: 2rem;
         }

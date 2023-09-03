@@ -4,9 +4,11 @@ import { formatDate } from '@/utils/date';
 
 const props = defineProps<{
     type?: string
-    post?: Blog[]
+    blogs?: Blog[]
     extra?: Blog[]
 }>()
+
+const atype = ref(null)
 
 const router = useRouter()
 const routes: Blog[] = router.getRoutes()
@@ -21,13 +23,17 @@ const routes: Blog[] = router.getRoutes()
         recording: i.meta.frontmatter.recording,
         upcoming: i.meta.frontmatter.upcoming,
         redirect: i.meta.frontmatter.redirect,
+        type: i.meta.frontmatter.type
     }))
-console.log(routes)
 
-const post = computed(() =>
-    [...(props.post || routes), ...props.extra || []]
+const types = ['All', ...new Set(routes.filter(i => i.type !== null).map(i => i.type))]
+// console.log(routes, types)
+
+const blogs = computed(() =>
+    [...(props.blogs || routes), ...props.extra || []]
         .sort((a, b) => +new Date(b.date) - +new Date(a.date))
-        .filter(i => i.lang !== 'zh'),
+        .filter(i => i.lang !== 'zh')
+        .filter(i => i.type === atype.value || atype.value === 'All'),
 )
 
 const getYear = (a: Date | string | number) => new Date(a).getFullYear()
@@ -45,16 +51,22 @@ function getGroupName(p: Blog) {
 
 </script>
 <template>
-    <div class="blog">
+    <div class="blog mt-16 ">
+        <v-tabs v-model="atype" align-tabs="start">
+            <v-tab v-for="item in types" :key="item" :value="item">
+                {{ item }}
+            </v-tab>
+        </v-tabs>
+
         <ul>
-            <template v-if="!post.length">
+            <template v-if="!blogs.length">
                 <div py2 op50>
                     { nothing here yet }
                 </div>
             </template>
 
-            <template v-for="route, idx in post" :key="route.path">
-                <div v-if="!isSameGroup(route, post[idx - 1])" select-none relative h20 pointer-events-none slide-enter
+            <template v-for="route, idx in blogs" :key="route.path">
+                <div v-if="!isSameGroup(route, blogs[idx - 1])" select-none relative h20 pointer-events-none slide-enter
                     :style="{
                         '--enter-stage': idx - 2,
                         '--enter-step': '60ms',
@@ -90,7 +102,9 @@ function getGroupName(p: Blog) {
                                     title="Provided in video" />
                                 <span v-if="route.radio" align-middle op50 flex-none i-ri:radio-line
                                     title="Provided in radio" />
-
+                                <span text-sm op50 ws-nowrap v-if="atype === 'All' && route.type !== null">
+                                    {{ route.type }} ·
+                                </span>
                                 <span text-sm op50 ws-nowrap>
                                     {{ formatDate(route.date, true) }}
                                 </span>
@@ -106,4 +120,9 @@ function getGroupName(p: Blog) {
         </ul>
     </div>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.blog {
+    position: relative;
+    min-width: 48rem;
+}
+</style>

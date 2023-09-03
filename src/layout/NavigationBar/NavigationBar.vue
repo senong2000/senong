@@ -11,7 +11,7 @@ const toPages = (path: string) => {
 
 </script>
 <template>
-    <v-toolbar class="navigation-bar" height="80">
+    <v-toolbar class="navigation-bar" height="80" >
         <v-toolbar-title>
             <v-btn variant="plain" @click="toPages('')">
                 <span>
