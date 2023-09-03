@@ -52,8 +52,8 @@ function getGroupName(p: Blog) {
 </script>
 <template>
     <div class="blog mt-16 ">
-        <v-tabs v-model="atype" align-tabs="start">
-            <v-tab v-for="item in types" :key="item" :value="item">
+        <v-tabs v-model="atype" align-tabs="start" selected-class="active-atype" hide-slider>
+            <v-tab v-for="item in types" :key="item" :value="item" variant="plain">
                 {{ item }}
             </v-tab>
         </v-tabs>
@@ -124,5 +124,16 @@ function getGroupName(p: Blog) {
 .blog {
     position: relative;
     min-width: 48rem;
+
+    button {
+        display: flex;
+        align-items: end;
+        transition: all .2s;
+        
+    }
+
+    .active-atype {
+        font-size: 1.5rem;
+    }
 }
 </style>
