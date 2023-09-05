@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Senong" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <!-- <link
+      href="https://cdn.bootcdn.net/ajax/libs/MaterialDesign-Webfont/7.2.96/css/materialdesignicons.css"
+      rel="stylesheet"
+    /> -->
+    <link
+      href="https://use.fontawesome.com/releases/v6.4.2/css/all.css"
+      rel="stylesheet"
+    />
+
+    <title>Senong</title>
+  </head>
+  <script>
+    (function () {
+      const prefersDark =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const setting = localStorage.getItem("vueuse-color-scheme") || "auto";
+      if (setting === "dark" || (prefersDark && setting !== "light"))
+        document.documentElement.classList.toggle("dark", true);
+    })();
+  </script>
+  <body>
+    <div
+      id="app"
+      class="font-sans text-gray-700 dark:text-gray-200 relative"
+    ></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
