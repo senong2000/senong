@@ -3,11 +3,4 @@
 .app-main {
     color: $font-color;
     background-color: lighten($theme-bg-color, 2%) !important;
-
-    .table-of-contents-anchor {
-        svg {
-            color: $font-color;
-            background-color: lighten($theme-bg-color, 2%) !important;
-        }
-    }
 }

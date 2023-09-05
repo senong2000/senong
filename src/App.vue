@@ -25,6 +25,5 @@ initTheme()
   @include clearfix;
   width: 100vw;
   height: 100vh;
-  font-size: 16px;
 }
 </style>.

@@ -129,7 +129,11 @@ function getGroupName(p: Blog) {
         display: flex;
         align-items: end;
         transition: all .2s;
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> c30492fe47bbc59d71e83e7035278b24ef68ed42
     }
 
     .active-atype {
