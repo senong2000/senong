@@ -1,10 +1,26 @@
 <script lang="ts" setup>
 
+const rain = ref()
+
+onMounted(() => {
+    let raindrop = document.createElement('div')
+    raindrop.classList.add('text')
+
+    rain.value.appendChild(raindrop)
+
+    
+
+})
+
+
 </script>
 <template>
     <div class="background">
         <div class="background-name" font-semibold>
             <span>Senong</span>
+        </div>
+        <div class="background-rain" ref="rain">
+
         </div>
     </div>
 </template>

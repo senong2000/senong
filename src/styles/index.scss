@@ -20,6 +20,10 @@
   white-space: nowrap;
 }
 
+::selection {
+  background: #8884;
+}
+
 .sponsorkit-avatar {
   cursor: pointer;
 }
