@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { defineConfig, presetAttributify, presetIcons, presetUno, presetWebFonts, transformerDirectives } from 'unocss'
 
 export default defineConfig({
@@ -38,12 +37,4 @@ export default defineConfig({
   safelist: [
     'menu',
   ],
-=======
-// uno.config.ts
-import { defineConfig } from 'unocss'
-
-export default defineConfig({
-  // ...UnoCSS options
-  rules: []
->>>>>>> c30492fe47bbc59d71e83e7035278b24ef68ed42
 })
