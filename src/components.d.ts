@@ -9,9 +9,5 @@ declare module 'vue' {
   export interface GlobalComponents {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-<<<<<<< HEAD
-=======
-    UsePinia: typeof import('./components/usePinia.vue')['default']
->>>>>>> c30492fe47bbc59d71e83e7035278b24ef68ed42
   }
 }
