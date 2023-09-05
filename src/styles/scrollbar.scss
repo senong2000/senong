@@ -1,21 +1,3 @@
-:root {
-    --c-bg: #fff;
-    --c-scrollbar: #eee;
-    --c-scrollbar-hover: #bbb;
-}
-
-html {
-    background-color: var(--c-bg);
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
-
-html.dark {
-    --c-bg: #151515;
-    --c-scrollbar: #535353;
-    --c-scrollbar-hover: #aeaeae;
-}
-
 * {
     scrollbar-color: var(--c-scrollbar) var(--c-bg);
 }

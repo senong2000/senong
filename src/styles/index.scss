@@ -13,6 +13,26 @@
 
 @import "./viewTransition.scss";
 
+:root {
+  --c-bg: #fff;
+  --c-scrollbar: #eee;
+  --c-scrollbar-hover: #bbb;
+  --c-noprogress-color: #888;
+}
+
+html {
+  background-color: var(--c-bg);
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+html.dark {
+  --c-bg: #151515;
+  --c-scrollbar: #535353;
+  --c-scrollbar-hover: #aeaeae;
+  --c-noprogress-color: #d0d0d0;
+}
+
 /* 文字单行省略号 */
 .sle {
   overflow: hidden;
@@ -125,5 +145,20 @@ html:not(.dark) [img-dark] {
   }
   .slide-enter-content > *:nth-child(20) {
     --enter-stage: 20 !important;
+  }
+  .slide-enter-content > *:nth-child(21) {
+    --enter-stage: 21 !important;
+  }
+  .slide-enter-content > *:nth-child(22) {
+    --enter-stage: 22 !important;
+  }
+  .slide-enter-content > *:nth-child(23) {
+    --enter-stage: 23 !important;
+  }
+  .slide-enter-content > *:nth-child(24) {
+    --enter-stage: 24 !important;
+  }
+  .slide-enter-content > *:nth-child(25) {
+    --enter-stage: 25 !important;
   }
 }
