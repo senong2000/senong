@@ -1,15 +1,5 @@
 <script lang="ts" setup>
 
-import { useRainFx } from "@/hooks/useRainFx"
-
-const rain = ref()
-
-const { initRain } = useRainFx()
-
-onMounted(() => {
-    initRain()
-})
-
 </script>
 
 <template>
