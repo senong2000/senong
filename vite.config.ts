@@ -96,7 +96,7 @@ export default defineConfig({
       // Class names for the wrapper div
       wrapperClasses: (id, code) => code.includes('@layout-full-width')
         ? ''
-        : 'prose m-auto slide-enter-content',
+        : 'prose slide-enter-content',
       wrapperComponent: 'WrapperMarkdown',
       headEnabled: true,
       exportFrontmatter: false,
@@ -141,7 +141,7 @@ export default defineConfig({
         md.use(MarkdownItToc, {
           includeLevel: [1, 2, 3, 4],
           slugify,
-          containerHeaderHtml: '<div class="table-of-contents-anchor"><div class="i-ri-menu-2-fill" /></div>',
+          containerHeaderHtml: '<div class="table-of-contents-anchor"><i class="fas fa-bars-staggered v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i></div>',
         })
         md.use(MarkdownItEmoji)
         md.use(MackdownItLinkAttributes, {

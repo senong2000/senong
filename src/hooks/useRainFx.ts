@@ -16,9 +16,8 @@ const startRainFx = () => {
     let left = Math.floor(Math.random() * window.innerWidth)
     let size = Math.random() * 1.5;
     let duration = Math.random() * 1;
-
     raindrop.classList.add('raindrop')
-    // rain.value.appendChild(raindrop)
+
     rain.appendChild(raindrop)
     raindrop.innerHTML = randomRaindropText();
     raindrop.style.left = left + 'px';
@@ -26,7 +25,6 @@ const startRainFx = () => {
     raindrop.style.animationDuration = 10 + duration + 's';
 
     setTimeout(() => {
-        // rain.value.removeChild(raindrop)
         rain.removeChild(raindrop)
     }, 10000)
 
@@ -44,7 +42,7 @@ const initRain = () => {
     setRain(DEFAULT_RAIN)
     timer = setInterval(() => {
         startRainFx()
-    }, 50)
+    }, 100)
 }
 
 const setRain = (value: Rain) => {
@@ -64,7 +62,7 @@ const updateRain = () => {
 
 const toggleRain = () => {
     updateRain()
-    console.log(isRain)
+
     if (isRain.value) {
         timer = setInterval(() => {
             startRainFx()

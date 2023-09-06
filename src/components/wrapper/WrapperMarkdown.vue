@@ -73,8 +73,8 @@ onMounted(() => {
 </script>
 <template>
     <div class="blog-post">
-        <div v-if="frontmatter.display ?? frontmatter.title" class="prose m-auto mb-8" :class="[frontmatter.wrapperClass]">
-            <h1 class="mb-0 slide-enter-50">
+        <div v-if="frontmatter.display ?? frontmatter.title" class="m-auto mb-8" :class="[frontmatter.wrapperClass]">
+            <h1 class="blog-post-title" slide-enter-50 mb-0>
                 {{ frontmatter.display ?? frontmatter.title }}
             </h1>
             <p v-if="frontmatter.date" class="opacity-50 !mt-6 slide-enter-50">
@@ -92,7 +92,7 @@ onMounted(() => {
         <article ref="content" :class="[frontmatter.tocAlwaysOn ? 'toc-always-on' : '', frontmatter.class]">
             <slot />
         </article>
-        <div v-if="route.path !== '/'" class="prose m-auto mt-8 mb-8 slide-enter animate-delay-500 print:hidden">
+        <div v-if="route.path !== '/'" class="prose mt-8 mb-8 slide-enter animate-delay-500 print:hidden">
             <span font-mono op50>> </span>
             <RouterLink :to="route.path.split('/').slice(0, -1).join('/') || '/'" class="font-mono op50 hover:op75"
                 v-text="'cd ..'" />
@@ -102,6 +102,8 @@ onMounted(() => {
 <style lang="scss" scoped>
 .blog-post {
     position: relative;
-    min-width: 48rem;
+    // max-width: 48rem;
+    width: 50vw;
+
 }
 </style>

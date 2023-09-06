@@ -141,8 +141,25 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     NProgress.start()
-    
-    next()
+    // @ts-expect-error experimental API
+    const isAppearanceTransition = document.startViewTransition
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // 如果不支持
+    if (!isAppearanceTransition || !event) {
+        next()
+        return
+    }
+
+    if (from.path === '/blog') {
+        // @ts-expect-error experimental API
+        const transition = document.startViewTransition(() => {
+            next()
+        })
+    } else {
+
+        next()
+    }
+
 })
 
 router.afterEach(() => {

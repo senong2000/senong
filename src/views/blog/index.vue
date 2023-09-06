@@ -90,7 +90,7 @@ function getGroupName(p: Blog) {
                             <div class="title text-lg leading-1.2em" flex="~ gap-2 wrap">
                                 <span v-if="route.lang === 'zh'" align-middle flex-none
                                     class="text-xs bg-zinc:15 text-zinc5 rounded px-1 py-0.5 ml--12 mr2 my-auto hidden md:block">中文</span>
-                                <span align-middle>{{ route.title }}</span>
+                                <span align-middle class="blog-title">{{ route.title }}</span>
                             </div>
 
                             <div flex="~ gap-2 items-center">
@@ -102,14 +102,15 @@ function getGroupName(p: Blog) {
                                     title="Provided in video" />
                                 <span v-if="route.radio" align-middle op50 flex-none i-ri:radio-line
                                     title="Provided in radio" />
-                                <span text-sm op50 ws-nowrap v-if="atype === 'All' && route.type !== null">
-                                    {{ route.type }} ·
-                                </span>
-                                <span text-sm op50 ws-nowrap>
-                                    {{ formatDate(route.date, true) }}
-                                </span>
-                                <span v-if="route.duration" text-sm op40 ws-nowrap>· {{ route.duration }}</span>
-                                <span v-if="route.platform" text-sm op40 ws-nowrap>· {{ route.platform }}</span>
+
+                                <div class="blog-tags">
+                                    <span v-if="atype === 'All' && route.type !== null" text-sm op50 ws-nowrap>{{ route.type
+                                    }} · </span>
+                                    <span v-if="route.date" text-sm op50 ws-nowrap>{{ formatDate(route.date, true) }}</span>
+                                    <span v-if="route.duration" text-sm op40 ws-nowrap> · {{ route.duration }}</span>
+                                    <span v-if="route.platform" text-sm op40 ws-nowrap> · {{ route.platform }}</span>
+                                </div>
+
                                 <span v-if="route.lang === 'zh'" align-middle flex-none
                                     class="text-xs bg-zinc:15 text-zinc5 rounded px-1 py-0.5 my-auto md:hidden">中文</span>
                             </div>
@@ -123,7 +124,8 @@ function getGroupName(p: Blog) {
 <style lang="scss" scoped>
 .blog {
     position: relative;
-    min-width: 48rem;
+    // max-width: 48rem;
+    width: 50vw;
 
     button {
         display: flex;
@@ -132,7 +134,17 @@ function getGroupName(p: Blog) {
     }
 
     .active-atype {
-        font-size: 1.5rem;
+        font-size: 2rem;
+        opacity: 1;
     }
+
+    &-title {
+        view-transition-name: title
+    }
+
+    &-tags {
+        view-transition-name: tags
+    }
+
 }
 </style>

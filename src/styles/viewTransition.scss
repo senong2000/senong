@@ -15,3 +15,15 @@
 .dark::view-transition-new(root) {
     z-index: 1000;
 }
+
+::view-transition-old(title),
+::view-transition-new(title) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+::view-transition-old(title) {
+
+}
+::view-transition-new(title) {
+
+}

@@ -97,8 +97,7 @@ const platformsArray = [
         align-items: center;
 
         .preface {
-            min-width: 48rem;
-            max-width: 48rem;
+            width: 50vw;
 
             div {
                 margin: 1.5rem 0;
@@ -107,8 +106,7 @@ const platformsArray = [
 
 
         .platforms {
-            min-width: 48rem;
-            max-width: 48rem;
+            width: 50vw;
         }
     }
 

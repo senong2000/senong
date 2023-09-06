@@ -32,9 +32,9 @@ export default defineConfig({
     }),
   ],
   transformers: [
-    // transformerDirectives(),
+    transformerDirectives(),
   ],
   safelist: [
-    'menu',
+    'bars',
   ],
 })
