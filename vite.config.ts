@@ -34,6 +34,7 @@ import { slugify } from './scripts/slugify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   css: {
     preprocessorOptions: {
       scss: {
@@ -75,7 +76,8 @@ export default defineConfig({
       dirs: [
         'src/views',
         { dir: 'src/views/home', baseRoute: '/' },
-        { dir: 'src/views/blog/**', baseRoute: 'blog' }
+        { dir: 'src/views/blog/**', baseRoute: '/blog' },
+        { dir: 'src/views/blog/secret', baseRoute: '/secret' },
       ],
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1))
@@ -89,7 +91,10 @@ export default defineConfig({
           // 处理其他文件
           route.meta = Object.assign(route.meta || {}, { frontmatter: {} })
         }
-        return route
+        return {
+          ...route,
+          path: `/me${route.path}`
+        }
       },
     }),
     Markdown({
@@ -179,7 +184,6 @@ export default defineConfig({
     })
   ],
 
-  base: "./",
 
   define: { 'process.env': {} },
 

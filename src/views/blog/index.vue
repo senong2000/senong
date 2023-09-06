@@ -7,12 +7,30 @@ const props = defineProps<{
     blogs?: Blog[]
     extra?: Blog[]
 }>()
-
+let titles: NodeList;
 const atype = ref(null)
 
+onMounted(async () => {
+    await nextTick();
+
+
+
+
+})
+
+// @ts-ignore
+const addViewTrasition = () => {
+    titles = document.querySelectorAll('.blog-title') as NodeListOf<HTMLDivElement>
+    titles.forEach((v, k) => {
+        console.log(v, k);
+        const domEle = v as HTMLDivElement
+        // @ts-ignore
+        domEle.style.viewTransitionName = `title-${k}`
+    })
+}
 const router = useRouter()
 const routes: Blog[] = router.getRoutes()
-    .filter(i => i.path.startsWith('/blog') && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
+    .filter(i => i.path.startsWith(`${import.meta.env.VITE_BASE_URL}/blog`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
     .filter(i => !i.path.endsWith('.html'))
     .map(i => ({
         path: i.meta.frontmatter.redirect || i.path,
@@ -26,15 +44,17 @@ const routes: Blog[] = router.getRoutes()
         type: i.meta.frontmatter.type
     }))
 
-const types = ['All', ...new Set(routes.filter(i => i.type !== null).map(i => i.type))]
+const types = ['All', ...new Set(routes.filter(i => i.type !== null && i.type !== 'secret').map(i => i.type))].sort()
 // console.log(routes, types)
 
-const blogs = computed(() =>
-    [...(props.blogs || routes), ...props.extra || []]
+const blogs = computed(() => {
+    return [...(props.blogs || routes), ...props.extra || []]
         .sort((a, b) => +new Date(b.date) - +new Date(a.date))
-        .filter(i => i.lang !== 'zh')
-        .filter(i => i.type === atype.value || atype.value === 'All'),
-)
+        // .filter(i => i.lang !== 'zh')
+        .filter(i => i.type !== 'secret')
+        .filter(i => i.type === atype.value || atype.value === 'All' ? i : null)
+
+})
 
 const getYear = (a: Date | string | number) => new Date(a).getFullYear()
 const isFuture = (a?: Date | string | number) => a && new Date(a) > new Date()
@@ -48,6 +68,7 @@ function getGroupName(p: Blog) {
         return 'Upcoming'
     return getYear(p.date)
 }
+
 
 </script>
 <template>
@@ -87,7 +108,7 @@ function getGroupName(p: Blog) {
                     }
                         " class="item block font-normal mb-6 mt-2 no-underline">
                         <li class="no-underline" flex="~ col md:row gap-2 md:items-center">
-                            <div class="title text-lg leading-1.2em" flex="~ gap-2 wrap">
+                            <div class="text-lg leading-1.2em" flex="~ gap-2 wrap">
                                 <span v-if="route.lang === 'zh'" align-middle flex-none
                                     class="text-xs bg-zinc:15 text-zinc5 rounded px-1 py-0.5 ml--12 mr2 my-auto hidden md:block">中文</span>
                                 <span align-middle class="blog-title">{{ route.title }}</span>
@@ -138,13 +159,11 @@ function getGroupName(p: Blog) {
         opacity: 1;
     }
 
+
+
     &-title {
-        view-transition-name: title
+        animation: none;
+        mix-blend-mode: normal;
     }
-
-    &-tags {
-        view-transition-name: tags
-    }
-
 }
 </style>

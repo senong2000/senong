@@ -16,14 +16,8 @@
     z-index: 1000;
 }
 
-::view-transition-old(title),
-::view-transition-new(title) {
+::view-transition-old(title-0),
+::view-transition-new(title-0) {
     animation: none;
     mix-blend-mode: normal;
-}
-::view-transition-old(title) {
-
-}
-::view-transition-new(title) {
-
 }

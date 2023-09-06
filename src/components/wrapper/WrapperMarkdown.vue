@@ -105,5 +105,9 @@ onMounted(() => {
     // max-width: 48rem;
     width: 50vw;
 
+    &-title {
+        view-transition-name: title-0;
+    }
+
 }
 </style>
