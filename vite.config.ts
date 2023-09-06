@@ -74,7 +74,7 @@ export default defineConfig({
       extensions: ['vue', 'md'],
       dirs: [
         'src/views',
-        { dir: 'src/views/home', baseRoute: '' },
+        { dir: 'src/views/home', baseRoute: '/' },
         { dir: 'src/views/blog/**', baseRoute: 'blog' }
       ],
       extendRoute(route) {

@@ -134,7 +134,7 @@ import virtualRoutes from 'virtual:generated-pages';
 // unplugin-pages 自动引入方式
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(process.env.BASE_URL),
     // routes: [...routes, ...errorRoutes] 
     routes: virtualRoutes
 });
