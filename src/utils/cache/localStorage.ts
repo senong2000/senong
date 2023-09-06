@@ -2,7 +2,7 @@
 
 import CacheKey from "@/constants/cacheKey"
 import { type ThemeName } from "@/hooks/useTheme"
-
+import { type Rain } from '@/hooks/useRainFx'
 
 class Cache {
   public name: string
@@ -61,7 +61,12 @@ export const setActiveThemeName = (themeName: ThemeName) => {
   cache.set(CacheKey.ACTIVE_THEME_NAME, themeName)
 }
 
-
+export const getActiveRain = () => {
+  return cache.get(CacheKey.ACTIVE_RAIN) as Rain
+}
+export const setActiveRain = (rain: boolean) => {
+  cache.set(CacheKey.ACTIVE_RAIN, rain)
+}
 
 
 

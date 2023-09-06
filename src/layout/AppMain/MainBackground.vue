@@ -1,48 +1,14 @@
 <script lang="ts" setup>
 
+import { useRainFx } from "@/hooks/useRainFx"
+
 const rain = ref()
-// @ts-ignore
-let timer: NodeJS.Timeout;
+
+const { initRain } = useRainFx()
 
 onMounted(() => {
-    startRaining()
+    initRain()
 })
-
-const initRain = () => {
-    let raindrop = document.createElement('div')
-
-    let left = Math.floor(Math.random() * window.innerWidth)
-    let size = Math.random() * 1.5;
-    let duration = Math.random() * 1;
-
-    raindrop.classList.add('raindrop')
-
-    rain.value.appendChild(raindrop)
-    raindrop.innerHTML = randomRaindropText();
-    raindrop.style.left = left + 'px';
-    raindrop.style.fontSize = 0.5 + size + 'em';
-    raindrop.style.animationDuration = 10 + duration + 's';
-
-    setTimeout(() => {
-        rain.value.removeChild(raindrop)
-    }, 10000)
-}
-
-const startRaining = () => {
-    timer = setInterval(() => {
-        initRain()
-    }, 50)
-}
-
-const randomRaindropText = () => {
-    const text = '01';
-    const letter = text[Math.floor(Math.random() * text.length)];
-    return letter;
-}
-
-
-
-
 
 </script>
 
@@ -51,9 +17,7 @@ const randomRaindropText = () => {
         <div class="background-name" font-semibold>
             <span>Senong</span>
         </div>
-        <div class="background-rain" ref="rain">
-
-        </div>
+        <div class="background-rain" ref="rain"></div>
     </div>
 </template>
 <style lang="scss" scoped>
@@ -113,12 +77,12 @@ const randomRaindropText = () => {
             }
 
             70% {
-                transform: translateY(110vh) scale(1);
+                transform: translateY(calc(100vh - 1.5rem)) scale(1);
                 opacity: 0.2;
             }
 
             100% {
-                transform: translateY(110vh) scale(0);
+                transform: translateY(calc(100vh - 1.5rem)) scale(0);
                 opacity: 0.1;
             }
         }

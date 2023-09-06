@@ -61,7 +61,7 @@ const isDark = computed(() => activeThemeName.value === 'dark')
  * @see https://github.com/vuejs/vitepress/pull/2347/files
  * @param event event
  */
-function toggleDark(event?: MouseEvent) {
+const toggleDark = (event?: MouseEvent) => {
   // @ts-expect-error experimental API
   const isAppearanceTransition = document.startViewTransition
     && !window.matchMedia('(prefers-reduced-motion: reduce)').matches

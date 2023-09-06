@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 
 import { useTheme } from "@/hooks/useTheme"
+import { useRainFx } from "@/hooks/useRainFx"
+
 const { isDark, toggleDark } = useTheme()
+
+const { isRain, toggleRain } = useRainFx()
 
 const router = useRouter()
 
@@ -11,7 +15,7 @@ const toPages = (path: string) => {
 
 </script>
 <template>
-    <v-toolbar class="navigation-bar" height="80" >
+    <v-toolbar class="navigation-bar" height="80">
         <v-toolbar-title>
             <v-btn variant="plain" @click="toPages('')">
                 <span>
@@ -31,6 +35,9 @@ const toPages = (path: string) => {
         </v-btn>
         <v-btn variant="plain" @click="toPages('settings')">
             <v-icon>fas fa-gear</v-icon>
+        </v-btn>
+        <v-btn variant="plain" @click="toggleRain">
+            <v-icon :icon="`${isRain ? 'fas fa-droplet' : 'fas fa-droplet-slash'}`"></v-icon>
         </v-btn>
         <v-btn variant="plain" @click="toggleDark">
             <v-icon :icon="`${isDark ? 'fas fa-moon' : 'fas fa-sun'}`"></v-icon>
