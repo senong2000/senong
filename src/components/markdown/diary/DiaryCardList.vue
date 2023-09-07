@@ -6,7 +6,7 @@ const router = useRouter()
 const route = useRoute()
 
 const routes: Post[] = router.getRoutes()
-    .filter(i => i.path.startsWith(`${route.path}/**/`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
+    .filter(i => i.path.startsWith(`${route.path}/`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
     .filter(i => !i.path.endsWith('.html'))
     .map(i => ({
         path: i.meta.frontmatter.redirect || i.path,

@@ -9,6 +9,7 @@ const { initRain } = useRainFx()
 onMounted(() => {
   initTheme()
   initRain()
+  
 })
 
 </script>

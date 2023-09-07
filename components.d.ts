@@ -10,6 +10,7 @@ declare module 'vue' {
     AppMain: typeof import('./src/layout/AppMain/AppMain.vue')['default']
     BlogList: typeof import('./src/components/markdown/BlogList.vue')['default']
     BottomBar: typeof import('./src/layout/BottomBar/BottomBar.vue')['default']
+    DiaryCardList: typeof import('./src/components/markdown/diary/DiaryCardList.vue')['default']
     MainBackground: typeof import('./src/layout/AppMain/MainBackground.vue')['default']
     NavigationBar: typeof import('./src/layout/NavigationBar/NavigationBar.vue')['default']
     PornCardList: typeof import('./src/components/markdown/porn/PornCardList.vue')['default']

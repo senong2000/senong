@@ -174,14 +174,12 @@ router.afterEach((to, from) => {
 // 监听浏览器的后退事件
 window.onpopstate = async (event) => {
     await nextTick()
-    console.log(1, event.state.scroll.top)
     setTimeout(() => {
         window.scrollTo({
             top: event.state.scroll.top,
             behavior: 'smooth',
         })
     }, 600)
-
 }
 
 
