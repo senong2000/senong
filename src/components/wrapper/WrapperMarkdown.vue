@@ -70,10 +70,10 @@ onMounted(() => {
     // --enter-stage 渐入
     content.value!.childNodes.forEach((node) => {
         if (node.nodeType === 1) { // 过滤掉非元素节点
-            // console.log(node, index)
             node.childNodes.forEach((node, index) => {
-                // console.log(node, index)
-                (node as HTMLElement).style.setProperty('--enter-stage', index.toString());
+                if (node.nodeType === 1) { // 过滤掉非元素节点
+                    (node as HTMLElement).style.setProperty('--enter-stage', index.toString());
+                }
             })
         }
     })
@@ -107,10 +107,14 @@ onMounted(() => {
             <slot />
         </article>
         <div v-if="frontmatter.paged ?? route.path !== '/'"
-            class="prose mt-8 mb-8 slide-enter animate-delay-500 print:hidden">
-            <span font-mono op50>> </span>
-            <RouterLink :to="route.path.split('/').slice(0, -1).join('/') || baseUrl" class="font-mono op50 hover:op75"
-                v-text="'cd ..'" />
+            class="prose mt-8 mb-8 slide-enter animate-delay-500 print:hidden flex">
+            <div class="return">
+                <v-icon size="small" op50 mr-2>fas fa-angle-right</v-icon>
+
+                <RouterLink :to="route.path.split('/').slice(0, -1).join('/') || baseUrl" class="font-mono op50 hover:op75"
+                    v-text="'cd ..'"></RouterLink>
+            </div>
+
         </div>
     </div>
 </template>
