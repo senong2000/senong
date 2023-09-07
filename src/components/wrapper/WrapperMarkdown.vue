@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { formatDate } from '@/utils/date'
 
+const baseUrl = `${import.meta.env.VITE_BASE_URL}`
+
 const { frontmatter } = defineProps({
     frontmatter: {
         type: Object,
@@ -94,7 +96,7 @@ onMounted(() => {
         </article>
         <div v-if="route.path !== '/'" class="prose mt-8 mb-8 slide-enter animate-delay-500 print:hidden">
             <span font-mono op50>> </span>
-            <RouterLink :to="route.path.split('/').slice(0, -1).join('/') || '/'" class="font-mono op50 hover:op75"
+            <RouterLink :to="route.path.split('/').slice(0, -1).join('/') || baseUrl" class="font-mono op50 hover:op75"
                 v-text="'cd ..'" />
         </div>
     </div>
@@ -104,7 +106,7 @@ onMounted(() => {
     position: relative;
     // max-width: 48rem;
     width: 50vw;
-
+    z-index: 999;
     &-title {
         view-transition-name: title-0;
     }

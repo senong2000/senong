@@ -72,6 +72,6 @@ const toggleRain = () => {
     }
 }
 
-export function useRainFx() {
+export const useRainFx = () => {
     return { isRain, initRain, toggleRain }
 }

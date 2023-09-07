@@ -10,9 +10,8 @@ tags: diary
 [[toc]]
 
 <script setup lang="ts">
-import { useRouter,useRoutes } from 'vue-router'
-
-const yearRouteRegex = new RegExp(`^${import.meta.env.VITE_BASE_URL}/secret/diary/([^/]+)$`);
+import { useRouter} from 'vue-router'
+const yearRouteRegex = new RegExp(`^${import.meta.env.VITE_BASE_URL}/blog/secret/diary/([^/]+)$`);
 
 const router = useRouter()
 const routes = router.getRoutes().filter(i => yearRouteRegex.test(i.path))

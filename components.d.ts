@@ -7,6 +7,12 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AppMain: typeof import('./src/layout/AppMain/AppMain.vue')['default']
+    BottomBar: typeof import('./src/layout/BottomBar/BottomBar.vue')['default']
+    MainBackground: typeof import('./src/layout/AppMain/MainBackground.vue')['default']
+    MarkdownList: typeof import('./src/components/markdown/MarkdownList.vue')['default']
+    NavigationBar: typeof import('./src/layout/NavigationBar/NavigationBar.vue')['default']
+    PornCard: typeof import('./src/components/markdown/porn/PornCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ToTopButton: typeof import('./src/components/ToTopButton.vue')['default']

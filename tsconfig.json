@@ -38,6 +38,7 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
+    "src/**/*.md",
     "src/**/*.vue",
     "src/**/*.ts",
     "src/**/*.js",

@@ -10,14 +10,14 @@ type: secret
 
 
 <script setup lang="ts">
-import { useRouter,useRoutes } from 'vue-router'
+import { useRouter} from 'vue-router'
 
 const router = useRouter()
 
-const secretRouteRegex = new RegExp(`^${import.meta.env.VITE_BASE_URL}/secret/[^/]+$`);
+const secretRouteRegex = new RegExp(`^${import.meta.env.VITE_BASE_URL}/blog/secret/[^/]+$`);
 
 const routes = router.getRoutes().filter(i => secretRouteRegex.test(i.path) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
-// console.log(routes)
+console.log(routes)
 
 </script>
 

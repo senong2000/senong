@@ -12,7 +12,7 @@ tags: diary
 <script setup lang="ts">
 import { useRouter,useRoutes } from 'vue-router'
 
-const monthRouteRegex = new RegExp(`^${import.meta.env.VITE_BASE_URL}/secret/diary/([^/]+)/([^/]+)$`);
+const monthRouteRegex = new RegExp(`^${import.meta.env.VITE_BASE_URL}/blog/secret/diary/([^/]+)/([^/]+)$`);
 
 const router = useRouter()
 const routes = router.getRoutes().filter(i => monthRouteRegex.test(i.path))

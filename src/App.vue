@@ -1,8 +1,5 @@
 
 <script lang="ts" setup>
-import { NavigationBar, AppMain, BottomBar, MainBackground } from "@/layout"
-import { ToTopButton } from '@/components/index'
-
 import { useTheme } from "@/hooks/useTheme"
 import { useRainFx } from "@/hooks/useRainFx"
 

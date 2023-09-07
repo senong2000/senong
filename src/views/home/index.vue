@@ -11,11 +11,6 @@ const platformsArray = [
         link: 'https://twitter.com/senong0221'
     },
     {
-        icon: 'fab fa-instagram',
-        name: 'Instagram',
-        link: 'https://www.instagram.com/senong0221/'
-    },
-    {
         icon: 'fab fa-youtube',
         name: 'Youtube',
         link: 'https://www.youtube.com/channel/UCXE1CZ9CVMvLG3ohizQq-IA'

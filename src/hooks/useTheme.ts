@@ -108,6 +108,6 @@ const toggleDark = (event?: MouseEvent) => {
 
 
 /** 主题 hook */
-export function useTheme() {
+export const useTheme = () => {
   return { themeList, activeThemeName, initTheme, setTheme, toggleDark, isDark }
 }

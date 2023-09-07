@@ -68,16 +68,17 @@ export default defineConfig({
       extensions: ['vue', 'md'],
       dts: true,
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      dirs: ['./src/components'],
+      dirs: ['./src/components','./src/layout'],
 
     }),
     Pages({
       extensions: ['vue', 'md'],
       dirs: [
         'src/views',
-        { dir: 'src/views/home', baseRoute: '/' },
-        { dir: 'src/views/blog/**', baseRoute: '/blog' },
-        { dir: 'src/views/blog/secret', baseRoute: '/secret' },
+        { dir: 'src/views/home/', baseRoute: '' },
+        { dir: 'src/views/blog/**/', baseRoute: '/blog' },
+        { dir: 'src/views/blog/secret/', baseRoute: '/blog/secret' },
+        { dir: 'src/views/blog/secret/porn/**/', baseRoute: '/blog/secret/porn' },
       ],
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1))

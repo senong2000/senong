@@ -4,17 +4,15 @@ import { formatDate } from '@/utils/date';
 
 const props = defineProps<{
     type?: string
-    blogs?: Blog[]
+    posts?: Blog[]
     extra?: Blog[]
 }>()
+
 let titles: NodeList;
 const atype = ref(null)
 
 onMounted(async () => {
     await nextTick();
-
-
-
 
 })
 
@@ -47,23 +45,22 @@ const routes: Blog[] = router.getRoutes()
 const types = ['All', ...new Set(routes.filter(i => i.type !== null && i.type !== 'secret').map(i => i.type))].sort()
 // console.log(routes, types)
 
-const blogs = computed(() => {
-    return [...(props.blogs || routes), ...props.extra || []]
+const posts = computed(() => {
+    return [...(props.posts || routes), ...props.extra || []]
         .sort((a, b) => +new Date(b.date) - +new Date(a.date))
         // .filter(i => i.lang !== 'zh')
         .filter(i => i.type !== 'secret')
         .filter(i => i.type === atype.value || atype.value === 'All' ? i : null)
-
 })
 
 const getYear = (a: Date | string | number) => new Date(a).getFullYear()
 const isFuture = (a?: Date | string | number) => a && new Date(a) > new Date()
 const isSameYear = (a?: Date | string | number, b?: Date | string | number) => a && b && getYear(a) === getYear(b)
-function isSameGroup(a: Blog, b?: Blog) {
+const isSameGroup = (a: Blog, b?: Blog) => {
     return (isFuture(a.date) === isFuture(b?.date)) && isSameYear(a.date, b?.date)
 }
 
-function getGroupName(p: Blog) {
+const getGroupName = (p: Blog) => {
     if (isFuture(p.date))
         return 'Upcoming'
     return getYear(p.date)
@@ -80,14 +77,14 @@ function getGroupName(p: Blog) {
         </v-tabs>
 
         <ul>
-            <template v-if="!blogs.length">
+            <template v-if="!posts.length">
                 <div py2 op50>
                     { nothing here yet }
                 </div>
             </template>
 
-            <template v-for="route, idx in blogs" :key="route.path">
-                <div v-if="!isSameGroup(route, blogs[idx - 1])" select-none relative h20 pointer-events-none slide-enter
+            <template v-for="route, idx in posts" :key="route.path">
+                <div v-if="!isSameGroup(route, posts[idx - 1])" select-none relative h20 pointer-events-none slide-enter
                     :style="{
                         '--enter-stage': idx - 2,
                         '--enter-step': '60ms',

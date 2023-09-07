@@ -1,6 +1,7 @@
 ---
 title: 动作明星
 description: porn star
+display: ''
 date: 2000-02-21 
 lang: en
 duration: ∞
@@ -11,15 +12,14 @@ tags: porn
 
 
 <script setup lang="ts">
-import { useRouter,useRoutes } from 'vue-router'
-
+import { useRouter} from 'vue-router'
 const router = useRouter()
-const routes1 = router.getRoutes().filter(i => i.path.startsWith(`${import.meta.env.VITE_BASE_URL}/secret/porn/`))
+const routes = router.getRoutes().filter(i => i.path.startsWith(`${import.meta.env.VITE_BASE_URL}/blog/secret/porn/`))
 
-console.log(routes1)
+// console.log(routes)
 </script>
 
-哟哟哟！这里是本人多年单身喜好的动作明星，在没找到女朋友之前都会更新，自己所见所闻，也会找到女朋友之后也会更新 nvn~ 
+哟哟哟！这里是本人多年单身喜好的动作明星，在没找到女朋友之前都会更新，自己所见所闻。nvn~ 
 
 色即是空，空即是色。
 
@@ -27,8 +27,6 @@ console.log(routes1)
 
 ### 北影教材
 
-<div v-for="route, idx in routes1" :key="route.path">
-<button @click="router.push(route.path)"> 
- {{route.meta.frontmatter.title}}
-</button>
+<div v-for="route in routes" :key="route.path">
+    <PornCard cover="/public/secret/porn/jp/AzumiMizushima/cover.jpg" :title="route.meta.frontmatter.title" :route="route.path"></PornCard>
 </div>
