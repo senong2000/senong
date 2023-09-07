@@ -6,7 +6,7 @@ lang: en
 duration: 5min
 type: secret
 tags: porn
-cover: /public/secret/porn/jp/AzumiMizushima/cover.jpg
+cover: /secret/porn/jp/AzumiMizushima/cover.png
 ---
 [[toc]]
 
@@ -22,21 +22,13 @@ cover: /public/secret/porn/jp/AzumiMizushima/cover.jpg
 
 国  籍：日本
 
-民  族：大和
-
 三　围：B84/W61/H93
-
-星  座：天枰座
-
-血  型：A型血
 
 爱  好：喜欢逛街购物、美食
 
 身　高：167cm
 
 体  重：48KG
-
-出生地：日本神奈川县
 
 出生日期：1988年10月12日
 

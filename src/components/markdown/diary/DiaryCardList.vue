@@ -5,8 +5,9 @@ import { formatDate } from '@/utils/date'
 const router = useRouter()
 const route = useRoute()
 
+const postRouteRegExp = new RegExp(`^${route.path}/([^/]+)$`)
 const routes: Post[] = router.getRoutes()
-    .filter(i => i.path.startsWith(`${route.path}/`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
+    .filter(i => postRouteRegExp.test(i.path) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
     .filter(i => !i.path.endsWith('.html'))
     .map(i => ({
         path: i.meta.frontmatter.redirect || i.path,
@@ -17,7 +18,7 @@ const routes: Post[] = router.getRoutes()
         type: i.meta.frontmatter.type,
         cover: i.meta.frontmatter.cover,
     }))
-
+console.log(routes)
 </script>
 <template>
     <div class="porn-card">

@@ -5,8 +5,9 @@ import { formatDate } from '@/utils/date'
 const router = useRouter()
 const route = useRoute()
 
+const postRouteRegExp = new RegExp(`^${route.path}/([^/]+)$`)
 const routes: Post[] = router.getRoutes()
-    .filter(i => i.path.startsWith(`${route.path}/**/`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
+    .filter(i => postRouteRegExp.test(i.path) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
     .filter(i => !i.path.endsWith('.html'))
     .map(i => ({
         path: i.meta.frontmatter.redirect || i.path,
@@ -18,11 +19,13 @@ const routes: Post[] = router.getRoutes()
         cover: i.meta.frontmatter.cover,
     }))
 
+// console.log(routes)
+
 </script>
 <template>
     <div class="porn-card">
-        <v-card v-for="route in routes" class="mx-auto" :key="route.title" @click="router.push(route.path)">
-            <v-img class="porn-card-cover" :src="route.cover" aspect-ratio="16/9" cover>
+        <v-card v-for="route in routes" class="mx-auto mt-8" :key="route.title" @click="router.push(route.path)">
+            <v-img class="porn-card-cover" :src="route.cover" aspect-ratio="16/9" height="256" cover >
             </v-img>
             <v-card-actions>
                 <v-card-title class="text-black" v-text="route.title"></v-card-title>

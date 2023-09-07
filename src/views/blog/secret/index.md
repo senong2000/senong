@@ -1,10 +1,12 @@
 ---
 title: 秘密基地
+display: ""
 description: 
 date: 2000-02-21
 lang: en
 duration: ∞
 type: secret
+paged:
 ---
 [[toc]]
 
@@ -17,7 +19,6 @@ const router = useRouter()
 const secretRouteRegex = new RegExp(`^${import.meta.env.VITE_BASE_URL}/blog/secret/[^/]+$`);
 
 const routes = router.getRoutes().filter(i => secretRouteRegex.test(i.path) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
-// console.log(routes)
 
 </script>
 
