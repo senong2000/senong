@@ -3,4 +3,4 @@ title: Blog - Senong
 display: ''
 ---
 
-<MarkdownList only-date type="blog" />
+<BlogList only-date type="blog" />

@@ -10,15 +10,6 @@ tags: porn
 ---
 [[toc]]
 
-
-<script setup lang="ts">
-import { useRouter} from 'vue-router'
-const router = useRouter()
-const routes = router.getRoutes().filter(i => i.path.startsWith(`${import.meta.env.VITE_BASE_URL}/blog/secret/porn/`))
-
-// console.log(routes)
-</script>
-
 哟哟哟！这里是本人多年单身喜好的动作明星，在没找到女朋友之前都会更新，自己所见所闻。nvn~ 
 
 色即是空，空即是色。
@@ -27,6 +18,4 @@ const routes = router.getRoutes().filter(i => i.path.startsWith(`${import.meta.e
 
 ### 北影教材
 
-<div v-for="route in routes" :key="route.path">
-    <PornCard cover="/public/secret/porn/jp/AzumiMizushima/cover.jpg" :title="route.meta.frontmatter.title" :route="route.path"></PornCard>
-</div>
+<PornCardList></PornCardList>

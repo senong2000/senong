@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { Blog } from '@/types/blog';
+import { Post } from '@/types/markdown';
 import { formatDate } from '@/utils/date';
 
 const props = defineProps<{
     type?: string
-    posts?: Blog[]
-    extra?: Blog[]
+    posts?: Post[]
+    extra?: Post[]
 }>()
 
 let titles: NodeList;
@@ -18,7 +18,7 @@ onMounted(async () => {
 
 // @ts-ignore
 const addViewTrasition = () => {
-    titles = document.querySelectorAll('.blog-title') as NodeListOf<HTMLDivElement>
+    titles = document.querySelectorAll('.Post-title') as NodeListOf<HTMLDivElement>
     titles.forEach((v, k) => {
         console.log(v, k);
         const domEle = v as HTMLDivElement
@@ -27,7 +27,7 @@ const addViewTrasition = () => {
     })
 }
 const router = useRouter()
-const routes: Blog[] = router.getRoutes()
+const routes: Post[] = router.getRoutes()
     .filter(i => i.path.startsWith(`${import.meta.env.VITE_BASE_URL}/blog`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
     .filter(i => !i.path.endsWith('.html'))
     .map(i => ({
@@ -56,11 +56,11 @@ const posts = computed(() => {
 const getYear = (a: Date | string | number) => new Date(a).getFullYear()
 const isFuture = (a?: Date | string | number) => a && new Date(a) > new Date()
 const isSameYear = (a?: Date | string | number, b?: Date | string | number) => a && b && getYear(a) === getYear(b)
-const isSameGroup = (a: Blog, b?: Blog) => {
+const isSameGroup = (a: Post, b?: Post) => {
     return (isFuture(a.date) === isFuture(b?.date)) && isSameYear(a.date, b?.date)
 }
 
-const getGroupName = (p: Blog) => {
+const getGroupName = (p: Post) => {
     if (isFuture(p.date))
         return 'Upcoming'
     return getYear(p.date)

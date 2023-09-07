@@ -15,11 +15,11 @@ onUnmounted(() => {
 // 监听滚动事件
 const handleScroll = () => {
     const scrollTop = document.documentElement.scrollTop
-    showBackToTop.value = scrollTop > 0
+    showBackToTop.value = scrollTop > 512
 }
 
 const toTop = () => {
-    document.documentElement.scrollTo({
+    window.scrollTo({
         top: 0,
         behavior: 'smooth'
     })

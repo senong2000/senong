@@ -141,6 +141,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     NProgress.start()
+
     // @ts-expect-error experimental API
     const isAppearanceTransition = document.startViewTransition
         && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -162,8 +163,27 @@ router.beforeEach((to, from, next) => {
 
 })
 
-router.afterEach(() => {
+router.afterEach((to, from) => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+    })
     NProgress.done()
 })
+
+// 监听浏览器的后退事件
+window.onpopstate = async (event) => {
+    await nextTick()
+    console.log(1, event.state.scroll.top)
+    setTimeout(() => {
+        window.scrollTo({
+            top: event.state.scroll.top,
+            behavior: 'smooth',
+        })
+    }, 600)
+
+}
+
+
 
 export default router;

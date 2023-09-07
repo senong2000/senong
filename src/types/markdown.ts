@@ -1,4 +1,4 @@
-export interface Blog {
+export interface Post {
     path: string
     title: string
     date: string
@@ -11,5 +11,6 @@ export interface Blog {
     video?: boolean
     inperson?: boolean
     redirect?: string
-    type?: string,
+    type?: string
+    cover?: string
 }

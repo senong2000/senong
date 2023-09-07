@@ -17,7 +17,7 @@ const router = useRouter()
 const secretRouteRegex = new RegExp(`^${import.meta.env.VITE_BASE_URL}/blog/secret/[^/]+$`);
 
 const routes = router.getRoutes().filter(i => secretRouteRegex.test(i.path) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
-console.log(routes)
+// console.log(routes)
 
 </script>
 

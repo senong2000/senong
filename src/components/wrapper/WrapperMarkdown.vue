@@ -21,6 +21,7 @@ onMounted(() => {
             if (el) {
                 const rect = el.getBoundingClientRect()
                 const y = window.scrollY + rect.top - 40
+                console.log(y)
                 window.scrollTo({
                     top: y,
                     behavior: 'smooth',

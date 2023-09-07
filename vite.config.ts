@@ -68,7 +68,7 @@ export default defineConfig({
       extensions: ['vue', 'md'],
       dts: true,
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      dirs: ['./src/components','./src/layout'],
+      dirs: ['./src/components', './src/layout'],
 
     }),
     Pages({
@@ -175,9 +175,7 @@ export default defineConfig({
           // )
           // frontmatter.image = `https://antfu.me/${path}`
         })()
-
-        // console.log(id)
-
+        // console.log(frontmatter)
         const head = defaults(frontmatter, options)
 
         return { head, frontmatter }
