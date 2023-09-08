@@ -34,7 +34,7 @@ import { slugify } from './scripts/slugify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? './' : './',
+  base: process.env.NODE_ENV === 'production' ? `./` : './',
   css: {
     preprocessorOptions: {
       scss: {

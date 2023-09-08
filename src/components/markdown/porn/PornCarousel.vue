@@ -11,14 +11,20 @@ const routes = router.getRoutes()
 const images = parseInt(routes[0].images)
 
 
-const imgSrc = '/images' + route.path.replace(/^\/blog/, '')
+const imgSrc = `${import.meta.env.VITE_BASE_URL}/images` + route.path.replace(/^\/blog/, '')
 
 </script>
 <template>
     <div class="porn-carousel">
         <v-carousel hide-delimiters show-arrows="hover" progress="default" cycle interval="3000">
-            <v-carousel-item v-for="image in images" :src="`${imgSrc}/${image}.png`" aspect-ratio="16/9"
-                height="512"></v-carousel-item>
+            <v-carousel-item v-for="image in images" :lazy-src="`${imgSrc}/${image}.png`" :src="`${imgSrc}/${image}.png`"
+                aspect-ratio="16/9" height="512">
+                <template v-slot:placeholder>
+                    <div class="d-flex align-center justify-center fill-height">
+                        <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                    </div>
+                </template>
+            </v-carousel-item>
         </v-carousel>
     </div>
 </template>

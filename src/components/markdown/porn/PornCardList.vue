@@ -16,16 +16,20 @@ const routes: Post[] = router.getRoutes()
         lang: i.meta.frontmatter.lang,
         duration: i.meta.frontmatter.duration,
         type: i.meta.frontmatter.type,
-        cover: i.meta.frontmatter.cover,
+        cover: `${import.meta.env.VITE_BASE_URL}` + i.meta.frontmatter.cover,
     }))
-
-// console.log(route.path, routes)
 
 </script>
 <template>
     <div class="porn-card">
         <v-card v-for="route in routes" class="mx-auto mt-8" :key="route.title" @click="router.push(route.path)">
-            <v-img class="porn-card-cover" :src="route.cover" aspect-ratio="16/9" height="256" cover>
+            <v-img class="porn-card-cover" :lazy-src="route.cover" :src="route.cover" aspect-ratio="16/9" height="256"
+                cover>
+                <template v-slot:placeholder>
+                    <div class="d-flex align-center justify-center fill-height">
+                        <v-progress-circular color="grey-lighten-4" indeterminate></v-progress-circular>
+                    </div>
+                </template>
             </v-img>
             <v-card-actions>
                 <v-card-title class="text-black" v-text="route.title"></v-card-title>

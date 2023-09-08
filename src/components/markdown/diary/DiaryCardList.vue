@@ -16,15 +16,12 @@ const routes: Post[] = router.getRoutes()
         lang: i.meta.frontmatter.lang,
         duration: i.meta.frontmatter.duration,
         type: i.meta.frontmatter.type,
-        cover: i.meta.frontmatter.cover,
     }))
 console.log(routes)
 </script>
 <template>
     <div class="porn-card">
         <v-card v-for="route in routes" class="mx-auto" :key="route.title" @click="router.push(route.path)">
-            <v-img class="porn-card-cover" :src="route.cover" aspect-ratio="16/9" cover>
-            </v-img>
             <v-card-actions>
                 <v-card-title class="text-black" v-text="route.title"></v-card-title>
                 <span> {{ formatDate(route.date, false) }} </span>
