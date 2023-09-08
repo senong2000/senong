@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { formatDate } from '@/utils/date'
 
-const baseUrl = `${import.meta.env.VITE_BASE_URL}`
+const baseUrl = `/`
 
 const { frontmatter } = defineProps({
     frontmatter: {
@@ -15,21 +15,21 @@ const route = useRoute()
 const content = ref<HTMLDivElement>()
 
 onMounted(() => {
-    const navigate = () => {
-        if (location.hash) {
-            const el = document.querySelector(decodeURIComponent(location.hash))
-            if (el) {
-                const rect = el.getBoundingClientRect()
-                const y = window.scrollY + rect.top - 40
-                // console.log(y)
-                window.scrollTo({
-                    top: y,
-                    behavior: 'smooth',
-                })
-                return true
-            }
-        }
-    }
+    // const navigate = () => {
+    //     if (location.hash) {
+    //         const el = document.querySelector(decodeURIComponent(location.hash))
+    //         if (el) {
+    //             const rect = el.getBoundingClientRect()
+    //             const y = window.scrollY + rect.top - 40
+    //             // console.log(y)
+    //             window.scrollTo({
+    //                 top: y,
+    //                 behavior: 'smooth',
+    //             })
+    //             return true
+    //         }
+    //     }
+    // }
 
     const handleAnchors = (
         event: MouseEvent & { target: HTMLElement },
@@ -56,7 +56,7 @@ onMounted(() => {
             const { pathname, hash } = url
             if (hash && (!pathname || pathname === location.pathname)) {
                 window.history.replaceState({}, '', hash)
-                navigate()
+                // navigate()
             }
             else {
                 router.push({ path: pathname, hash })
@@ -64,7 +64,7 @@ onMounted(() => {
         }
     }
 
-    useEventListener(window, 'hashchange', navigate)
+    // useEventListener(window, 'hashchange', navigate)
     useEventListener(content.value!, 'click', handleAnchors, { passive: false })
 
     // --enter-stage 渐入
@@ -78,10 +78,10 @@ onMounted(() => {
         }
     })
 
-    setTimeout(() => {
-        if (!navigate())
-            setTimeout(navigate, 1000)
-    }, 1)
+    // setTimeout(() => {
+    //     if (!navigate())
+    //         setTimeout(navigate, 1000)
+    // }, 1)
 })
 
 </script>
@@ -110,7 +110,6 @@ onMounted(() => {
             class="prose mt-8 mb-8 slide-enter animate-delay-500 print:hidden flex">
             <div class="return">
                 <v-icon size="small" op50 mr-2>fas fa-angle-right</v-icon>
-
                 <RouterLink :to="route.path.split('/').slice(0, -1).join('/') || baseUrl" class="font-mono op50 hover:op75"
                     v-text="'cd ..'"></RouterLink>
             </div>

@@ -10,27 +10,27 @@ const { isRain, toggleRain } = useRainFx()
 const router = useRouter()
 
 const toPages = (path: string) => {
-    router.push(`${import.meta.env.VITE_BASE_URL}/${path}`)
+    router.push(`${path}`)
 }
 
 </script>
 <template>
     <v-toolbar class="navigation-bar" height="80">
         <v-toolbar-title>
-            <v-btn variant="plain" @click="toPages('')">
+            <v-btn variant="plain" @click="toPages('/')">
                 <span>
                     Senong
                 </span>
             </v-btn>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn variant="plain" @click="toPages('blog')">
+        <v-btn variant="plain" @click="toPages('/blog')">
             Blog
         </v-btn>
-        <v-btn variant="plain" @click="toPages('projects')">
+        <v-btn variant="plain" @click="toPages('/projects')">
             Projects
         </v-btn>
-        <v-btn variant="plain" @click="toPages('tools')">
+        <v-btn variant="plain" @click="toPages('/tools')">
             Tools
         </v-btn>
         <v-btn variant="plain" @click="toPages('settings')">

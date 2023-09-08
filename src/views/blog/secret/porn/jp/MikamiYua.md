@@ -39,11 +39,21 @@ cover: /secret/porn/jp/MikamiYua/cover.png
 
 职业生涯：偶像、SKE48Team S前成员  2015年6月1日 - 2023年8月15日
 
-鄙人评价：
-
-
 ### 往昔面貌
 
 
 
-### 经典作品
+### 生涯十佳
+(排名不分先后)
+1. SSNI-780
+2. SSNI-865
+3. SSNI-845
+4. SSNI-802 
+5. SSNI-589
+6. SSNI-254
+7. SSIS-241
+8. SSNI-566 
+9. SSNI-888
+10. SSNI-432
+
+### 鄙人评价

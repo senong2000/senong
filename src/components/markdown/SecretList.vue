@@ -21,7 +21,7 @@ const routes: Post[] = router.getRoutes()
         type: i.meta.frontmatter.type
     }))
 
-console.log(routes)
+// console.log(routes)
 
 </script>
 <template>

@@ -79,6 +79,7 @@ export default defineConfig({
         { dir: 'src/views/blog/**/', baseRoute: '/blog' },
         { dir: 'src/views/blog/secret/', baseRoute: '/blog/secret' },
         { dir: 'src/views/blog/secret/porn/**/', baseRoute: '/blog/secret/porn' },
+        { dir: 'src/views/error/', baseRoute: '' },
       ],
       extendRoute(route) {
         const path = resolve(__dirname, route.component.slice(1))
@@ -92,9 +93,18 @@ export default defineConfig({
           // 处理其他文件
           route.meta = Object.assign(route.meta || {}, { frontmatter: {} })
         }
+
+        if (route.path === '/404') {
+          return {
+            ...route,
+            name: '404',
+            component: '/src/views/error/404.vue'
+          }
+        }
+
         return {
           ...route,
-          path: `/me${route.path}`
+          path: `${route.path}`
         }
       },
     }),
@@ -217,7 +227,8 @@ export default defineConfig({
         rewrite: (path: string) => path.replace(/^\/api/, '')
       }
     },
-    
+
+
 
   },
 

@@ -47,7 +47,7 @@ cover: /secret/porn/jp/MatsushimaKaede/cover.png
 ### 生涯十佳
 （排名不分先后）
 1. IPTD-543
-2. IPTD-598 
+2. IPTD-598
 3. IPTD-611
 4. IPTD-567
 5. IPTD-515
@@ -55,12 +55,7 @@ cover: /secret/porn/jp/MatsushimaKaede/cover.png
 7. SOE-133
 8. SOE-110
 9. SOE-175
-10. DV-553
-11. DV-805 
-12. DV-694
-13. DV-708
-14. DV-628
-15. DV-587
+10. DV-805
 
 ### 鄙人评价
 

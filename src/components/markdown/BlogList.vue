@@ -26,6 +26,7 @@ const addViewTrasition = () => {
         domEle.style.viewTransitionName = `title-${k}`
     })
 }
+
 const route = useRoute()
 const router = useRouter()
 
