@@ -26,9 +26,11 @@ const addViewTrasition = () => {
         domEle.style.viewTransitionName = `title-${k}`
     })
 }
+const route = useRoute()
 const router = useRouter()
+
 const routes: Post[] = router.getRoutes()
-    .filter(i => i.path.startsWith(`${import.meta.env.VITE_BASE_URL}/blog`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
+    .filter(i => i.path.startsWith(`${route.path}`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
     .filter(i => !i.path.endsWith('.html'))
     .map(i => ({
         path: i.meta.frontmatter.redirect || i.path,
@@ -92,10 +94,7 @@ const getGroupName = (p: Post) => {
                     <span text-8em color-transparent absolute left--3rem top--2rem font-bold text-stroke-2
                         text-stroke-hex-aaa op10>{{ getGroupName(route) }}</span>
                 </div>
-                <div class="slide-enter" :style="{
-                    '--enter-stage': idx,
-                    '--enter-step': '60ms',
-                }">
+                <div class="slide-enter" >
                     <component :is="route.path.includes('://') ? 'a' : 'RouterLink'" v-bind="route.path.includes('://') ? {
                         href: route.path,
                         target: '_blank',

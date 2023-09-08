@@ -38,7 +38,7 @@ const completeTotal = computed(() => {
 <template>
     <div class="todolist">
         <div class="todolist-input">
-            <v-input type="text" v-model="todo">
+            <v-input >
             </v-input>
             <v-btn @click="addTodo">
                 提交
@@ -55,9 +55,10 @@ const completeTotal = computed(() => {
         <div>任务总数: {{ todoList.length }}</div>
         <div>完成数量: {{ completeTotal }}</div>
         <div class="todolist-content">
+
             <v-btn @click="completeTodo">
-            提交
-        </v-btn>
+                提交
+            </v-btn>
         </div>
     </div>
 </template>

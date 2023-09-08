@@ -141,7 +141,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     NProgress.start()
-
     // @ts-expect-error experimental API
     const isAppearanceTransition = document.startViewTransition
         && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -163,10 +162,11 @@ router.beforeEach((to, from, next) => {
 
 })
 
-router.afterEach((to, from) => {
+router.afterEach(async (to, from) => {
+    await new Promise(resolve => setTimeout(resolve, 100)) // 等待 100 毫秒
     window.scrollTo({
         top: 0,
-        behavior: 'smooth',
+        behavior: 'smooth'
     })
     NProgress.done()
 })

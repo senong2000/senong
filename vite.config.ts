@@ -216,7 +216,9 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path: string) => path.replace(/^\/api/, '')
       }
-    }
+    },
+    
+
   },
 
   optimizeDeps: {
@@ -242,7 +244,7 @@ export default defineConfig({
             }
             return 'vendor'
           }
-        }
+        },
       }
     },
     // lib: {
@@ -251,5 +253,6 @@ export default defineConfig({
     //   fileName: 'senong', // 输出的文件名
     //   formats: ['umd'], // 打包的格式
     // },
+
   },
 });

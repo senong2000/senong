@@ -22,6 +22,7 @@
     "allowSyntheticDefaultImports": true, //允许引入没有默认导出的模块
     "forceConsistentCasingInFileNames": true,
 
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
