@@ -33,6 +33,7 @@
             user-select: none;
             transition: all .5s;
             z-index: 10;
+            pointer-events: none;
         }
 
         span:hover {

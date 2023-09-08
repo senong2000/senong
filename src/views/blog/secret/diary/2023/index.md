@@ -10,4 +10,4 @@ tags: diary
 ---
 [[toc]]
 
-<!-- <DiaryCardList /> -->
+<DiaryCardList />

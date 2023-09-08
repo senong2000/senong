@@ -17,7 +17,7 @@ const routes: Post[] = router.getRoutes()
         duration: i.meta.frontmatter.duration,
         type: i.meta.frontmatter.type,
     }))
-console.log(routes)
+
 </script>
 <template>
     <div class="porn-card">
