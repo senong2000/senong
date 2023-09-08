@@ -15,21 +15,20 @@ const route = useRoute()
 const content = ref<HTMLDivElement>()
 
 onMounted(() => {
-    // const navigate = () => {
-    //     if (location.hash) {
-    //         const el = document.querySelector(decodeURIComponent(location.hash))
-    //         if (el) {
-    //             const rect = el.getBoundingClientRect()
-    //             const y = window.scrollY + rect.top - 40
-    //             // console.log(y)
-    //             window.scrollTo({
-    //                 top: y,
-    //                 behavior: 'smooth',
-    //             })
-    //             return true
-    //         }
-    //     }
-    // }
+    const navigate = () => {
+        if (location.hash) {
+            const el = document.querySelector(decodeURIComponent(location.hash))
+            if (el) {
+                const rect = el.getBoundingClientRect()
+                const y = window.scrollY + rect.top - 40
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth',
+                })
+                return true
+            }
+        }
+    }
 
     const handleAnchors = (
         event: MouseEvent & { target: HTMLElement },
@@ -51,12 +50,12 @@ onMounted(() => {
             const url = new URL(link.href)
             if (url.origin !== window.location.origin)
                 return
-
+            // console.log(route)
             event.preventDefault()
             const { pathname, hash } = url
             if (hash && (!pathname || pathname === location.pathname)) {
                 window.history.replaceState({}, '', hash)
-                // navigate()
+                navigate()
             }
             else {
                 router.push({ path: pathname, hash })
@@ -64,7 +63,7 @@ onMounted(() => {
         }
     }
 
-    // useEventListener(window, 'hashchange', navigate)
+    useEventListener(window, 'hashchange', navigate)
     useEventListener(content.value!, 'click', handleAnchors, { passive: false })
 
     // --enter-stage 渐入
@@ -78,10 +77,10 @@ onMounted(() => {
         }
     })
 
-    // setTimeout(() => {
-    //     if (!navigate())
-    //         setTimeout(navigate, 1000)
-    // }, 1)
+    setTimeout(() => {
+        if (!navigate())
+            setTimeout(navigate, 1000)
+    }, 1)
 })
 
 </script>

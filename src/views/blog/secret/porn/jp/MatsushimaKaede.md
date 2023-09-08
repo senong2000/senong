@@ -6,7 +6,8 @@ lang: en
 duration: 5min
 type: secret
 tags: porn
-cover: /secret/porn/jp/MatsushimaKaede/cover.png
+cover: /images/secret/porn/matsushimakaede/cover.png
+images: 10
 ---
 [[toc]]
 
@@ -42,7 +43,9 @@ cover: /secret/porn/jp/MatsushimaKaede/cover.png
 - 大学肄业的松岛枫，经过男友的介绍，顺利成章进入投稿公司，而他的男朋友就是，松岛枫第1部戏的导演和制片人。
 - 2008年—2010年 
 - 2013年2月25日与男友X先生结婚
-### 往昔面貌
+### 容貌身姿
+
+<PornCarousel />
 
 ### 生涯十佳
 （排名不分先后）

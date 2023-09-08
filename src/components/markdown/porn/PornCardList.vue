@@ -19,7 +19,7 @@ const routes: Post[] = router.getRoutes()
         cover: i.meta.frontmatter.cover,
     }))
 
-// console.log(routes)
+// console.log(route.path, routes)
 
 </script>
 <template>

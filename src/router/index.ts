@@ -166,8 +166,8 @@ virtualRoutes.push({ path: '/:path(.*)', redirect: '/404' })
 
 // console.log(virtualRoutes)
 const router = createRouter({
-    // history: createWebHistory(`${import.meta.env.VITE_BASE_URL}`),
-    history: createWebHashHistory(),
+    history: createWebHistory(`${import.meta.env.VITE_BASE_URL}`),
+    // history: createWebHashHistory(),
     // routes: [...routes, ...errorRoutes] 
     routes: virtualRoutes
     // routes: routes

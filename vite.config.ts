@@ -34,7 +34,7 @@ import { slugify } from './scripts/slugify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
+  base: process.env.NODE_ENV === 'production' ? './' : './',
   css: {
     preprocessorOptions: {
       scss: {
@@ -239,6 +239,8 @@ export default defineConfig({
     ],
   },
   build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
     chunkSizeWarningLimit: 1500,
     rollupOptions: {
       treeshake: true,
@@ -256,6 +258,7 @@ export default defineConfig({
             return 'vendor'
           }
         },
+
       }
     },
     // lib: {

@@ -14,6 +14,7 @@ declare module 'vue' {
     MainBackground: typeof import('./src/layout/AppMain/MainBackground.vue')['default']
     NavigationBar: typeof import('./src/layout/NavigationBar/NavigationBar.vue')['default']
     PornCardList: typeof import('./src/components/markdown/porn/PornCardList.vue')['default']
+    PornCarousel: typeof import('./src/components/markdown/porn/PornCarousel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SecretList: typeof import('./src/components/markdown/SecretList.vue')['default']

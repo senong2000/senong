@@ -6,7 +6,8 @@ lang: en
 duration: 5min
 type: secret
 tags: porn
-cover: /secret/porn/jp/yu/cover.png
+cover: /images/secret/porn/suzumoriremu/cover.png
+images: 15
 ---
 [[toc]]
 
@@ -39,22 +40,22 @@ cover: /secret/porn/jp/yu/cover.png
 
 职业生涯：2019年4月首次演出 目前在Prestige工作，隶属ティーパワーズ株式会社（T-Powers）- 现役 (凉森玲梦出道前是一名护士)
 
-鄙人评价：
+### 容貌身姿
 
-
-### 往昔面貌
+<PornCarousel />
 
 ### 生涯十佳
 (排名不分先后)
 1. ABP-984 
-2. ABW-087 
-3. ABW-096
-4. ABF-017
-5. ABP-933
-6. ABW-054
-7. ABP-995
-8. ABW-366
-9. ABW-198
+2. ABW-023
+3. ABW-054
+4. ABP-950 
+5. ABW-006
+6. ABF-007 
+7. ABW-087 
+8. ABW-096
+9. ABF-017
+10. ABP-933
 ### 鄙人评价
 
 短发的神，

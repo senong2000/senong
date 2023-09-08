@@ -6,7 +6,8 @@ lang: en
 duration: 5min
 type: secret
 tags: porn
-cover: /secret/porn/jp/AzumiMizushima/cover.png
+cover: /images/secret/porn/azumimizushima/cover.png
+images: 13
 ---
 [[toc]]
 
@@ -36,10 +37,9 @@ cover: /secret/porn/jp/AzumiMizushima/cover.png
 
 职业生涯：2009年3月1日开始成为服役于SOD - 2012年退役
 
-鄙人评价：
-
 ### 容貌身姿
 
+<PornCarousel />
 
 
 ### 生涯十佳

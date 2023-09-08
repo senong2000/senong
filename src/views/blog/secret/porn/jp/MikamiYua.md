@@ -6,7 +6,8 @@ lang: en
 duration: 5min
 type: secret
 tags: porn
-cover: /secret/porn/jp/MikamiYua/cover.png
+cover: /images/secret/porn/mikamiyua/cover.png
+images: 13
 ---
 [[toc]]
 
@@ -39,9 +40,9 @@ cover: /secret/porn/jp/MikamiYua/cover.png
 
 职业生涯：偶像、SKE48Team S前成员  2015年6月1日 - 2023年8月15日
 
-### 往昔面貌
+### 容貌身姿
 
-
+<PornCarousel />
 
 ### 生涯十佳
 (排名不分先后)
