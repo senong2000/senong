@@ -14,3 +14,5 @@ export interface Post {
     type?: string
     cover?: string
 }
+
+

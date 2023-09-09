@@ -3,6 +3,7 @@
 import CacheKey from "@/constants/cacheKey"
 import { type ThemeName } from "@/hooks/useTheme"
 import { type Rain } from '@/hooks/useRainFx'
+import { TodoSpace } from "@/types/todolist"
 
 class Cache {
   public name: string
@@ -68,5 +69,10 @@ export const setActiveRain = (rain: boolean) => {
   cache.set(CacheKey.ACTIVE_RAIN, rain)
 }
 
-
+export const getTodoSpaces = () => {
+  return cache.get(CacheKey.TODOSPACES) as TodoSpace[]
+}
+export const setTodoSpaces = (todoSpaces: TodoSpace[]) => {
+  cache.set(CacheKey.TODOSPACES, todoSpaces)
+}
 
