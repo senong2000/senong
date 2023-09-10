@@ -95,7 +95,7 @@ const getGroupName = (p: Post) => {
                     <span text-8em color-transparent absolute left--3rem top--2rem font-bold text-stroke-2
                         text-stroke-hex-aaa op10>{{ getGroupName(route) }}</span>
                 </div>
-                <div class="slide-enter" >
+                <div class="slide-enter">
                     <component :is="route.path.includes('://') ? 'a' : 'RouterLink'" v-bind="route.path.includes('://') ? {
                         href: route.path,
                         target: '_blank',
@@ -124,7 +124,8 @@ const getGroupName = (p: Post) => {
                                 <div class="blog-tags">
                                     <span v-if="atype === 'All' && route.type !== null" text-sm op50 ws-nowrap>{{ route.type
                                     }} · </span>
-                                    <span v-if="route.date" text-sm op50 ws-nowrap>{{ formatDate(route.date, true) }}</span>
+                                    <span v-if="route.date" text-sm op50 ws-nowrap>{{ formatDate(route.date, 'diy', 'MMM D')
+                                    }}</span>
                                     <span v-if="route.duration" text-sm op40 ws-nowrap> · {{ route.duration }}</span>
                                     <span v-if="route.platform" text-sm op40 ws-nowrap> · {{ route.platform }}</span>
                                 </div>

@@ -1,8 +1,59 @@
 import dayjs from "dayjs"
 
-export function formatDate(d: string | Date, onlyDate = true) {
+type mode = 'default' | 'dynamic' | 'diy'
+
+export const formatDate = (d: string | Date, mode: mode = 'default', display: string = '') => {
     const date = dayjs(d)
-    if (onlyDate || date.year() === dayjs().year())
-        return date.format('MMM D')
-    return date.format('MMM D, YYYY')
+    let temp: string;
+
+    if (mode === 'default') {
+        return date.format('MMM D, YYYY HH:mm:ss')
+    }
+    else if (mode === 'dynamic') {
+        if (date.day() === dayjs().day()) {
+            return date.format('HH:mm:ss')
+        } else if (date.month() === dayjs().month()) {
+            return date.format('MMM D HH:mm:ss')
+        }
+        else if (date.year() === dayjs().year()) {
+            return date.format('MMM D HH:mm:ss')
+        }
+        return date.format('MMM D, YY HH:mm:ss')
+    }
+    else if (mode === 'diy') {
+        return date.format(display)
+    }
+}
+
+export const diffDate = (end: string | Date, start: string | Date) => {
+    const diff = new Date(end).getTime() - new Date(start).getTime()
+
+    const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+    const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+    const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    let formattedTime = '';
+    if (years > 0) {
+        formattedTime += `${years}y`;
+    }
+    if (months > 0) {
+        formattedTime += `${months}m`;
+    }
+    if (days > 0) {
+        formattedTime += `${days}d`;
+    }
+    if (hours > 0) {
+        formattedTime += `${hours}h`;
+    }
+    if (minutes > 0) {
+        formattedTime += `${minutes}min`;
+    }
+
+    if (formattedTime === '') {
+        formattedTime = '0min';
+    }
+
+    return formattedTime
 }
