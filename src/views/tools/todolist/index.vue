@@ -51,6 +51,8 @@ const initTodoSpace = () => {
 }
 
 const addSpace = () => {
+    // 遍历这个数组，过滤index
+    todoSpace.valie.todolist
 
     if (!todo.value) return
 
@@ -70,9 +72,9 @@ const addSpace = () => {
 }
 
 const addTodo = () => {
-
     if (!todo.value) return
 
+    // 创建一个临时对象
     const tempTodoList: TodoList = {
         index: todoList.value.length,
         todo: todo.value,
@@ -80,6 +82,7 @@ const addTodo = () => {
         complete: false
     }
 
+    // 添加到数组中 
     todoSpace.value.todolist.unshift(tempTodoList)
     setTodoSpaces(todoSpaceList.value)
 
@@ -143,7 +146,7 @@ const completeList = computed(() => {
         </v-tabs>
 
         <div class="todo-list-input flex flex-items-center">
-            <v-text-field label="添加任务" variant="solo" hide-details="auto" v-model="todo" :rules="rules"
+            <v-text-field placeholder="添加任务" variant="solo" hide-details="auto" v-model="todo" :rules="rules"
                 @keydown.enter="addTodo" clearable :theme="activeThemeName"></v-text-field>
             <v-btn @click="addTodo" h-full :theme="activeThemeName">
                 提交
@@ -169,7 +172,7 @@ const completeList = computed(() => {
                     <v-text-field v-model="item.todo" @input="updateTodo(item)" variant="solo" hide-details="auto" clearable
                         @focus="inputTodo"></v-text-field>
                 </div>
-                <v-card-actions >
+                <v-card-actions>
                     <span px-4> {{ formatDate(item.createdate, 'dynamic') }} </span>
 
                     <span v-if="item.complete" px-4>{{ item.completedate ?
@@ -208,8 +211,8 @@ const completeList = computed(() => {
             </v-card>
         </div>
 
-        <v-overlay v-model="datepickers" flex flex-items-center flex-justify-center>
-            <v-date-picker class="data-pickers" show-adjacent-months></v-date-picker>
+        <v-overlay :theme="activeThemeName" v-model="datepickers" flex flex-items-center flex-justify-center>
+            <v-date-picker class="data-pickers"></v-date-picker>
         </v-overlay>
     </div>
 </template>
