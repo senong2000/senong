@@ -18,7 +18,9 @@ const types = ['All', 'Todo', 'Complete']
 
 const rules: any = [];
 
-const datepickers = ref(false)
+const date = ref()
+const datepickersoverlay = ref(false)
+const selectedItem = ref<TodoList>();
 
 
 const { activeThemeName } = useTheme()
@@ -30,7 +32,7 @@ onMounted(() => {
 })
 
 watch(
-    datepickers, (val) => {
+    datepickersoverlay, (val) => {
         if (val) {
             // setTimeout(() => {
             //     datepickers.value = false;
@@ -51,8 +53,6 @@ const initTodoSpace = () => {
 }
 
 const addSpace = () => {
-    // 遍历这个数组，过滤index
-    todoSpace.valie.todolist
 
     if (!todo.value) return
 
@@ -111,8 +111,20 @@ const deleteTodo = (item: TodoList) => {
     setTodoSpaces(todoSpaceList.value)
 }
 
-const inputTodo = () => {
+const addTodoETC = (date: any) => {
+    if (!date) return
+    if (selectedItem.value) {
+        const index = todoSpace.value.todolist.indexOf(selectedItem.value);
+        if (index > -1) {
+            todoSpace.value.todolist[index].etc = new Date(date)
+        }
+    }
+    setTodoSpaces(todoSpaceList.value)
+}
 
+const displayDatePickersOverlay = (item: TodoList) => {
+    datepickersoverlay.value = !datepickersoverlay.value
+    selectedItem.value = item
 }
 
 const todoSpace = computed(() => {
@@ -141,16 +153,15 @@ const completeList = computed(() => {
     <div class="todo slide-enter">
         <v-tabs class="todo-spaces-tabs my-8" v-model="space" align-tabs="start" selected-class="active-type" hide-slider>
             <v-tab v-for="item in spaces" :key="item" :value="item" variant="plain">
+
                 {{ item }}
             </v-tab>
         </v-tabs>
 
-        <div class="todo-list-input flex flex-items-center">
+        <div class="todo-list-input flex flex-items-center" py-2>
             <v-text-field placeholder="添加任务" variant="solo" hide-details="auto" v-model="todo" :rules="rules"
-                @keydown.enter="addTodo" clearable :theme="activeThemeName"></v-text-field>
-            <v-btn @click="addTodo" h-full :theme="activeThemeName">
-                提交
-            </v-btn>
+                @keydown.enter="addTodo" clearable persistent-clear persistent-counter persistent-hint
+                :theme="activeThemeName" hint="Press Enter key to add"></v-text-field>
         </div>
 
         <v-tabs class="todo-list-tabs" v-model="type" align-tabs="start" selected-class="active-type" hide-slider>
@@ -169,21 +180,32 @@ const completeList = computed(() => {
             <v-card rounded="0" v-for="item in list" :key="item.index" :theme="activeThemeName">
                 <div class="todo-list-content-body px-4 py-2 flex flex-items-center">
                     <v-checkbox-btn v-model="item.complete" @input="updateTodo(item)"></v-checkbox-btn>
-                    <v-text-field v-model="item.todo" @input="updateTodo(item)" variant="solo" hide-details="auto" clearable
-                        @focus="inputTodo"></v-text-field>
+                    <v-text-field v-model="item.todo" @input="updateTodo(item)" variant="solo" hide-details="auto"
+                        clearable></v-text-field>
                 </div>
                 <v-card-actions>
-                    <span px-4> {{ formatDate(item.createdate, 'dynamic') }} </span>
+                    <span flex flex-justify-center flex-items-center>
+                        <v-icon size="x-small" px-4>fa-solid fa-hourglass-start</v-icon>
+                        {{ formatDate(item.createdate, 'dynamic') }}
+                    </span>
 
-                    <span v-if="item.complete" px-4>{{ item.completedate ?
-                        formatDate(item.completedate, 'dynamic') : null
-                    }}</span>
+                    <span v-if="item.complete" flex flex-justify-center flex-items-center>
+                        <v-icon size="x-small" px-4>fa-solid fa-hourglass-end</v-icon>
+                        {{ item.completedate ? formatDate(item.completedate, 'dynamic') : null }}
+                    </span>
 
-                    <span v-if="item.complete" px-4> C:{{ item.completedate ? diffDate(item.completedate, item.createdate) :
-                        null
-                    }}</span>
+                    <span v-if="item.complete" flex flex-justify-center flex-items-center>
+                        <v-icon size="x-small" px-4>fa-solid fa-check</v-icon>
+                        {{ item.completedate ? diffDate(item.completedate, item.createdate) : null }}
+                    </span>
 
                     <v-spacer></v-spacer>
+                    
+                    <span v-if="item.etc" flex flex-justify-center flex-items-center>
+                        <v-icon size="x-small" px-4>fa-solid fa-clock</v-icon>
+                        {{ item.etc ? formatDate(item.etc, 'diy', 'MMM D') : null }} -
+                        {{ item.etc ? diffDate(item.etc, item.createdate) : null }}
+                    </span>
                     <v-menu>
                         <template v-slot:activator="{ props }">
                             <v-btn variant="plain" v-bind="props">
@@ -191,7 +213,7 @@ const completeList = computed(() => {
                             </v-btn>
                         </template>
                         <v-list>
-                            <v-list-item value="clock" @click="datepickers = !datepickers">
+                            <v-list-item value="clock" @click="displayDatePickersOverlay(item)">
                                 <v-list-item-title>
                                     <v-btn variant="plain">
                                         <v-icon>fas fa-clock</v-icon>
@@ -208,11 +230,13 @@ const completeList = computed(() => {
                         </v-list>
                     </v-menu>
                 </v-card-actions>
+                <v-divider></v-divider>
             </v-card>
         </div>
 
-        <v-overlay :theme="activeThemeName" v-model="datepickers" flex flex-items-center flex-justify-center>
-            <v-date-picker class="data-pickers"></v-date-picker>
+        <v-overlay :theme="activeThemeName" v-model="datepickersoverlay" flex flex-items-center flex-justify-center>
+            <v-date-picker class="data-pickers" show-adjacent-months @click:cancel="datepickersoverlay = false"
+                @update:modelValue="addTodoETC"></v-date-picker>
         </v-overlay>
     </div>
 </template>

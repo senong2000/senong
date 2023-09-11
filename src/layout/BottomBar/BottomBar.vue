@@ -17,6 +17,7 @@ const onFinish = () => {
         loading.value = false
         codeOverlay.value = false
         if (code.value === '000221') {
+            code.value = ''
             router.push('/blog/secret');
         }
 
@@ -41,7 +42,7 @@ const { activeThemeName } = useTheme()
         <v-overlay flex flex-items-center flex-justify-center class="code-overlay" v-model="codeOverlay"
             :theme="activeThemeName">
             <v-otp-input v-model="code" :loading="loading" @finish="onFinish" variant="solo" class="code-overlay-input"
-                autofocus></v-otp-input>
+                autofocus ></v-otp-input>
         </v-overlay>
     </footer>
 </template>

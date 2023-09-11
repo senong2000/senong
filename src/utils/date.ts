@@ -36,23 +36,23 @@ export const diffDate = (end: string | Date, start: string | Date) => {
 
     let formattedTime = '';
     if (years > 0) {
-        formattedTime += `${years}y`;
+        formattedTime += `${years}年`;
     }
     if (months > 0) {
-        formattedTime += `${months}m`;
+        formattedTime += `${months}月`;
     }
     if (days > 0) {
-        formattedTime += `${days}d`;
+        formattedTime += `${days}天`;
     }
     if (hours > 0) {
-        formattedTime += `${hours}h`;
+        formattedTime += `${hours}小时`;
     }
     if (minutes > 0) {
-        formattedTime += `${minutes}min`;
+        formattedTime += `${minutes}分钟`;
     }
 
     if (formattedTime === '') {
-        formattedTime = '0min';
+        formattedTime = '0分钟';
     }
 
     return formattedTime

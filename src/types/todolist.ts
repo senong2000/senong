@@ -4,7 +4,7 @@ export type TodoList = {
     createdate: Date
     complete?: boolean
     completedate?: Date
-
+    etc?: Date
 }
 
 export type TodoSpace = {
