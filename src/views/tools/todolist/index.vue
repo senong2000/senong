@@ -109,8 +109,7 @@ const deleteTodo = (item: TodoList) => {
 }
 
 const inputTodo = () => {
-    console.log('1')
-    disabled.value = !disabled.value
+
 }
 
 const todoSpace = computed(() => {
@@ -137,15 +136,15 @@ const completeList = computed(() => {
 </script>
 <template>
     <div class="todo slide-enter">
-        <v-tabs class="todo-spaces-tabs" v-model="space" align-tabs="start" selected-class="active-type" hide-slider>
+        <v-tabs class="todo-spaces-tabs my-8" v-model="space" align-tabs="start" selected-class="active-type" hide-slider>
             <v-tab v-for="item in spaces" :key="item" :value="item" variant="plain">
                 {{ item }}
             </v-tab>
         </v-tabs>
 
         <div class="todo-list-input flex flex-items-center">
-            <v-text-field label="添加任务" hide-details="auto" v-model="todo" :rules="rules" @keydown.enter="addTodo"
-                clearable></v-text-field>
+            <v-text-field label="添加任务" variant="solo" hide-details="auto" v-model="todo" :rules="rules"
+                @keydown.enter="addTodo" clearable :theme="activeThemeName"></v-text-field>
             <v-btn @click="addTodo" h-full :theme="activeThemeName">
                 提交
             </v-btn>
@@ -164,21 +163,24 @@ const completeList = computed(() => {
 
         <div class="todo-list-content">
 
-            <v-card v-for="item in list" :key="item.index" my-1 :theme="activeThemeName">
-                <div class="todo-list-content-body flex flex-items-center">
+            <v-card rounded="0" v-for="item in list" :key="item.index" :theme="activeThemeName">
+                <div class="todo-list-content-body px-4 py-2 flex flex-items-center">
                     <v-checkbox-btn v-model="item.complete" @input="updateTodo(item)"></v-checkbox-btn>
                     <v-text-field v-model="item.todo" @input="updateTodo(item)" variant="solo" hide-details="auto" clearable
                         @focus="inputTodo"></v-text-field>
                 </div>
-                <v-card-actions>
-                    <span> {{ formatDate(item.createdate, 'dynamic') }} </span>
+                <v-card-actions >
+                    <span px-4> {{ formatDate(item.createdate, 'dynamic') }} </span>
 
-                    <span v-if="item.complete"> <span> &nbsp; - &nbsp;</span> {{ item.completedate ?
+                    <span v-if="item.complete" px-4>{{ item.completedate ?
                         formatDate(item.completedate, 'dynamic') : null
                     }}</span>
-                    <v-spacer></v-spacer>
-                    <span v-if="item.complete"> C:{{ item.completedate ? diffDate(item.completedate, item.createdate) : null
+
+                    <span v-if="item.complete" px-4> C:{{ item.completedate ? diffDate(item.completedate, item.createdate) :
+                        null
                     }}</span>
+
+                    <v-spacer></v-spacer>
                     <v-menu>
                         <template v-slot:activator="{ props }">
                             <v-btn variant="plain" v-bind="props">
@@ -221,6 +223,7 @@ const completeList = computed(() => {
 
     &-spaces {
         &-tabs {
+
             button {
                 display: flex;
                 align-items: end;
