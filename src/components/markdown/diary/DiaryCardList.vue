@@ -20,8 +20,8 @@ const routes: Post[] = router.getRoutes()
 
 </script>
 <template>
-    <div class="porn-card">
-        <v-card v-for="route in routes" class="mx-auto" :key="route.title" @click="router.push(route.path)">
+    <div class="diary-card">
+        <v-card v-for="route in routes" my-4 class="mx-auto" :key="route.title" @click="router.push(route.path)">
             <v-card-actions>
                 <v-card-title class="text-black" v-text="route.title"></v-card-title>
                 <span> {{ formatDate(route.date, 'diy', 'MMM D') }} </span>
@@ -32,7 +32,7 @@ const routes: Post[] = router.getRoutes()
     </div>
 </template>
 <style lang="scss" >
-.porn-card {
+.diary-card {
     &-cover {
         img {
             margin-top: 0;

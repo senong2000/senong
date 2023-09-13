@@ -25,7 +25,7 @@ const routes: Post[] = router.getRoutes()
 
 </script>
 <template>
-    <div class="secret-list">
+    <div class="secret-list mt-4">
         <div v-for="route in routes" :key="route.path">
             <button @click="router.push(route.path)">
                 {{ route.title }}

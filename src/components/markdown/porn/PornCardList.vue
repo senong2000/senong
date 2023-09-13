@@ -23,7 +23,7 @@ const routes: Post[] = router.getRoutes()
 <template>
     <div class="porn-card">
         <v-card v-for="route in routes" class="mx-auto mt-8" :key="route.title" @click="router.push(route.path)">
-            <v-img class="porn-card-cover" :lazy-src="route.cover" :src="route.cover" aspect-ratio="16/9" height="256"
+            <v-img class="porn-card-cover" :lazy-src="route.cover" :src="route.cover" aspect-ratio="16/9" height="512"
                 cover>
                 <template v-slot:placeholder>
                     <div class="d-flex align-center justify-center fill-height">

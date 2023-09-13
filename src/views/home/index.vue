@@ -46,7 +46,7 @@ const platformsArray = [
 </script>
 
 <template>
-    <div class="home ">
+    <div class="home mt-4 ">
         <div class="introduce slide-enter">
             <div class="preface">
                 <div>Hi, I'm <span font-size-8>Senong</span> , an ordinary office worker.</div>
@@ -79,12 +79,13 @@ const platformsArray = [
 
 <style lang="scss" scoped>
 .home {
+    width: 50vw;
+
     .introduce {
         position: relative;
         width: 100%;
         font-size: 1.2rem;
         font-weight: 500;
-        padding: 1.5rem;
         z-index: 100;
         display: flex;
         flex-direction: column;
@@ -92,7 +93,7 @@ const platformsArray = [
         align-items: center;
 
         .preface {
-            width: 50vw;
+            width: inherit;
 
             div {
                 margin: 1.5rem 0;
@@ -101,7 +102,7 @@ const platformsArray = [
 
 
         .platforms {
-            width: 50vw;
+            width: inherit;
         }
     }
 

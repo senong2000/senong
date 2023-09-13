@@ -7,9 +7,16 @@ import { formatDate, diffDate } from '@/utils/date';
 
 import { VDatePicker } from 'vuetify/labs/components';
 
+
 const space = ref('Default')
-const spaces = ['Default']
+const spaceIndex = ref(0)
 const todoSpaceList = ref<TodoSpace[]>([]);
+
+const spacename = ref('');
+const spaceNameInput = ref(false);
+
+const changeSpaceName = ref(false);
+const spaceNameClick = ref(0)
 
 const todo = ref('');
 
@@ -18,7 +25,6 @@ const types = ['All', 'Todo', 'Complete']
 
 const rules: any = [];
 
-const date = ref()
 const datepickersoverlay = ref(false)
 const selectedItem = ref<TodoList>();
 
@@ -29,6 +35,7 @@ onMounted(() => {
 
     getTodoSpaces() && getTodoSpaces().length > 0 ? todoSpaceList.value = getTodoSpaces() : initTodoSpace()
 
+    spaceIndex.value = todoSpaceList.value[0].index;
 })
 
 watch(
@@ -40,6 +47,10 @@ watch(
         }
     });
 
+watch(space, () => {
+    // console.log(oldVal, newVal)
+
+});
 const initTodoSpace = () => {
     const tempTodoSpace: TodoSpace = {
         index: todoSpaceList.value.length,
@@ -48,45 +59,98 @@ const initTodoSpace = () => {
     }
 
     todoSpaceList.value.push(tempTodoSpace)
-
     setTodoSpaces(todoSpaceList.value)
 }
 
-const addSpace = () => {
+const showAddSpaceInput = () => {
+    spacename.value === ''
+    spaceNameInput.value = true;
+    changeSpaceName.value = false;
+}
 
-    if (!todo.value) return
+const addSpace = (event: KeyboardEvent) => {
 
-    const tempTodoList: TodoList = {
-        index: todoList.value.length,
-        todo: todo.value,
-        createdate: new Date(),
-        complete: false
+    event.preventDefault()
+    if (spacename.value === '') return
+
+    console.log()
+    if (changeSpaceName.value) {
+        todoSpace.value.name = spacename.value
+        space.value = todoSpace.value.name
+        
+    } else {
+        const tempTodoSpace: TodoSpace = {
+            index: todoSpaceList.value.length,
+            name: spacename.value,
+            todolist: []
+        }
+        // 添加到数组中 
+        todoSpaceList.value.push(tempTodoSpace)
+        space.value = spacename.value
     }
 
-    todoSpace.value.todolist.unshift(tempTodoList)
+    setTodoSpaces(todoSpaceList.value)
+    spaceIndex.value = todoSpaceList.value.findIndex(i => i.name === space.value)
+    spaceNameInput.value = false
+    spacename.value = ''
 
-    todo.value = '';
+}
 
+const switchSpaceName = () => {
+    spaceNameClick.value = 0
+    changeSpaceName.value = false
+    triggerRef(todoSpace)
+    space.value = todoSpace.value.name
+}
+
+const clickSpaceName = () => {
+    spaceNameClick.value += 1
+    if (spaceNameClick.value < 2) return
+    spacename.value = todoSpace.value.name
+    changeSpaceName.value = true
+    spaceNameInput.value = true
+}
+
+const deleteSpace = (name: string) => {
+    if (todoSpaceList.value.length === 1) return
+
+    const index = todoSpaceList.value.findIndex(i => i.name === name)
+    if (index > -1) {
+        todoSpaceList.value.splice(index, 1);
+    }
     setTodoSpaces(todoSpaceList.value)
 
 }
 
-const addTodo = () => {
-    if (!todo.value) return
+const addTodo = (event: KeyboardEvent) => {
+    if (event.ctrlKey && event.key === 'Enter') {
+        // 处理 ctrl + enter 事件
+        // console.log('Ctrl + Enter key pressed');
+        todo.value += '\n'
+        return false
+    } else if (event.shiftKey && event.key === 'Enter') {
+        // 处理 shift + enter 事件
+        // console.log('Shift + Enter key pressed');
+        return false
+    } else {
+        event.preventDefault()
 
-    // 创建一个临时对象
-    const tempTodoList: TodoList = {
-        index: todoList.value.length,
-        todo: todo.value,
-        createdate: new Date(),
-        complete: false
+        if (todo.value === '') return
+
+        // 创建一个临时对象
+        const tempTodoList: TodoList = {
+            index: todoList.value.length,
+            todo: todo.value,
+            createdate: new Date(),
+            complete: false
+        }
+
+        // 添加到数组中 
+        todoSpace.value.todolist.unshift(tempTodoList)
+        setTodoSpaces(todoSpaceList.value)
+
+        todo.value = '';
     }
-
-    // 添加到数组中 
-    todoSpace.value.todolist.unshift(tempTodoList)
-    setTodoSpaces(todoSpaceList.value)
-
-    todo.value = '';
 }
 
 const updateTodo = (item: TodoList) => {
@@ -128,11 +192,13 @@ const displayDatePickersOverlay = (item: TodoList) => {
 }
 
 const todoSpace = computed(() => {
-    return todoSpaceList.value.filter(i => i.name === space.value)[0]
+    console.log(spaceIndex.value, space.value)
+    return todoSpaceList.value.filter(i => i.index === spaceIndex.value)[0]
 })
 
 const list = computed(() => {
-    const returnList = todoSpaceList.value[0] && todoSpaceList.value[0].todolist ? todoSpaceList.value[0].todolist : [];
+    // const returnList = todoSpaceList.value[0] && todoSpaceList.value[0].todolist ? todoSpaceList.value[0].todolist : [];
+    const returnList = todoSpace.value && todoSpace.value.todolist ? todoSpace.value.todolist : [];
     if (type.value === 'All') return returnList
     else if (type.value === 'Todo') return returnList.filter(j => !j.complete)
     else if (type.value === 'Complete') return returnList.filter(j => j.complete)
@@ -140,28 +206,52 @@ const list = computed(() => {
 })
 
 const todoList = computed(() => {
-    return todoSpaceList.value[0] && todoSpaceList.value[0].todolist ? todoSpaceList.value[0].todolist.filter(j => !j.complete) : []
+    return todoSpace.value && todoSpace.value.todolist ? todoSpace.value.todolist.filter(j => !j.complete) : []
 })
 
 const completeList = computed(() => {
-    return todoSpaceList.value[0] && todoSpaceList.value[0].todolist ? todoSpaceList.value[0].todolist.filter(j => j.complete) : []
+    return todoSpace.value && todoSpace.value.todolist ? todoSpace.value.todolist.filter(j => j.complete) : []
 });
 
 
 </script>
 <template>
     <div class="todo slide-enter">
-        <v-tabs class="todo-spaces-tabs my-8" v-model="space" align-tabs="start" selected-class="active-type" hide-slider>
-            <v-tab v-for="item in spaces" :key="item" :value="item" variant="plain">
+        <div class="todo-spaces-tabs" h-16 my-8 flex flex-items-center>
+            <v-tabs v-show="!spaceNameInput" v-model="spaceIndex" align-tabs="start" selected-class="active-type"
+                hide-slider show-arrows center-active @update:modelValue="switchSpaceName">
+                <v-menu open-on-hover v-for="item in todoSpaceList" :key="item.index">
+                    <template v-slot:activator="{ props }">
+                        <v-tab :key="item.index" :value="item.index" variant="plain" v-bind="props" @click="clickSpaceName">
+                            {{ item.name }}
+                        </v-tab>
+                    </template>
+                    <v-list :theme="activeThemeName">
+                        <v-list-item value="delete" @click="deleteSpace(item.name)">
+                            <v-list-item-title>
+                                <v-btn variant="plain" w-full>
+                                    <v-icon>fas fa-trash</v-icon>
+                                </v-btn>
+                            </v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </v-tabs>
+            <v-text-field v-show="spaceNameInput" class="todo-spaces-tabs-input" :theme="activeThemeName"
+                placeholder="添加空间名" hide-details="auto" v-model="spacename" @keydown.enter="addSpace"
+                variant="solo"></v-text-field>
+            <v-btn v-show="!spaceNameInput" variant="plain" @click="showAddSpaceInput">
+                <v-icon>fas fa-plus</v-icon>
+            </v-btn>
+            <v-btn class="back" v-show="spaceNameInput" variant="plain" @click="spaceNameInput = false">
+                <v-icon>fas fa-angle-left</v-icon>
+            </v-btn>
 
-                {{ item }}
-            </v-tab>
-        </v-tabs>
-
+        </div>
         <div class="todo-list-input flex flex-items-center" py-2>
-            <v-text-field placeholder="添加任务" variant="solo" hide-details="auto" v-model="todo" :rules="rules"
-                @keydown.enter="addTodo" clearable persistent-clear persistent-counter persistent-hint
-                :theme="activeThemeName" hint="Press Enter key to add"></v-text-field>
+            <v-textarea placeholder="添加任务" variant="solo" hide-details="auto" v-model="todo" :rules="rules"
+                @keydown.enter="addTodo" clearable persistent-clear persistent-hint :theme="activeThemeName"
+                hint="Press Enter key to add" auto-grow rows="1"></v-textarea>
         </div>
 
         <v-tabs class="todo-list-tabs" v-model="type" align-tabs="start" selected-class="active-type" hide-slider>
@@ -180,8 +270,8 @@ const completeList = computed(() => {
             <v-card rounded="0" v-for="item in list" :key="item.index" :theme="activeThemeName">
                 <div class="todo-list-content-body px-4 py-2 flex flex-items-center">
                     <v-checkbox-btn v-model="item.complete" @input="updateTodo(item)"></v-checkbox-btn>
-                    <v-text-field v-model="item.todo" @input="updateTodo(item)" variant="solo" hide-details="auto"
-                        clearable></v-text-field>
+                    <v-textarea v-model="item.todo" @input="updateTodo(item)" variant="solo" hide-details="auto" clearable
+                        auto-grow rows="1"></v-textarea>
                 </div>
                 <v-card-actions>
                     <span flex flex-justify-center flex-items-center>
@@ -200,13 +290,13 @@ const completeList = computed(() => {
                     </span>
 
                     <v-spacer></v-spacer>
-                    
+
                     <span v-if="item.etc" flex flex-justify-center flex-items-center>
                         <v-icon size="x-small" px-4>fa-solid fa-clock</v-icon>
                         {{ item.etc ? formatDate(item.etc, 'diy', 'MMM D') : null }} -
                         {{ item.etc ? diffDate(item.etc, item.createdate) : null }}
                     </span>
-                    <v-menu>
+                    <v-menu location="bottom" transition="slide-y-transition">
                         <template v-slot:activator="{ props }">
                             <v-btn variant="plain" v-bind="props">
                                 <v-icon size="x-large">fas fa-ellipsis</v-icon>
@@ -253,7 +343,6 @@ const completeList = computed(() => {
 
             button {
                 display: flex;
-                align-items: end;
                 transition: all .2s;
             }
 
@@ -262,10 +351,36 @@ const completeList = computed(() => {
                 opacity: 1;
 
             }
+
+
+
+            &-input {
+                background: none;
+                width: auto;
+
+                .v-field--variant-solo {
+                    background: none;
+                    box-shadow: none;
+                    transition: all .3s;
+
+                }
+
+                .v-field--focused {
+                    // background: none !important;
+                }
+            }
         }
     }
 
     &-list {
+        &-input {
+            .v-field--variant-solo {
+                transition: all .3s;
+
+            }
+
+        }
+
         &-tabs {
             button {
                 display: flex;
@@ -278,6 +393,8 @@ const completeList = computed(() => {
                 opacity: 1;
 
             }
+
+
         }
 
         &-content {
