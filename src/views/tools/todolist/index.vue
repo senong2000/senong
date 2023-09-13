@@ -28,6 +28,9 @@ const rules: any = [];
 const datepickersoverlay = ref(false)
 const selectedItem = ref<TodoList>();
 
+const delSpaceNamedialog = ref(false)
+const delTododialog = ref(false)
+
 
 const { activeThemeName } = useTheme()
 
@@ -118,7 +121,8 @@ const deleteSpace = (name: string) => {
         todoSpaceList.value.splice(index, 1);
     }
     setTodoSpaces(todoSpaceList.value)
-
+    spaceIndex.value = todoSpaceList.value[0].index;
+    delSpaceNamedialog.value = false
 }
 
 const addTodo = (event: KeyboardEvent) => {
@@ -172,6 +176,7 @@ const deleteTodo = (item: TodoList) => {
         todoSpace.value.todolist.splice(index, 1);
     }
     setTodoSpaces(todoSpaceList.value)
+    delTododialog.value = false
 }
 
 const addTodoETC = (date: any) => {
@@ -225,10 +230,23 @@ const completeList = computed(() => {
                         </v-tab>
                     </template>
                     <v-list :theme="activeThemeName">
-                        <v-list-item value="delete" @click="deleteSpace(item.name)">
+                        <v-list-item value="delete">
                             <v-list-item-title>
                                 <v-btn variant="plain" w-full>
                                     <v-icon>fas fa-trash</v-icon>
+                                    <v-dialog v-model="delSpaceNamedialog" activator="parent" width="auto">
+                                        <v-card flex flex-items-center flex-justify-center>
+                                            <v-card-text m-4>
+                                                确定删除?
+                                            </v-card-text>
+                                            <v-card-actions m-4>
+                                                <v-btn color="primary" variant="tonal"
+                                                    @click="delSpaceNamedialog = false">No</v-btn>
+                                                <v-btn color="primary" variant="tonal" @click="deleteSpace(item.name)">
+                                                    Yes</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
                                 </v-btn>
                             </v-list-item-title>
                         </v-list-item>
@@ -308,10 +326,23 @@ const completeList = computed(() => {
                                     </v-btn>
                                 </v-list-item-title>
                             </v-list-item>
-                            <v-list-item value="delete" @click="deleteTodo(item)">
+                            <v-list-item value="delete">
                                 <v-list-item-title>
                                     <v-btn variant="plain">
                                         <v-icon>fas fa-trash</v-icon>
+                                        <v-dialog v-model="delTododialog" activator="parent" width="auto">
+                                            <v-card flex flex-items-center flex-justify-center>
+                                                <v-card-text m-4>
+                                                    确定删除?
+                                                </v-card-text>
+                                                <v-card-actions m-4>
+                                                    <v-btn color="primary" variant="tonal"
+                                                        @click="delTododialog = false">No</v-btn>
+                                                    <v-btn color="primary" variant="tonal" @click="deleteTodo(item)">
+                                                        Yes</v-btn>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-dialog>
                                     </v-btn>
                                 </v-list-item-title>
                             </v-list-item>
