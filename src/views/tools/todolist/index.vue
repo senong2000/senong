@@ -63,9 +63,9 @@ const initTodoSpace = () => {
 }
 
 const showAddSpaceInput = () => {
-    spacename.value === ''
-    spaceNameInput.value = true;
+    spaceNameInput.value = !spaceNameInput.value;
     changeSpaceName.value = false;
+    spacename.value = ''
 }
 
 const addSpace = (event: KeyboardEvent) => {
@@ -73,11 +73,10 @@ const addSpace = (event: KeyboardEvent) => {
     event.preventDefault()
     if (spacename.value === '') return
 
-    console.log()
     if (changeSpaceName.value) {
         todoSpace.value.name = spacename.value
         space.value = todoSpace.value.name
-        
+
     } else {
         const tempTodoSpace: TodoSpace = {
             index: todoSpaceList.value.length,
@@ -192,7 +191,6 @@ const displayDatePickersOverlay = (item: TodoList) => {
 }
 
 const todoSpace = computed(() => {
-    console.log(spaceIndex.value, space.value)
     return todoSpaceList.value.filter(i => i.index === spaceIndex.value)[0]
 })
 
@@ -243,7 +241,7 @@ const completeList = computed(() => {
             <v-btn v-show="!spaceNameInput" variant="plain" @click="showAddSpaceInput">
                 <v-icon>fas fa-plus</v-icon>
             </v-btn>
-            <v-btn class="back" v-show="spaceNameInput" variant="plain" @click="spaceNameInput = false">
+            <v-btn class="back" v-show="spaceNameInput" variant="plain" @click="showAddSpaceInput">
                 <v-icon>fas fa-angle-left</v-icon>
             </v-btn>
 
