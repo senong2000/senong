@@ -2,13 +2,10 @@
 
 </script>
 <template>
-    <div class="settings">
-        settings
+    <div class="mcskineditor">
+        mcskineditor
     </div>
 </template>
 <style lang="scss" scoped>
-.settings {
-    width: 60vw;
-    
-}
+
 </style>

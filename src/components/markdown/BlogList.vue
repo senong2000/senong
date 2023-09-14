@@ -73,7 +73,7 @@ const getGroupName = (p: Post) => {
 </script>
 <template>
     <div class="blog mt-4 ">
-        <v-tabs v-model="atype" align-tabs="start" selected-class="active-atype" hide-slider>
+        <v-tabs v-model="atype" align-tabs="start" selected-class="active-atype" hide-slider show-arrows center-active>
             <v-tab v-for="item in types" :key="item" :value="item" variant="plain">
                 {{ item }}
             </v-tab>

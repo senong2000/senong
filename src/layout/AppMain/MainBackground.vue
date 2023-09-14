@@ -1,10 +1,14 @@
 <script lang="ts" setup>
 
+const route = useRoute()
+
+console.log(route.path)
+
 </script>
 
 <template>
-    <div class="background">
-        <div class="background-name" font-semibold>
+    <div class="background slide-enter-50 ">
+        <div class="background-name" font-semibold v-if="route.path === '/'">
             <span>Senong</span>
         </div>
         <div class="background-rain" ref="rain"></div>

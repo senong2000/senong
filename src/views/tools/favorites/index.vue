@@ -2,13 +2,12 @@
 
 </script>
 <template>
-    <div class="settings">
-        settings
+    <div class="favorites">
+        favorites
     </div>
 </template>
 <style lang="scss" scoped>
-.settings {
-    width: 60vw;
-    
+.favorites {
+    width: 50vw
 }
 </style>

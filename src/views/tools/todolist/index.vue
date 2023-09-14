@@ -187,6 +187,7 @@ const addTodoETC = (date: any) => {
             todoSpace.value.todolist[index].etc = new Date(date)
         }
     }
+    datepickersoverlay.value = false
     setTodoSpaces(todoSpaceList.value)
 }
 
