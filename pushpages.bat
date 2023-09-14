@@ -11,6 +11,6 @@ git commit -m "chore: update static pages"
 
 @REM git push -u gitee-me main
 
-git remote add github-me https://github.com/senong2000/me.git 
+@REM git remote add github-me https://github.com/senong2000/me.git 
 
 git push -u github-me main 

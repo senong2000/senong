@@ -1,8 +1,10 @@
 <script lang="ts" setup>
+import { useTheme } from '@/hooks/useTheme';
+const { activeThemeName } = useTheme()
 
 </script>
 <template>
-    <div class="resume">
+    <div class="resume" :theme="activeThemeName">
 
     </div>
 </template>

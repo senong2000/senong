@@ -6,7 +6,14 @@ const router = useRouter()
 
 const { activeThemeName } = useTheme()
 
-const toolsArr = [
+type Tool = {
+    route: string
+    icon: string
+    title: string
+    desc: string
+}
+
+const tools: Tool[] = [
     {
         route: 'todolist',
         icon: 'fas fa-rectangle-list',
@@ -37,14 +44,14 @@ const toolsArr = [
         title: 'lucky day',
         desc: '用于测试和预测用户在今天的狗屎运。'
     },
-    
+
 ]
 
 </script>
 <template>
     <div class="tools" flex m-4>
         <v-row no-gutters>
-            <v-col cols="6" v-for="item, idx in toolsArr" :key="idx">
+            <v-col cols="6" v-for="item, idx in tools" :key="idx">
                 <div flex h-full>
                     <v-card :theme="activeThemeName" variant="outlined" @click="router.push(`${route.path}/${item.route}`)"
                         p-4 m-2 flex w-full>
