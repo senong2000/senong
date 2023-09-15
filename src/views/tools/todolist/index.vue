@@ -56,12 +56,18 @@ watch(space, () => {
 });
 const initTodoSpace = () => {
     const tempTodoSpace: TodoSpace = {
-        index: todoSpaceList.value.length,
         name: space.value,
         todolist: []
     }
 
     todoSpaceList.value.push(tempTodoSpace)
+
+    todoSpaceList.value = todoSpaceList.value.map((i, idx) => ({
+        index: idx,
+        name: i.name,
+        todolist: i.todolist
+    }))
+
     setTodoSpaces(todoSpaceList.value)
 }
 
@@ -81,13 +87,28 @@ const addSpace = (event: KeyboardEvent) => {
         space.value = todoSpace.value.name
 
     } else {
+
         const tempTodoSpace: TodoSpace = {
-            index: todoSpaceList.value.length,
             name: spacename.value,
             todolist: []
         }
+
+        if (todoSpaceList.value.findIndex(i => i.index === tempTodoSpace.index) > -1) return
+
+        if (todoSpaceList.value.findIndex(i => i.name === tempTodoSpace.name) > -1) {
+            console.log('名字重复')
+            return
+        }
+
         // 添加到数组中 
         todoSpaceList.value.push(tempTodoSpace)
+
+        todoSpaceList.value = todoSpaceList.value.map((i, idx) => ({
+            index: idx,
+            name: i.name,
+            todolist: i.todolist
+        }))
+
         space.value = spacename.value
     }
 
@@ -97,7 +118,6 @@ const addSpace = (event: KeyboardEvent) => {
     spacename.value = ''
 
 }
-
 
 const clickSpaceName = (item: TodoSpace) => {
     if (item.name !== space.value) {
@@ -121,7 +141,7 @@ const deleteSpace = (name: string) => {
         todoSpaceList.value.splice(index, 1);
     }
     setTodoSpaces(todoSpaceList.value)
-    spaceIndex.value = todoSpaceList.value[0].index;
+    spaceIndex.value = todoSpaceList.value[0].index ? todoSpaceList.value[0].index : -1;
     delSpaceNamedialog.value = false
 }
 
@@ -142,14 +162,23 @@ const addTodo = (event: KeyboardEvent) => {
 
         // 创建一个临时对象
         const tempTodoList: TodoList = {
-            index: todoList.value.length,
             todo: todo.value,
             createdate: new Date(),
             complete: false
         }
 
+        if (!todoSpace.value.todolist.findIndex(i => i.index === tempTodoList.index)) return
+
         // 添加到数组中 
         todoSpace.value.todolist.unshift(tempTodoList)
+
+        todoSpace.value.todolist = todoSpace.value.todolist.map((i, idx) => ({
+            index: idx,
+            todo: i.todo,
+            createdate: i.createdate,
+            complete: i.complete
+        }))
+
         setTodoSpaces(todoSpaceList.value)
 
         todo.value = '';
@@ -163,13 +192,12 @@ const updateTodo = (item: TodoList) => {
         todoSpace.value.todolist[index].completedate = new Date()
     }
 
-
     setTodoSpaces(todoSpaceList.value)
 
 }
 
 const deleteTodo = (item: TodoList) => {
-    console.log(todoSpace.value.todolist, item)
+    // console.log(todoSpace.value.todolist, item)
 
     const index = todoSpace.value.todolist.indexOf(item);
     if (index > -1) {
@@ -222,8 +250,8 @@ const completeList = computed(() => {
 <template>
     <div class="todo slide-enter" mb-16>
         <div class="todo-spaces-tabs" h-16 my-8 flex flex-items-center>
-            <v-tabs v-show="!spaceNameInput" v-model="spaceIndex" align-tabs="start" selected-class="active-type" hide-slider
-                show-arrows center-active>
+            <v-tabs v-show="!spaceNameInput" v-model="spaceIndex" align-tabs="start" selected-class="active-type"
+                hide-slider show-arrows center-active>
                 <v-menu open-on-hover v-for="item in todoSpaceList" :key="item.index">
                     <template v-slot:activator="{ props }">
                         <v-tab :value="item.index" variant="plain" v-bind="props" @click="clickSpaceName(item)">
@@ -267,7 +295,7 @@ const completeList = computed(() => {
         </div>
         <div class="todo-list-input flex flex-items-center" py-2>
             <v-textarea placeholder="添加任务" variant="solo" hide-details="auto" v-model="todo" :rules="rules"
-                @keydown.enter="addTodo" clearable persistent-clear persistent-hint :theme="activeThemeName" autofocus
+                @keydown.enter="addTodo" clearable persistent-clear persistent-hint :theme="activeThemeName"
                 hint="Press Enter key to add" auto-grow rows="1"></v-textarea>
         </div>
 

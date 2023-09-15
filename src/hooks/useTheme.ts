@@ -74,6 +74,7 @@ const toggleDark = (event?: MouseEvent) => {
 
   const x = event.clientX
   const y = event.clientY
+  
   const endRadius = Math.hypot(
     Math.max(x, innerWidth - x),
     Math.max(y, innerHeight - y),

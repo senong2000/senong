@@ -1,5 +1,5 @@
 export type TodoList = {
-    index: number
+    index?: number
     todo: string
     createdate: Date
     complete?: boolean
@@ -8,7 +8,7 @@ export type TodoList = {
 }
 
 export type TodoSpace = {
-    index: number
+    index?: number
     name: string
     todolist: TodoList[]
 }

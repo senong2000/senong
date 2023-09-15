@@ -4,20 +4,14 @@
     mix-blend-mode: normal;
 }
 ::view-transition-old(root) {
-    z-index: 1000;
+    z-index: 1;
 }
 ::view-transition-new(root) {
-    z-index: 99999;
+    z-index: 9999;
 }
 .dark::view-transition-old(root) {
-    z-index: 99999;
+    z-index: 9999;
 }
 .dark::view-transition-new(root) {
-    z-index: 1000;
-}
-
-::view-transition-old(title-0),
-::view-transition-new(title-0) {
-    animation: none;
-    mix-blend-mode: normal;
+    z-index: 1;
 }
