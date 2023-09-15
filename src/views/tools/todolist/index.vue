@@ -16,7 +16,6 @@ const spacename = ref('');
 const spaceNameInput = ref(false);
 
 const changeSpaceName = ref(false);
-const spaceNameClick = ref(0)
 
 const todo = ref('');
 
@@ -39,6 +38,7 @@ onMounted(() => {
     getTodoSpaces() && getTodoSpaces().length > 0 ? todoSpaceList.value = getTodoSpaces() : initTodoSpace()
 
     spaceIndex.value = todoSpaceList.value[0].index;
+    space.value = todoSpaceList.value[0].name
 })
 
 watch(
@@ -98,19 +98,19 @@ const addSpace = (event: KeyboardEvent) => {
 
 }
 
-const switchSpaceName = () => {
-    spaceNameClick.value = 0
-    changeSpaceName.value = false
-    triggerRef(todoSpace)
-    space.value = todoSpace.value.name
-}
 
-const clickSpaceName = () => {
-    spaceNameClick.value += 1
-    if (spaceNameClick.value < 2) return
-    spacename.value = todoSpace.value.name
-    changeSpaceName.value = true
-    spaceNameInput.value = true
+const clickSpaceName = (item: TodoSpace) => {
+    if (item.name !== space.value) {
+        triggerRef(todoSpace)
+        space.value = todoSpace.value.name
+        changeSpaceName.value = false
+        spaceNameInput.value = false
+
+    } else {
+        spacename.value = todoSpace.value.name
+        changeSpaceName.value = true
+        spaceNameInput.value = true
+    }
 }
 
 const deleteSpace = (name: string) => {
@@ -220,17 +220,17 @@ const completeList = computed(() => {
 
 </script>
 <template>
-    <div class="todo slide-enter" mb-16 >
+    <div class="todo slide-enter" mb-16>
         <div class="todo-spaces-tabs" h-16 my-8 flex flex-items-center>
-            <v-tabs v-show="!spaceNameInput" v-model="spaceIndex" align-tabs="start" selected-class="active-type"
-                hide-slider show-arrows center-active @update:modelValue="switchSpaceName">
+            <v-tabs v-show="!spaceNameInput" v-model="spaceIndex" align-tabs="start" selected-class="active-type" hide-slider
+                show-arrows center-active>
                 <v-menu open-on-hover v-for="item in todoSpaceList" :key="item.index">
                     <template v-slot:activator="{ props }">
-                        <v-tab :key="item.index" :value="item.index" variant="plain" v-bind="props" @click="clickSpaceName">
+                        <v-tab :value="item.index" variant="plain" v-bind="props" @click="clickSpaceName(item)">
                             {{ item.name }}
                         </v-tab>
                     </template>
-                    <v-list :theme="activeThemeName">
+                    <v-list :theme="activeThemeName" v-show="!spaceNameInput">
                         <v-list-item value="delete">
                             <v-list-item-title>
                                 <v-btn variant="plain" w-full>
@@ -254,9 +254,9 @@ const completeList = computed(() => {
                     </v-list>
                 </v-menu>
             </v-tabs>
-            <v-text-field v-show="spaceNameInput" class="todo-spaces-tabs-input" :theme="activeThemeName"
-                placeholder="添加空间名" hide-details="auto" v-model="spacename" @keydown.enter="addSpace"
-                variant="solo"></v-text-field>
+            <v-text-field v-if="spaceNameInput" class="todo-spaces-tabs-input" :theme="activeThemeName"
+                :autofocus="spaceNameInput" placeholder="添加空间名" hide-details="auto" v-model="spacename"
+                @keydown.enter="addSpace" variant="solo"></v-text-field>
             <v-btn v-show="!spaceNameInput" variant="plain" @click="showAddSpaceInput">
                 <v-icon>fas fa-plus</v-icon>
             </v-btn>
@@ -267,7 +267,7 @@ const completeList = computed(() => {
         </div>
         <div class="todo-list-input flex flex-items-center" py-2>
             <v-textarea placeholder="添加任务" variant="solo" hide-details="auto" v-model="todo" :rules="rules"
-                @keydown.enter="addTodo" clearable persistent-clear persistent-hint :theme="activeThemeName"
+                @keydown.enter="addTodo" clearable persistent-clear persistent-hint :theme="activeThemeName" autofocus
                 hint="Press Enter key to add" auto-grow rows="1"></v-textarea>
         </div>
 

@@ -53,7 +53,7 @@ const tools: Tool[] = [
         <v-row no-gutters>
             <v-col cols="6" v-for="item, idx in tools" :key="idx">
                 <div flex h-full>
-                    <v-card :theme="activeThemeName" variant="outlined" @click="router.push(`${route.path}/${item.route}`)"
+                    <v-card :ripple="true" :theme="activeThemeName" variant="outlined" @click="router.push(`${route.path}/${item.route}`)"
                         p-4 m-2 flex w-full>
                         <v-icon size="x-large" h-full ml-4 mr-8>{{ item.icon }}</v-icon>
                         <div flex flex-col>
