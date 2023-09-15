@@ -30,6 +30,7 @@ const selectedItem = ref<TodoList>();
 const delSpaceNamedialog = ref(false)
 const delTododialog = ref(false)
 
+const showTooltip = ref(false)
 
 const { activeThemeName } = useTheme()
 
@@ -37,7 +38,7 @@ onMounted(() => {
 
     getTodoSpaces() && getTodoSpaces().length > 0 ? todoSpaceList.value = getTodoSpaces() : initTodoSpace()
 
-    spaceIndex.value = todoSpaceList.value[0].index;
+    spaceIndex.value = todoSpaceList.value[0]?.index !== undefined ? todoSpaceList.value[0].index : -1;
     space.value = todoSpaceList.value[0].name
 })
 
@@ -95,8 +96,11 @@ const addSpace = (event: KeyboardEvent) => {
 
         if (todoSpaceList.value.findIndex(i => i.index === tempTodoSpace.index) > -1) return
 
-        if (todoSpaceList.value.findIndex(i => i.name === tempTodoSpace.name) > -1) {
-            console.log('名字重复')
+        if (todoSpaceList.value.findIndex(i => i.name.toLowerCase() === tempTodoSpace.name.toLowerCase()) > -1) {
+            showTooltip.value = true
+            setTimeout(() => {
+                showTooltip.value = false
+            }, 3000)
             return
         }
 
@@ -141,7 +145,8 @@ const deleteSpace = (name: string) => {
         todoSpaceList.value.splice(index, 1);
     }
     setTodoSpaces(todoSpaceList.value)
-    spaceIndex.value = todoSpaceList.value[0].index ? todoSpaceList.value[0].index : -1;
+
+    spaceIndex.value = todoSpaceList.value[0]?.index !== undefined ? todoSpaceList.value[0].index : -1;
     delSpaceNamedialog.value = false
 }
 
@@ -282,9 +287,15 @@ const completeList = computed(() => {
                     </v-list>
                 </v-menu>
             </v-tabs>
-            <v-text-field v-if="spaceNameInput" class="todo-spaces-tabs-input" :theme="activeThemeName"
-                :autofocus="spaceNameInput" placeholder="添加空间名" hide-details="auto" v-model="spacename"
-                @keydown.enter="addSpace" variant="solo"></v-text-field>
+
+            <v-tooltip v-model="showTooltip" location="bottom" disabled>
+                <template v-slot:activator="{ props }">
+                    <v-text-field v-if="spaceNameInput" v-bind="props" class="todo-spaces-tabs-input"
+                        :theme="activeThemeName" :autofocus="spaceNameInput" placeholder="添加空间名" hide-details="auto"
+                        v-model="spacename" @keydown.enter="addSpace" variant="solo"></v-text-field>
+                </template>
+                <span>TodoSpace already exists</span>
+            </v-tooltip>
             <v-btn v-show="!spaceNameInput" variant="plain" @click="showAddSpaceInput">
                 <v-icon>fas fa-plus</v-icon>
             </v-btn>
