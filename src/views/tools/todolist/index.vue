@@ -220,7 +220,7 @@ const completeList = computed(() => {
 
 </script>
 <template>
-    <div class="todo slide-enter">
+    <div class="todo slide-enter" mb-16 >
         <div class="todo-spaces-tabs" h-16 my-8 flex flex-items-center>
             <v-tabs v-show="!spaceNameInput" v-model="spaceIndex" align-tabs="start" selected-class="active-type"
                 hide-slider show-arrows center-active @update:modelValue="switchSpaceName">
@@ -363,9 +363,7 @@ const completeList = computed(() => {
 <style lang="scss">
 .todo {
     width: 50vw;
-    height: 100vh;
     z-index: 999;
-    margin: -2rem;
     box-sizing: border-box;
 
     &-spaces {

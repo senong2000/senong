@@ -31,7 +31,7 @@ const route = useRoute()
             color: $PrimaryColor-default;
             font-size: 16rem;
             letter-spacing: 2rem;
-            opacity: 0.1;
+            opacity: 0.05;
             user-select: none;
             transition: all .5s;
             z-index: 10;

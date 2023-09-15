@@ -34,7 +34,7 @@ const { activeThemeName } = useTheme()
 
 </script>
 <template>
-    <footer class="footer proseflex">
+    <footer class="footer prose flex">
         <span class="text-sm op50 ">2023 - PRESENT © <span @click="overlay" pointer-events-auto
                 cursor-default>Senong</span></span>
         <div class="flex-auto" />

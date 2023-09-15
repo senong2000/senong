@@ -6,6 +6,7 @@ class CacheKey {
     static ACTIVE_THEME_NAME = `${SYSTEM_NAME}-active-theme-name-key`
     static ACTIVE_RAIN = `${SYSTEM_NAME}-active-rain`
     static TODOSPACES = `${SYSTEM_NAME}-todospaces`
+    static FAVORITES = `${SYSTEM_NAME}-favorites`
 }
 
 export default CacheKey

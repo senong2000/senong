@@ -42,7 +42,7 @@ const initRain = () => {
     setRain(DEFAULT_RAIN)
     timer = setInterval(() => {
         startRainFx()
-    }, 100)
+    }, 200)
 }
 
 const setRain = (value: Rain) => {
