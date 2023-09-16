@@ -31,7 +31,6 @@ import { bundledLanguages, getHighlighter } from 'shikiji'
 // ts-expect-error missing types
 import MarkdownItToc from 'markdown-it-table-of-contents';
 import { slugify } from './scripts/slugify'
-
 // https://vitejs.dev/config/
 export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? `./` : './',
@@ -52,10 +51,14 @@ export default defineConfig({
         defineModel: true,
       },
     }),
+
+    Unocss(),
+
     vuetify({
       autoImport: true,
     }),
-    Unocss(),
+
+
     AutoImport({
       imports: ['vue', '@vueuse/core', 'vue-router', 'pinia', '@vueuse/head'],
       exclude: [
@@ -79,6 +82,7 @@ export default defineConfig({
         { dir: 'src/views/blog/**/', baseRoute: '/blog' },
         { dir: 'src/views/blog/secret/', baseRoute: '/blog/secret' },
         { dir: 'src/views/blog/secret/porn/**/', baseRoute: '/blog/secret/porn' },
+        { dir: 'src/views/projects/shader/', baseRoute: '/projects/shader' },
         { dir: 'src/views/error/', baseRoute: '' },
       ],
       extendRoute(route) {
@@ -94,6 +98,8 @@ export default defineConfig({
           route.meta = Object.assign(route.meta || {}, { frontmatter: {} })
         }
 
+        const shaderRegExp = new RegExp('/projects/shader')
+
         if (route.path === '/404') {
           return {
             ...route,
@@ -102,9 +108,26 @@ export default defineConfig({
           }
         }
 
+        else if (shaderRegExp.test(route.path)) {
+          return {
+            path: '/shader',
+            component: '/src/layout/shader/index.vue',
+            children: [
+              {
+                ...route,
+              },
+            ],
+          }
+        }
+
         return {
-          ...route,
-          path: `${route.path}`
+          path: '/website',
+          component: '/src/layout/website/index.vue',
+          children: [
+            {
+              ...route,
+            },
+          ],
         }
       },
     }),
@@ -154,11 +177,13 @@ export default defineConfig({
           }),
         })
         md.use(MarkdownItPrism)
+
         md.use(MarkdownItToc, {
           includeLevel: [1, 2, 3, 4],
           slugify,
           containerHeaderHtml: '<div class="table-of-contents-anchor"><i class="fas fa-bars-staggered v-icon notranslate v-theme--light v-icon--size-default" aria-hidden="true"></i></div>',
         })
+
         md.use(MarkdownItEmoji)
         md.use(MackdownItLinkAttributes, {
           matcher: (link: string) => /^https?:\/\//.test(link),

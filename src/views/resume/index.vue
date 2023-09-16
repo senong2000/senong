@@ -5,7 +5,7 @@ const { activeThemeName } = useTheme()
 </script>
 <template>
     <div class="resume" :theme="activeThemeName">
-
+        
     </div>
 </template>
 <style lang="scss" scoped></style>

@@ -83,4 +83,3 @@ export const getFavorites = () => {
 export const setgetFavorites = (favorites: Favorite[]) => {
   cache.set(CacheKey.FAVORITES, favorites)
 }
-

@@ -30,6 +30,8 @@ const addViewTrasition = () => {
 const route = useRoute()
 const router = useRouter()
 
+
+
 const routes: Post[] = router.getRoutes()
     .filter(i => i.path.startsWith(`${route.path}`) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
     .filter(i => !i.path.endsWith('.html'))
@@ -45,6 +47,7 @@ const routes: Post[] = router.getRoutes()
         type: i.meta.frontmatter.type
     }))
 
+
 const types = ['All', ...new Set(routes.filter(i => i.type !== null && i.type !== 'secret').map(i => i.type))].sort()
 // console.log(routes, types)
 
@@ -55,6 +58,7 @@ const posts = computed(() => {
         .filter(i => i.type !== 'secret')
         .filter(i => i.type === atype.value || atype.value === 'All' ? i : null)
 })
+
 
 const getYear = (a: Date | string | number) => new Date(a).getFullYear()
 const isFuture = (a?: Date | string | number) => a && new Date(a) > new Date()

@@ -38,7 +38,10 @@ const randomRaindropText = () => {
 }
 
 const initRain = () => {
-    rain = document.querySelector('.background-rain') as HTMLDivElement;
+    rain = document.createElement('div')
+    rain.className = 'rainfx'
+    document.body.appendChild(rain)
+
     setRain(DEFAULT_RAIN)
     timer = setInterval(() => {
         startRainFx()
@@ -72,6 +75,10 @@ const toggleRain = () => {
     }
 }
 
+const uninstallRainFx = () => {
+    document.body.removeChild(rain)
+}
+
 export const useRainFx = () => {
-    return { isRain, initRain, toggleRain }
+    return { isRain, initRain, toggleRain, uninstallRainFx }
 }

@@ -13,6 +13,7 @@ export default defineConfig({
       '--enter-stage': n,
     })],
   ],
+  
   presets: [
     presetIcons({
       extraProperties: {
@@ -37,4 +38,5 @@ export default defineConfig({
   safelist: [
     'bars',
   ],
+
 })

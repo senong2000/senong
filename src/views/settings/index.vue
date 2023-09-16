@@ -14,7 +14,6 @@ type Json = {
 
 const importData = () => {
     const fileInput = document.createElement('input');
-    document.body.appendChild(fileInput);
     fileInput.type = 'file';
     fileInput.accept = '.json';
 
@@ -48,7 +47,6 @@ const backups = () => {
     const link = document.createElement("a");
     link.download = "senong-backups.json";
     link.href = url;
-    document.body.appendChild(link);
     link.click();
 }
 

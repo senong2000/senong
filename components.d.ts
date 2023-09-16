@@ -7,18 +7,21 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AppMain: typeof import('./src/layout/AppMain/AppMain.vue')['default']
+    AppMain: typeof import('./src/layout/website/AppMain/AppMain.vue')['default']
     BlogList: typeof import('./src/components/markdown/BlogList.vue')['default']
-    BottomBar: typeof import('./src/layout/BottomBar/BottomBar.vue')['default']
+    BottomBar: typeof import('./src/layout/website/BottomBar/BottomBar.vue')['default']
     DiaryCardList: typeof import('./src/components/markdown/diary/DiaryCardList.vue')['default']
-    MainBackground: typeof import('./src/layout/AppMain/MainBackground.vue')['default']
-    NavigationBar: typeof import('./src/layout/NavigationBar/NavigationBar.vue')['default']
+    Layout: typeof import('./src/layout/index.vue')['default']
+    MainBackground: typeof import('./src/layout/website/AppMain/MainBackground.vue')['default']
+    NavigationBar: typeof import('./src/layout/website/NavigationBar/NavigationBar.vue')['default']
     PornCardList: typeof import('./src/components/markdown/porn/PornCardList.vue')['default']
     PornCarousel: typeof import('./src/components/markdown/porn/PornCarousel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SecretList: typeof import('./src/components/markdown/SecretList.vue')['default']
+    Shader: typeof import('./src/layout/shader/index.vue')['default']
     ToTopButton: typeof import('./src/components/ToTopButton.vue')['default']
+    Website: typeof import('./src/layout/website/index.vue')['default']
     WrapperMarkdown: typeof import('./src/components/wrapper/WrapperMarkdown.vue')['default']
   }
 }
