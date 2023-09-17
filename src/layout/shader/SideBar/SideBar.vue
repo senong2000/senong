@@ -14,7 +14,7 @@ type shader = {
 const shaderTab = ref(0)
 
 onMounted(() => {
-
+    shaderTab.value = shaders.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[3]) > -1 ? shaders.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[3]) + 1 : 0
 })
 
 const toShader = (item: shader) => {
@@ -35,7 +35,7 @@ const shadersArr = computed(() => {
 
 const routes = router.getRoutes()
 const shaders: shader[] = routes
-    .filter(i => i.path.startsWith(`${route.path}/`)).map(i => ({
+    .filter(i => i.path.startsWith(`/projects/shader/`)).map(i => ({
         title: (i.name as string).split("-")[2],
         route: i.path
     }))
