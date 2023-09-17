@@ -27,8 +27,6 @@ const startRainFx = () => {
     setTimeout(() => {
         rain.removeChild(raindrop)
     }, 10000)
-
-
 }
 
 const randomRaindropText = () => {
@@ -76,6 +74,7 @@ const toggleRain = () => {
 }
 
 const uninstallRainFx = () => {
+    clearInterval(timer)
     document.body.removeChild(rain)
 }
 

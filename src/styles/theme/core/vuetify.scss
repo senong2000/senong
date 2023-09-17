@@ -3,3 +3,10 @@
 .v-field--focused {
     background-color: $input-focus-bg-color !important;
 }
+
+
+.side-bar {
+    .tab-active {
+        border: 1px solid $border-color;
+    }
+}

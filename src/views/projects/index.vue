@@ -28,6 +28,7 @@ const projects = computed(() => {
     }))
 })
 
+
 </script>
 <template>
     <div class="projects">

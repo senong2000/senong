@@ -9,7 +9,7 @@ const key = computed(() => {
 
 </script>
 <template>
-    <main class="app-main">
+    <div class="canvas-main">
         <RouterView v-slot="{ Component }">
             <Transition name="fade" mode="out-in">
                 <KeepAlive>
@@ -17,12 +17,11 @@ const key = computed(() => {
                 </KeepAlive>
             </Transition>
         </RouterView>
-    </main>
+    </div>
 </template>
 <style lang="scss" scoped>
-.app-main {
+.canvas-main {
     display: flex;
-    justify-content: center;
     width: 100%;
 }
 </style>
