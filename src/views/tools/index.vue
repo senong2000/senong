@@ -39,9 +39,9 @@ const tools: Tool[] = [
         desc: '记账工具，它可以帮助用户跟踪和管理收入、支出、债务和资产等财务数据，以便更好地控制和规划财务状况。'
     },
     {
-        route: 'luckyday',
-        icon: 'fas fa-star',
-        title: 'lucky day',
+        route: 'dogshit',
+        icon: 'fas fa-poo',
+        title: 'dog shit',
         desc: '用于测试和预测用户在今天的狗屎运。'
     },
     {

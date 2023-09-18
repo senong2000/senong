@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 
 import { useTheme } from '@/hooks/useTheme';
-import { TodoList, TodoSpace } from '@/types/todolist'
+import { TodoList, TodoSpace } from '@/types/projects'
 import { getTodoSpaces, setTodoSpaces } from "@/utils/cache/localStorage"
 import { formatDate, diffDate } from '@/utils/date';
 
 import { VDatePicker } from 'vuetify/labs/components';
-
 
 const space = ref('Default')
 const spaceIndex = ref(0)
