@@ -27,32 +27,37 @@ const backToProjects = () => {
     router.push('/projects')
 }
 
-const routes = router.getRoutes()
+let shadersRef = ref<shader[]>([])
+shadersRef.value = router.getRoutes()
+    .filter(i => i.path.startsWith(`/projects/shader/`)).map(i => ({
+        title: (i.name as string).split("-")[2],
+        route: i.path
+    }))
+    .sort((a, b) => {
+        const numA = parseFloat(a.title);
+        const numB = parseFloat(b.title);
+        return numA - numB;
+    }).map((i, idx) => ({
+        index: idx,
+        title: i.title,
+        route: i.route
+    }))
+
+shadersRef.value = [{ index: 0, title: 'home', route: '/projects/shader' }, ...shadersRef.value]
+
 const shaders = computed(() => {
-    return routes
-        .filter(i => i.path.startsWith(`/projects/shader/`)).map(i => ({
-            title: (i.name as string).split("-")[2],
-            route: i.path
-        }))
-        .sort((a, b) => {
-            const numA = parseFloat(a.title);
-            const numB = parseFloat(b.title);
-            return numA - numB;
-        }).map((i, idx) => ({
-            index: idx,
-            title: i.title,
-            route: i.route
-        }));
+    return shadersRef.value;
 })
 
+const getShaders = shadersRef.value;
+
 const searchShader = () => {
-
-    if (shaderInput.value === '') return
-
-    
-
+    if (shaderInput.value === null) {
+        shadersRef.value = getShaders
+    } else {
+        shadersRef.value = getShaders.filter(i => i.title.toLocaleLowerCase().includes(shaderInput.value.toLocaleLowerCase()))
+    }
 }
-
 
 </script>
 <template>
@@ -71,7 +76,8 @@ const searchShader = () => {
                         </div>
 
                         <v-text-field placeholder="shader" variant="solo" hide-details="auto" v-model="shaderInput"
-                            @keydown.enter="searchShader" clearable persistent-clear persistent-hint>
+                            @keydown.enter="searchShader" @click:clear="searchShader" clearable persistent-clear
+                            persistent-hint>
                             <template v-slot:append-inner>
                                 <v-icon icon="fas fa-magnifying-glass" size="small" @click="searchShader"></v-icon>
                             </template>
@@ -83,11 +89,6 @@ const searchShader = () => {
                     <div class="d-flex flex-row">
                         <v-tabs w-full v-model="shaderTab" direction="vertical" align-tabs="start"
                             selected-class="tab-active" hide-slider p-4>
-
-                            <v-tab @click="router.push('/projects/shader')" value="0" class="my-2 b-rd-4!">
-                                <span>Home</span>
-                            </v-tab>
-
                             <v-tab v-for="item, idx in shaders" :key="idx" @click="toShader(item)" :value="idx + 1"
                                 class="my-2 b-rd-4!">
                                 <span>{{ item.title }}</span>

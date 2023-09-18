@@ -44,6 +44,12 @@ const tools: Tool[] = [
         title: 'lucky day',
         desc: '用于测试和预测用户在今天的狗屎运。'
     },
+    {
+        route: 'schedule',
+        icon: 'fas fa-calendar',
+        title: 'schedule',
+        desc: '日程表是一种用于管理和安排个人或团队的日常活动和任务的工具，亦可以用来作个人作息表等等。'
+    },
 
 ]
 
