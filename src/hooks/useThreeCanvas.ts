@@ -197,16 +197,16 @@ export class ThreeCanvas {
 
         if (process.env.NODE_ENV === "development") {
             //热更新会创建多个实例 删除之前的实例
-            const oldInst = document.querySelector(".dg");
+            const oldInst = document.querySelector(".dg.main");
             oldInst?.parentElement?.removeChild(oldInst);
-        }
+        };
 
         this.gui = new GUI();
-
-        this.guidom = document.querySelector('.dg')!;
-        document.body.removeChild(this.guidom);
-        document.querySelector('.canvas')!.appendChild(this.guidom);
-
+        
+        document.querySelector('.canvas')!.appendChild(this.gui.domElement);
+        this.gui.domElement.style.position = 'absolute';
+        this.gui.domElement.style.top = '0';
+        this.gui.domElement.style.right = '0';
         this._initGuiCallBack();
     }
 
@@ -241,7 +241,7 @@ export class ThreeCanvas {
     public updateStats = () => {
         this.stats && this.stats.update();
     }
-    
+
 
     private axesHelper!: AxesHelper;
     public initAxesHelper = () => {
