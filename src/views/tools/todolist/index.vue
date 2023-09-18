@@ -431,10 +431,6 @@ const completeList = computed(() => {
                     transition: all .3s;
 
                 }
-
-                .v-field--focused {
-                    // background: none !important;
-                }
             }
         }
     }

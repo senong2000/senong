@@ -3,7 +3,7 @@
  */
 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { Object3D, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
+import { AxesHelper, Clock, GridHelper, Object3D, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three';
 import { GUI } from "dat.gui";
 import Stats from "three/examples/jsm/libs/stats.module";
 
@@ -53,9 +53,9 @@ export class ThreeCanvas {
 
     private initCamera() {
         this.camera = new PerspectiveCamera(75, this.WIDTH / this.HEIGHT, 0.1, 1000);
-        this.camera.position.x = 0;
-        this.camera.position.y = 0;
-        this.camera.position.z = 8;
+        this.camera.position.x = 5;
+        this.camera.position.y = 5;
+        this.camera.position.z = 5;
         this.camera.lookAt(new Vector3(0, 0, 0));
     }
 
@@ -110,6 +110,10 @@ export class ThreeCanvas {
 
 
     // animation
+    private clock = new Clock();
+    private delta = 0; // 时间间隔
+    private fps_60 = 60
+    private fps_30 = 30
     private runAnimate = true;
     protected _animation: VoidFunction = () => { };
     /**
@@ -117,9 +121,19 @@ export class ThreeCanvas {
      */
     private frameByFrame = () => {
         this.frameHandle = requestAnimationFrame(this.frameByFrame);
-        this.runAnimate && this._animation();
-        this.orbitControls.update();
-        this.render();
+        // 计算与上一帧的时间差
+        this.delta += this.clock.getDelta();
+        // 如果时间差小于 16.7 毫秒，则等待剩余时间
+        if (this.delta > 1 / this.fps_60) {
+
+            this.runAnimate && this._animation();
+            this.orbitControls.update();
+            this.render();
+
+            this.delta = 0;
+        }
+
+
     }
     animation(call: VoidFunction) {
         this._animation = call;
@@ -133,15 +147,23 @@ export class ThreeCanvas {
         this.frameHandle = 0;
     }
 
+    // Scene Api
+    public addObject(...object: Object3D<THREE.Event>[]) {
+        this.scene.add(...object);
+    }
+    public removeObject(...object: Object3D<THREE.Event>[]) {
+        this.scene.remove(...object);
+    }
+
     /**
      * @description 移除Scene
      */
-    _removeTheSceneCallBack = () => { };
-    public removeTheScene = (obj: any) => {
+    _removeSceneCallBack = () => { };
+    public removeScene = (obj: any) => {
         // console.log(obj)
 
         while (obj.children.length > 0) {
-            this.removeTheScene(obj.children[0])
+            this.removeScene(obj.children[0])
             obj.remove(obj.children[0]);
         }
         if (obj.geometry) obj.geometry.dispose()
@@ -157,14 +179,16 @@ export class ThreeCanvas {
             obj.material.dispose()
         }
 
-        this._removeTheSceneCallBack();
+        this._removeSceneCallBack();
 
     }
 
-    public removeTheSceneCallBack(call: VoidFunction) {
-        this._removeTheSceneCallBack = call;
+    public removeSceneCallBack(call: VoidFunction) {
+        this._removeSceneCallBack = call;
     }
 
+
+    // 辅助工具
 
     public gui!: GUI;
     _initGuiCallBack = () => { };
@@ -173,7 +197,6 @@ export class ThreeCanvas {
             //热更新会创建多个实例 删除之前的实例
             const oldInst = document.querySelector(".dg.main");
             oldInst?.parentElement?.removeChild(oldInst);
-            // console.log("del", );
         }
 
         this.gui = new GUI();
@@ -185,6 +208,21 @@ export class ThreeCanvas {
         this._initGuiCallBack = call;
     }
 
+    public uninstallGui() {
+        const oldInst = document.querySelector(".dg.main");
+        oldInst?.parentElement?.removeChild(oldInst);
+    }
+
+    /**
+     * @description 选择框
+     * @param options 
+     * @param defaultValue 
+     * @param name 
+     * @returns gui add api
+     */
+    public guiOptions = (options: any[], defaultValue: any, name: string) => {
+        return this.gui.add({ [name]: defaultValue }, name).options(options);
+    };
 
     private stats!: Stats;
     public initStats = () => {
@@ -201,12 +239,49 @@ export class ThreeCanvas {
     public updateStats = () => {
         this.stats && this.stats.update();
     }
-
-    public addObject(...object: Object3D<THREE.Event>[]) {
-        this.scene.add(...object);
+    public uninstallStats = () => {
+        document.body.appendChild(this.stats.dom);
     }
-}
 
-export const useThreeCanvas = () => {
-    return {};
+    private axesHelper!: AxesHelper;
+    public initAxesHelper = () => {
+        // 坐标辅助
+        this.axesHelper = new AxesHelper(length || 10);
+        this.axesHelper.position.set(0, 0, 0);
+        // 让辅助显示 射线交集 为空 就不会被识取到
+        this.axesHelper.raycast = () => { };
+
+        this.scene.add(this.axesHelper);
+
+        this.axesHelper.visible = true;
+
+        const params = {
+            showAxesHelper: true,
+        };
+
+        this.gui.add(params, 'showAxesHelper').name('axes').onChange((value) => {
+            this.axesHelper.visible = value;
+        })
+
+
+    }
+
+    private gridHelper!: GridHelper;
+    public initGridHelper = () => {
+        // 地板网格 辅助显示
+        this.gridHelper = new GridHelper(100, 10, 'rgb(200,200,200)', 'rgb(100,100,100)');
+        this.gridHelper.raycast = () => { };
+
+        this.scene.add(this.gridHelper);
+
+        this.gridHelper.visible = true;
+
+        const params = {
+            showGridHelper: true,
+        };
+
+        this.gui.add(params, 'showGridHelper').name('grid').onChange((value) => {
+            this.gridHelper.visible = value;
+        })
+    }
 }

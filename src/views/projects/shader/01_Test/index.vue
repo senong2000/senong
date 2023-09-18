@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 
-import { ThreeCanvas, useThreeCanvas } from '@/hooks/useThreeCanvas'
+import { ThreeCanvas } from '@/hooks/useThreeCanvas'
 import { BoxGeometry, Mesh, MeshBasicMaterial } from 'three';
-
-const { } = useThreeCanvas()
 
 const canvas = ref<HTMLElement>()
 
@@ -19,22 +17,27 @@ const initThreeCanvas = () => {
         const cube = new Mesh(geometry, material);
         threeCanvas.addObject(cube);
         threeCanvas.initStats();
-
-
+        threeCanvas.initGui();
     })
-
 
     threeCanvas.animation(() => {
         threeCanvas.updateStats();
     })
+
+    threeCanvas.initGuiCallBack(() => {
+        threeCanvas.initAxesHelper();
+        threeCanvas.initGridHelper();
+    })
+
 }
 
 onMounted(() => {
     initThreeCanvas()
 })
 
-onUnmounted(() => {
-
+onBeforeRouteLeave(() => {
+    threeCanvas.uninstallGui()
+    threeCanvas.uninstallStats()
 })
 
 </script>
