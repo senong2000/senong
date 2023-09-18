@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { Post } from '@/types/markdown';
 import { formatDate } from '@/utils/date'
+import { useTheme } from '@/hooks/useTheme';
+
+const { activeThemeName } = useTheme()
 
 const router = useRouter()
 const route = useRoute()
@@ -21,7 +24,8 @@ const routes: Post[] = router.getRoutes()
 </script>
 <template>
     <div class="diary-card">
-        <v-card v-for="route in routes" my-4 class="mx-auto" :key="route.title" @click="router.push(route.path)">
+        <v-card :theme="activeThemeName" v-for="route in routes" my-4 class="mx-auto" :key="route.title"
+            @click="router.push(route.path)">
             <v-card-actions>
                 <v-card-title class="text-black" v-text="route.title"></v-card-title>
                 <span> {{ formatDate(route.date, 'diy', 'MMM D') }} </span>

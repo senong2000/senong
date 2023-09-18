@@ -35,10 +35,6 @@ onMounted(() => {
     initThreeCanvas()
 })
 
-onBeforeRouteLeave(() => {
-    threeCanvas.uninstallGui()
-    threeCanvas.uninstallStats()
-})
 
 </script>
 <template>

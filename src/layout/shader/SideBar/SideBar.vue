@@ -49,6 +49,7 @@ const searchShader = () => {
 
     if (shaderInput.value === '') return
 
+    
 
 }
 
@@ -69,8 +70,8 @@ const searchShader = () => {
                             </v-btn>
                         </div>
 
-                        <v-text-field placeholder="shader" variant="solo" hide-details="auto" v-model="shaderInput" @keydown.enter="searchShader"
-                            clearable persistent-clear persistent-hint>
+                        <v-text-field placeholder="shader" variant="solo" hide-details="auto" v-model="shaderInput"
+                            @keydown.enter="searchShader" clearable persistent-clear persistent-hint>
                             <template v-slot:append-inner>
                                 <v-icon icon="fas fa-magnifying-glass" size="small" @click="searchShader"></v-icon>
                             </template>
@@ -83,12 +84,12 @@ const searchShader = () => {
                         <v-tabs w-full v-model="shaderTab" direction="vertical" align-tabs="start"
                             selected-class="tab-active" hide-slider p-4>
 
-                            <v-tab @click="router.push('/projects/shader')" value="0" my-2>
+                            <v-tab @click="router.push('/projects/shader')" value="0" class="my-2 b-rd-4!">
                                 <span>Home</span>
                             </v-tab>
 
-                            <v-tab v-for="item, idx in shaders" :key="idx" @click="toShader(item)" :value="idx + 1" my-2
-                                b-rd-16>
+                            <v-tab v-for="item, idx in shaders" :key="idx" @click="toShader(item)" :value="idx + 1"
+                                class="my-2 b-rd-4!">
                                 <span>{{ item.title }}</span>
                                 {{ }}
                             </v-tab>

@@ -191,26 +191,27 @@ export class ThreeCanvas {
     // 辅助工具
 
     public gui!: GUI;
+    public guidom!: HTMLElement;
     _initGuiCallBack = () => { };
     public initGui() {
+
         if (process.env.NODE_ENV === "development") {
             //热更新会创建多个实例 删除之前的实例
-            const oldInst = document.querySelector(".dg.main");
+            const oldInst = document.querySelector(".dg");
             oldInst?.parentElement?.removeChild(oldInst);
         }
 
         this.gui = new GUI();
+
+        this.guidom = document.querySelector('.dg')!;
+        document.body.removeChild(this.guidom);
+        document.querySelector('.canvas')!.appendChild(this.guidom);
 
         this._initGuiCallBack();
     }
 
     public initGuiCallBack(call: VoidFunction) {
         this._initGuiCallBack = call;
-    }
-
-    public uninstallGui() {
-        const oldInst = document.querySelector(".dg.main");
-        oldInst?.parentElement?.removeChild(oldInst);
     }
 
     /**
@@ -230,7 +231,8 @@ export class ThreeCanvas {
         if (this.stats) return;
         const stats = new Stats();
         this.stats = stats;
-        document.body.appendChild(stats.dom);
+
+        document.querySelector('.canvas')!.appendChild(stats.dom);
         stats.dom.style.top = "auto";
         stats.dom.style.bottom = "0";
         stats.dom.style.left = "auto";
@@ -239,9 +241,7 @@ export class ThreeCanvas {
     public updateStats = () => {
         this.stats && this.stats.update();
     }
-    public uninstallStats = () => {
-        document.body.appendChild(this.stats.dom);
-    }
+    
 
     private axesHelper!: AxesHelper;
     public initAxesHelper = () => {
@@ -259,7 +259,7 @@ export class ThreeCanvas {
             showAxesHelper: true,
         };
 
-        this.gui.add(params, 'showAxesHelper').name('axes').onChange((value) => {
+        this.gui.add(params, 'showAxesHelper').name('Axes Helper').onChange((value) => {
             this.axesHelper.visible = value;
         })
 
@@ -280,7 +280,7 @@ export class ThreeCanvas {
             showGridHelper: true,
         };
 
-        this.gui.add(params, 'showGridHelper').name('grid').onChange((value) => {
+        this.gui.add(params, 'showGridHelper').name('Grid Helper').onChange((value) => {
             this.gridHelper.visible = value;
         })
     }
