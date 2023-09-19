@@ -76,7 +76,7 @@ const searchShader = () => {
                         </div>
 
                         <v-text-field placeholder="shader" variant="solo" hide-details="auto" v-model="shaderInput"
-                            @keydown.enter="searchShader" @click:clear="searchShader" clearable persistent-clear
+                            @input="searchShader"  @click:clear="searchShader" clearable persistent-clear
                             persistent-hint>
                             <template v-slot:append-inner>
                                 <v-icon icon="fas fa-magnifying-glass" size="small" @click="searchShader"></v-icon>

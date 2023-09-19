@@ -7,6 +7,10 @@ class CacheKey {
     static ACTIVE_RAIN = `${SYSTEM_NAME}-active-rain`
     static TODOSPACES = `${SYSTEM_NAME}-todospaces`
     static FAVORITES = `${SYSTEM_NAME}-favorites`
+    static ACCOUNT = `${SYSTEM_NAME}-account`
+    static DOGSHIT = `${SYSTEM_NAME}-dogshit`
+    static SCHEDULE = `${SYSTEM_NAME}-schedule`
+    static MCSKIN = `${SYSTEM_NAME}-mcskin`
 }
 
 export default CacheKey

@@ -27,10 +27,9 @@ const routes: Post[] = router.getRoutes()
         <v-card :theme="activeThemeName" v-for="route in routes" my-4 class="mx-auto" :key="route.title"
             @click="router.push(route.path)">
             <v-card-actions>
-                <v-card-title class="text-black" v-text="route.title"></v-card-title>
+                <v-card-title v-text="route.title"></v-card-title>
                 <span> {{ formatDate(route.date, 'diy', 'MMM D') }} </span>
                 <v-spacer></v-spacer>
-                <v-btn size="large" color="surface-variant" variant="plain" icon="fas fa-forward"></v-btn>
             </v-card-actions>
         </v-card>
     </div>
