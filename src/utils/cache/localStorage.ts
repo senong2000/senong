@@ -3,10 +3,7 @@
 import CacheKey from "@/constants/cacheKey"
 import { type ThemeName } from "@/hooks/useTheme"
 import { type Rain } from '@/hooks/useRainFx'
-import { TodoSpace } from "@/types/projects"
-import { Favorite } from "@/types/projects"
-import { Account } from "@/types/projects"
-
+import { Favorites, TodoSpace,Account } from "@/types/projects"
 class Cache {
   public name: string
 
@@ -79,9 +76,9 @@ export const setTodoSpaces = (todoSpaces: TodoSpace[]) => {
 }
 
 export const getFavorites = () => {
-  return cache.get(CacheKey.FAVORITES) as Favorite[]
+  return cache.get(CacheKey.FAVORITES) as Favorites[]
 }
-export const setFavorites = (favorites: Favorite[]) => {
+export const setFavorites = (favorites: Favorites[]) => {
   cache.set(CacheKey.FAVORITES, favorites)
 }
 

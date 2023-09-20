@@ -21,6 +21,14 @@ export type TodoSpace = {
  * @description favorite
  */
 
+
+
+export type Favorites = {
+    index?: number
+    title: string
+    favoriteList: Favorite[]
+}
+
 export type Favorite = {
     index?: number
     title?: string

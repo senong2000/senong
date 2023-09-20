@@ -1,19 +1,20 @@
 <script lang="ts" setup>
 
 import { useTheme } from '@/hooks/useTheme';
-import { Favorite } from "@/types/projects";
+import { Favorite, Favorites } from "@/types/projects";
 import { getFavorites, setFavorites } from '@/utils/cache/localStorage'
 
 const { activeThemeName } = useTheme();
 
 const favoriteDialog = ref(false);
 
-const favoritesRef = ref<Favorite[]>([]);
+const favoritesRef = ref<Favorites[]>([]);
+
 
 const title = ref<string>();
 const desc = ref<string>();
 const url = ref<string>();
-const type = ref<string[]>([])
+const type = ref<string>()
 const types = ref<string[]>([]);
 
 onMounted(() => {
@@ -28,28 +29,47 @@ const favorites = computed(() => {
     return favoritesRef.value.map((i, idx) => ({
         index: idx,
         title: i.title,
+        favoriteList: i.favoriteList
+    }))
+})
+
+const favoriteList = computed(() => {
+    console.log(favorites.value)
+    return favorites.value.map(i => i.favoriteList.map((i, idx) => ({
+        index: idx,
+        title: i.title,
         desc: i.desc,
         type: i.type,
         url: i.url,
         cover: i.cover
-    }))
+    })))
 })
 
 const addFavorite = async () => {
 
     console.log(title.value, desc.value, url.value, type.value)
+
     if (url.value === undefined) return;
 
     const tempFavorite = {
         title: '',
         desc: '',
         type: '',
-        url: url.value!,
+        url: url.value,
         cover: ''
     }
 
-    favoritesRef.value.unshift(tempFavorite);
-    await setFavorites(favoritesRef.value);
+    if (favorites.value.find(i => i.title === type.value) === undefined) {
+        const Favorites = {
+            title: type.value as string,
+            favoriteList: [],
+        }
+        favoritesRef.value.unshift(Favorites)
+    }
+
+    favorites.value.find(i => i.title === type.value)!.favoriteList.unshift(tempFavorite);
+    
+    await setFavorites(favorites.value);
 
     favoriteDialog.value = false;
 
@@ -86,8 +106,7 @@ const importFavorites = () => {
                                         <v-text-field v-model="url" variant="solo" label="url" required></v-text-field>
                                     </v-col>
                                     <v-col cols="12">
-                                        <v-combobox v-model="type" :items="types" variant="solo" label="Types"
-                                            multiple></v-combobox>
+                                        <v-combobox v-model="type" :items="types" variant="solo" label="Types"></v-combobox>
                                     </v-col>
 
                                 </v-row>
@@ -115,12 +134,13 @@ const importFavorites = () => {
         </v-list>
 
         <v-row no-gutters :theme="activeThemeName">
-            <v-col v-for="item, idx in favorites" :key="idx">
+            <v-col v-for="item, idx in favoriteList" :key="idx">
                 <v-card :theme="activeThemeName">
                     {{ item }}
                 </v-card>
             </v-col>
         </v-row>
+
     </div>
 </template>
 <style lang="scss" scoped>
