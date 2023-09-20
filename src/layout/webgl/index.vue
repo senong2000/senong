@@ -9,7 +9,7 @@ onMounted(() => {
 
 </script>
 <template>
-    <div class="shader-layout">
+    <div class="webgl-layout">
         <SideBar></SideBar>
         <CanvasMain></CanvasMain>
     </div>
@@ -18,7 +18,7 @@ onMounted(() => {
 // 样式格式化
 @import "/src/styles/mixins.scss";
 
-.shader-layout {
+.webgl-layout {
     @include clearfix;
     width: 100vw;
     min-height: 100vh;

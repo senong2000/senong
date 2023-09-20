@@ -5,21 +5,21 @@ const { activeThemeName, toggleDark, isDark } = useTheme()
 const route = useRoute()
 const router = useRouter()
 
-type shader = {
+type webgl = {
     index?: number
     title: string
     route: string
 }
 
-const shaderTab = ref(0)
+const webglTab = ref(0)
 
-const shaderInput = ref('')
+const webglInput = ref('')
 
 onMounted(() => {
-    shaderTab.value = shaders.value.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[3]) > -1 ? shaders.value.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[3]) + 1 : 0
+    webglTab.value = webgls.value.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[3]) > -1 ? webgls.value.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[3]) + 1 : 0
 })
 
-const toShader = (item: shader) => {
+const toWebGL = (item: webgl) => {
     router.push(`${item.route}`)
 }
 
@@ -27,9 +27,9 @@ const backToProjects = () => {
     router.push('/projects')
 }
 
-let shadersRef = ref<shader[]>([])
-shadersRef.value = router.getRoutes()
-    .filter(i => i.path.startsWith(`/projects/shader/`)).map(i => ({
+let webglsRef = ref<webgl[]>([])
+webglsRef.value = router.getRoutes()
+    .filter(i => i.path.startsWith(`/projects/webgl/`)).map(i => ({
         title: (i.name as string).split("-")[2],
         route: i.path
     }))
@@ -43,19 +43,21 @@ shadersRef.value = router.getRoutes()
         route: i.route
     }))
 
-shadersRef.value = [{ index: 0, title: 'home', route: '/projects/shader' }, ...shadersRef.value]
+console.log(webglsRef.value)
 
-const shaders = computed(() => {
-    return shadersRef.value;
+webglsRef.value = [{ index: 0, title: 'home', route: '/projects/webgl' }, ...webglsRef.value]
+
+const webgls = computed(() => {
+    return webglsRef.value;
 })
 
-const getShaders = shadersRef.value;
+const getWebGLs = webglsRef.value;
 
-const searchShader = () => {
-    if (shaderInput.value === null) {
-        shadersRef.value = getShaders
+const searchWebGL = () => {
+    if (webglInput.value === null) {
+        webglsRef.value = getWebGLs
     } else {
-        shadersRef.value = getShaders.filter(i => i.title.toLocaleLowerCase().includes(shaderInput.value.toLocaleLowerCase()))
+        webglsRef.value = getWebGLs.filter(i => i.title.toLocaleLowerCase().includes(webglInput.value.toLocaleLowerCase()))
     }
 }
 
@@ -75,11 +77,10 @@ const searchShader = () => {
                             </v-btn>
                         </div>
 
-                        <v-text-field placeholder="shader" variant="solo" hide-details="auto" v-model="shaderInput"
-                            @input="searchShader"  @click:clear="searchShader" clearable persistent-clear
-                            persistent-hint>
+                        <v-text-field placeholder="webgl" variant="solo" hide-details="auto" v-model="webglInput"
+                            @input="searchWebGL" @click:clear="searchWebGL" clearable persistent-clear persistent-hint>
                             <template v-slot:append-inner>
-                                <v-icon icon="fas fa-magnifying-glass" size="small" @click="searchShader"></v-icon>
+                                <v-icon icon="fas fa-magnifying-glass" size="small" @click="searchWebGL"></v-icon>
                             </template>
                         </v-text-field>
 
@@ -87,9 +88,9 @@ const searchShader = () => {
                     </template>
                     <v-divider></v-divider>
                     <div class="d-flex flex-row">
-                        <v-tabs w-full v-model="shaderTab" direction="vertical" align-tabs="start"
+                        <v-tabs w-full v-model="webglTab" direction="vertical" align-tabs="start"
                             selected-class="tab-active" hide-slider p-4>
-                            <v-tab v-for="item, idx in shaders" :key="idx" @click="toShader(item)" :value="idx + 1"
+                            <v-tab v-for="item, idx in webgls" :key="idx" @click="toWebGL(item)" :value="idx + 1"
                                 class="my-2 b-rd-4!">
                                 <span>{{ item.title }}</span>
                                 {{ }}

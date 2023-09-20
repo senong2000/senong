@@ -82,7 +82,7 @@ export default defineConfig({
         { dir: 'src/views/blog/**/', baseRoute: '/blog' },
         { dir: 'src/views/blog/secret/', baseRoute: '/blog/secret' },
         { dir: 'src/views/blog/secret/porn/**/', baseRoute: '/blog/secret/porn' },
-        { dir: 'src/views/projects/shader/', baseRoute: '/projects/shader' },
+        { dir: 'src/views/projects/webgl/**/', baseRoute: '/projects/webgl/' },
         { dir: 'src/views/error/', baseRoute: '' },
       ],
       extendRoute(route) {
@@ -98,7 +98,7 @@ export default defineConfig({
           route.meta = Object.assign(route.meta || {}, { frontmatter: {} })
         }
 
-        const shaderRegExp = new RegExp('/projects/shader')
+        const webglRegExp = new RegExp('/projects/webgl')
 
         if (route.path === '/404') {
           return {
@@ -108,10 +108,10 @@ export default defineConfig({
           }
         }
 
-        else if (shaderRegExp.test(route.path)) {
+        else if (webglRegExp.test(route.path)) {
           return {
-            path: '/shader',
-            component: '/src/layout/shader/index.vue',
+            path: '/webgl',
+            component: '/src/layout/webgl/index.vue',
             children: [
               {
                 ...route,
@@ -119,15 +119,16 @@ export default defineConfig({
             ],
           }
         }
-
-        return {
-          path: '/website',
-          component: '/src/layout/website/index.vue',
-          children: [
-            {
-              ...route,
-            },
-          ],
+        else {
+          return {
+            path: '/website',
+            component: '/src/layout/website/index.vue',
+            children: [
+              {
+                ...route,
+              },
+            ],
+          }
         }
       },
     }),

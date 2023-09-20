@@ -14,9 +14,9 @@ type project = {
 
 const projectsArr: project[] = [
     {
-        title: 'Shader',
+        title: 'WebGL',
         cover: '/images/secret/porn/azumimizushima/cover.png',
-        route: 'shader'
+        route: 'webGL'
     }
 ]
 
@@ -36,7 +36,7 @@ const projects = computed(() => {
             <v-col cols="12" v-for="item, idx in projects" :key="idx">
                 <v-card :theme="activeThemeName" :ripple="true" class="projects-card"
                     @click="router.push(`${route.path}/${item.route}`)" m-2 flex flex-items-center flex-justify-center>
-                    <v-img :src="item.cover" cover aspect-ratio="16/9" class="projects-card-cover align-center max-h-64!" >
+                    <v-img :src="item.cover" cover aspect-ratio="16/9" class="projects-card-cover align-center max-h-64!">
                         <span class="projects-card-cover-title" uppercase flex justify-center text-8>{{ item.title
                         }}</span>
                     </v-img>

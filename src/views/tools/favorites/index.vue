@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 import { useTheme } from '@/hooks/useTheme';
-import { Favorite, Favorites } from "@/types/projects";
+import { Favorites } from "@/types/projects";
 import { getFavorites, setFavorites } from '@/utils/cache/localStorage'
 
 const { activeThemeName } = useTheme();
@@ -117,7 +117,7 @@ const importFavorites = () => {
                     <v-layout>
                         <v-navigation-drawer absolute permanent>
                             <div class="d-flex flex-row">
-                                <v-tabs v-model="typeTab" direction="vertical" align-tabs="start">
+                                <v-tabs v-model="typeTab" direction="vertical" align-tabs="start" w-full>
                                     <v-tab v-for="item, idx in typeTabs" :key="idx" :value="item">
                                         <span>{{ item }}</span>
                                     </v-tab>
@@ -186,7 +186,7 @@ const importFavorites = () => {
                 <v-row no-gutters :theme="activeThemeName">
                     <v-col v-for="item, idx in favoriteList" :key="idx" cols="4">
                         <v-card :theme="activeThemeName" @click="toUrl(item.url)" class="flex! p-2! h-full" rounded="0">
-                            <v-row flex-items-center w-full >
+                            <v-row flex-items-center w-full>
                                 <v-col cols="3">
                                     <v-avatar color="surface-variant" class="mr-4"></v-avatar>
                                 </v-col>
