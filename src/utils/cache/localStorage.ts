@@ -60,11 +60,11 @@ export const setActiveThemeName = (themeName: ThemeName) => {
   cache.set(CacheKey.ACTIVE_THEME_NAME, themeName)
 }
 
-export const getCodeRain = () => {
-  return cache.get(CacheKey.CODE_RAIN) as boolean
+export const getRainFx = () => {
+  return cache.get(CacheKey.RAINFX) as boolean
 }
-export const setCodeRain = (rain: string) => {
-  cache.set(CacheKey.CODE_RAIN, rain)
+export const setRainFx = (rainfx: string) => {
+  cache.set(CacheKey.RAINFX, rainfx)
 }
 
 export const getTodoSpaces = () => {

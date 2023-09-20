@@ -4,7 +4,7 @@ const SYSTEM_NAME = "Vite"
 class CacheKey {
     static TOKEN = `${SYSTEM_NAME}-token-key`
     static ACTIVE_THEME_NAME = `${SYSTEM_NAME}-active-theme-name-key`
-    static CODE_RAIN = `${SYSTEM_NAME}-code-rain`
+    static RAINFX = `${SYSTEM_NAME}-rainfx`
     static TODOSPACES = `${SYSTEM_NAME}-todospaces`
     static FAVORITES = `${SYSTEM_NAME}-favorites`
     static ACCOUNT = `${SYSTEM_NAME}-account`

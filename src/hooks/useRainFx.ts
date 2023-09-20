@@ -1,10 +1,10 @@
-import { getCodeRain, setCodeRain } from "@/utils/cache/localStorage"
+import { getRainFx, setRainFx } from "@/utils/cache/localStorage"
 
 let rain: HTMLDivElement;
 // @ts-ignore
 let timer: NodeJS.Timeout;
 
-const isRain = ref<boolean>(getCodeRain())
+const isRain = ref<boolean>(getRainFx())
 
 const startRainFx = () => {
     let raindrop = document.createElement('div')
@@ -33,7 +33,7 @@ const randomRaindropText = () => {
 }
 
 const initRain = () => {
-    setCodeRain(isRain.value ? 'true' : 'false')
+    setRainFx(isRain.value ? 'true' : 'false')
 
     rain = document.createElement('div')
     rain.className = 'rainfx'
@@ -50,7 +50,7 @@ const initRain = () => {
 const setRain = (value: string) => {
 
     value === 'true' ? isRain.value = true : isRain.value = false
-    setCodeRain(value)
+    setRainFx(value)
 }
 
 const updateRain = () => {
