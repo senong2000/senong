@@ -10,20 +10,16 @@ const favoriteDialog = ref(false);
 
 const favoritesRef = ref<Favorites[]>([]);
 
-
 const title = ref<string>();
 const desc = ref<string>();
 const url = ref<string>();
 const type = ref<string>()
-const types = ref<string[]>([]);
 
-onMounted(() => {
-    initFavorites();
+const types = computed(() => {
+    return favoritesRef.value.map(i => ({
+        type: i.title
+    }))
 })
-
-const initFavorites = () => {
-    if (getFavorites() && getFavorites().length > 0) favoritesRef.value = getFavorites();
-}
 
 const favorites = computed(() => {
     return favoritesRef.value.map((i, idx) => ({
@@ -34,16 +30,23 @@ const favorites = computed(() => {
 })
 
 const favoriteList = computed(() => {
-    console.log(favorites.value)
     return favorites.value.map(i => i.favoriteList.map((i, idx) => ({
         index: idx,
         title: i.title,
         desc: i.desc,
-        type: i.type,
         url: i.url,
         cover: i.cover
     })))
 })
+
+
+onMounted(() => {
+    initFavorites();
+})
+
+const initFavorites = () => {
+    if (getFavorites() && getFavorites().length > 0) favoritesRef.value = getFavorites();
+}
 
 const addFavorite = async () => {
 
@@ -54,7 +57,6 @@ const addFavorite = async () => {
     const tempFavorite = {
         title: '',
         desc: '',
-        type: '',
         url: url.value,
         cover: ''
     }
@@ -67,8 +69,8 @@ const addFavorite = async () => {
         favoritesRef.value.unshift(Favorites)
     }
 
-    favorites.value.find(i => i.title === type.value)!.favoriteList.unshift(tempFavorite);
-    
+    favoritesRef.value.find(i => i.title === type.value)!.favoriteList.unshift(tempFavorite);
+
     await setFavorites(favorites.value);
 
     favoriteDialog.value = false;

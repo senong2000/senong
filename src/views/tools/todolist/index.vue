@@ -33,6 +33,27 @@ const showTooltip = ref(false)
 
 const { activeThemeName } = useTheme()
 
+const todoSpace = computed(() => {
+    return todoSpaceList.value.filter(i => i.index === spaceIndex.value)[0]
+})
+
+const list = computed(() => {
+    // const returnList = todoSpaceList.value[0] && todoSpaceList.value[0].todolist ? todoSpaceList.value[0].todolist : [];
+    const returnList = todoSpace.value && todoSpace.value.todolist ? todoSpace.value.todolist : [];
+    if (type.value === 'All') return returnList
+    else if (type.value === 'Todo') return returnList.filter(j => !j.complete)
+    else if (type.value === 'Complete') return returnList.filter(j => j.complete)
+    else return returnList
+})
+
+const todoList = computed(() => {
+    return todoSpace.value && todoSpace.value.todolist ? todoSpace.value.todolist.filter(j => !j.complete) : []
+})
+
+const completeList = computed(() => {
+    return todoSpace.value && todoSpace.value.todolist ? todoSpace.value.todolist.filter(j => j.complete) : []
+});
+
 onMounted(() => {
 
     getTodoSpaces() && getTodoSpaces().length > 0 ? todoSpaceList.value = getTodoSpaces() : initTodoSpace()
@@ -228,26 +249,7 @@ const displayDatePickersOverlay = (item: TodoList) => {
     selectedItem.value = item
 }
 
-const todoSpace = computed(() => {
-    return todoSpaceList.value.filter(i => i.index === spaceIndex.value)[0]
-})
 
-const list = computed(() => {
-    // const returnList = todoSpaceList.value[0] && todoSpaceList.value[0].todolist ? todoSpaceList.value[0].todolist : [];
-    const returnList = todoSpace.value && todoSpace.value.todolist ? todoSpace.value.todolist : [];
-    if (type.value === 'All') return returnList
-    else if (type.value === 'Todo') return returnList.filter(j => !j.complete)
-    else if (type.value === 'Complete') return returnList.filter(j => j.complete)
-    else return returnList
-})
-
-const todoList = computed(() => {
-    return todoSpace.value && todoSpace.value.todolist ? todoSpace.value.todolist.filter(j => !j.complete) : []
-})
-
-const completeList = computed(() => {
-    return todoSpace.value && todoSpace.value.todolist ? todoSpace.value.todolist.filter(j => j.complete) : []
-});
 
 
 </script>

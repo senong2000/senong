@@ -1,14 +1,10 @@
-import { ref, computed } from "vue"
-import { getActiveRain, setActiveRain } from "@/utils/cache/localStorage"
-
-const DEFAULT_RAIN = true
-export type Rain = typeof DEFAULT_RAIN | false
+import { getCodeRain, setCodeRain } from "@/utils/cache/localStorage"
 
 let rain: HTMLDivElement;
 // @ts-ignore
 let timer: NodeJS.Timeout;
 
-const isRain = ref<Rain>(getActiveRain() || DEFAULT_RAIN)
+const isRain = ref<boolean>(getCodeRain())
 
 const startRainFx = () => {
     let raindrop = document.createElement('div')
@@ -23,6 +19,7 @@ const startRainFx = () => {
     raindrop.style.left = left + 'px';
     raindrop.style.fontSize = 0.5 + size + 'em';
     raindrop.style.animationDuration = 10 + duration + 's';
+    raindrop.style.pointerEvents = 'none';
 
     setTimeout(() => {
         rain.removeChild(raindrop)
@@ -36,26 +33,31 @@ const randomRaindropText = () => {
 }
 
 const initRain = () => {
+    setCodeRain(isRain.value ? 'true' : 'false')
+
     rain = document.createElement('div')
     rain.className = 'rainfx'
     document.body.appendChild(rain)
 
-    setRain(DEFAULT_RAIN)
-    timer = setInterval(() => {
-        startRainFx()
-    }, 200)
+    if (isRain.value) {
+        timer = setInterval(() => {
+            startRainFx()
+        }, 200)
+    }
+
 }
 
-const setRain = (value: Rain) => {
-    isRain.value = value
-    setActiveRain(value)
+const setRain = (value: string) => {
+
+    value === 'true' ? isRain.value = true : isRain.value = false
+    setCodeRain(value)
 }
 
 const updateRain = () => {
-    if (isRain.value === true) {
-        setRain(false as Rain)
-    } else if (isRain.value === false) {
-        setRain(true as Rain)
+    if (isRain.value) {
+        setRain('false')
+    } else if (!isRain.value) {
+        setRain('true')
     } else {
         console.warn('出现Code Rainy错误！')
     }

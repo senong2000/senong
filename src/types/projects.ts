@@ -33,7 +33,6 @@ export type Favorite = {
     index?: number
     title?: string
     desc?: string
-    type?: string
     url: string
     cover?: string
 }
