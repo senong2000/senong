@@ -106,11 +106,6 @@ export default defineConfig({
             component: '/src/views/error/404.vue'
           }
         }
-
-        else if (route.path === '/tools/mcskineditor') {
-          console.log('1')
-        }
-
         else if (webglRegExp.test(route.path)) {
           return {
             path: '/webgl',
