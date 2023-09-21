@@ -51,13 +51,18 @@ export type YearAccount = {
 export type MonthAccount = {
     index?: number
     month: string
-    day: Account[]
+    day: DayAccount[]
+}
+
+export type DayAccount = {
+    index?: number
+    day: string
+    account: Account[]
 }
 
 export type Account = {
     index?: number
     thing: string
-    day: string
     money: number
     type?: string
 }

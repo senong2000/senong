@@ -1,43 +1,40 @@
 <script lang="ts" setup>
 
-import { YearAccount, MonthAccount, Account } from '@/types/projects';
+import { YearAccount, MonthAccount, Account, DayAccount } from '@/types/projects';
 import { getAccount } from '@/utils/cache/localStorage';
-import { formatDate } from '@/utils/date';
+import { formatDate, getDaysInMonth } from '@/utils/date';
 
-const today = new Date();
+const today = ref(formatDate(new Date(), 'diy', 'DD'))
 
-const selectedDate = ref();
+const curMonth = ref(formatDate(new Date(), 'diy', 'MM'))
+
+const curYear = ref(formatDate(new Date(), 'diy', 'YYYY'))
+
+const days = getDaysInMonth(parseInt(curYear.value as string), parseInt(curMonth.value as string))
+
+const selectedDate = ref(1);
 
 const yearAccountsRef = ref<YearAccount[]>([]);
 
 const yearAccounts = computed(() => {
-    return yearAccountsRef.value.map((i, idx) => ({
-        index: idx,
-        year: i.year,
-        month: i.month
-    }))
-})
-
-const yearAccount = computed(() => {
-    return yearAccounts.value.find(i => i.year === formatDate(new Date(), 'diy', 'YYYY') as string);
+    return yearAccountsRef.value.filter(i => i.year === curYear.value)
 })
 
 const monthAccounts: Ref<MonthAccount[]> = computed(() => {
-    return yearAccount.value ? yearAccount.value.month.filter(i => i.month === formatDate(new Date(), 'diy', 'MM') as string).map((i, idx) => ({
-        index: idx,
-        month: i.month,
-        day: i.day,
-    })) : [];
+    return yearAccounts.value ? yearAccounts.value[0].month.filter(i => i.month === curMonth.value) : [];
+})
+
+const dayAccounts: Ref<DayAccount[]> = computed(() => {
+    return monthAccounts.value ? monthAccounts.value[0].day.filter(i => i.day === today.value) : [];
 })
 
 const accounts: Ref<Account[]> = computed(() => {
-    return monthAccounts.value.length > 0 ? monthAccounts.value[0].day.map((i, idx) => ({
+    return dayAccounts.value ? dayAccounts.value[0].account.map((i, idx) => ({
         index: idx,
         thing: i.thing,
-        day: i.day,
-        money: i.money,
+        moneny: i.money,
         type: i.type
-    })) as Account[] : [];
+    })) : [];
 })
 
 
@@ -46,15 +43,32 @@ onMounted(() => {
 })
 
 const initAccounts = () => {
-    if (getAccount() && getAccount().length > 0) yearAccountsRef.value = getAccount();
+    getAccount() && getAccount().length > 0 ? yearAccountsRef.value = getAccount() : [];
 }
 
+const addAccount = () => {
+
+}
 
 
 </script>
 <template>
     <div class="account">
-        {{ accounts }}
+        <v-row>
+            <v-col cols="12">
+                {{ curYear }} {{ curMonth }}
+            </v-col>
+            <v-tabs v-model="selectedDate" align-tabs="start" selected-class="active-type" hide-slider show-arrows
+                center-active>
+                <v-tab v-for="i, idx in days" :key="idx" :value="i">
+                    {{ i }}
+                </v-tab>
+            </v-tabs>
+        </v-row>
     </div>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.account {
+    width: 60vw;
+}
+</style>

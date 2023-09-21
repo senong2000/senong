@@ -57,3 +57,11 @@ export const diffDate = (end: string | Date, start: string | Date) => {
 
     return formattedTime
 }
+
+
+export const getDaysInMonth = (year: number, month: number) => {
+    // 闰年 2 月有 29 天，平年 2 月有 28 天
+    const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    const daysInMonth = [31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    return daysInMonth[month - 1];
+}
