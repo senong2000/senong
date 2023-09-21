@@ -7,12 +7,11 @@ import { hasKey, offset, siblings, toggle, toggleClass } from '@/utils/js/index'
 import WebGL from 'three/examples/jsm/capabilities/WebGL';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Skin } from './Skin';
-import { PerspectiveCamera, Raycaster, Scene, Vector3, WebGLRenderer } from 'three';
+import { PerspectiveCamera, Raycaster, Scene, Vector3, WebGLRenderer, sRGBEncoding } from 'three';
 import { ModelChangeTool } from './ModelChangeTool';
 import { ToolBox } from './ToolBox';
 import { setSkin } from '@/utils/cache/localStorage';
 import { base64ToBlob, download, resizedCanvas } from '@/utils/skin/canvas';
-
 
 class SkinEditor {
   public WEBGL = WebGL.isWebGLAvailable();
@@ -98,7 +97,6 @@ class SkinEditor {
       preserveDrawingBuffer: true,
       logarithmicDepthBuffer: true,
     });
-
 
     this.renderer.setSize(this.WIDTH * this.MULTISAMPLING, this.HEIGHT * this.MULTISAMPLING);
     // this.renderer.setClearColor(this.BACKGROUND_COLOR, 1);

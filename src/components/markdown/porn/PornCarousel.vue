@@ -2,6 +2,11 @@
 const router = useRouter()
 const route = useRoute()
 
+import { useTheme } from '@/hooks/useTheme';
+
+const { activeThemeName } = useTheme()
+
+
 const postRouteRegExp = new RegExp(`^${route.path}`)
 const routes = router.getRoutes()
     .filter(i => postRouteRegExp.test(i.path) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
@@ -16,7 +21,7 @@ const imgSrc = `${import.meta.env.VITE_BASE_URL}/images` + route.path.replace(/^
 </script>
 <template>
     <div class="porn-carousel">
-        <v-carousel hide-delimiters show-arrows="hover" progress="default" cycle interval="3000">
+        <v-carousel hide-delimiters show-arrows="hover" progress="default" cycle interval="3000" :theme="activeThemeName">
             <v-carousel-item v-for="image in images" :lazy-src="`${imgSrc}/${image}.png`" :src="`${imgSrc}/${image}.png`"
                 aspect-ratio="16/9" height="512">
                 <template v-slot:placeholder>

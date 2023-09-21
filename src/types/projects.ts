@@ -41,14 +41,25 @@ export type Favorite = {
  * @description account
  */
 
-enum ExpenseType { life, game, girl, me, other }
+export type YearAccount = {
+    index?: number,
+    year: number,
+    month: MonthAccount,
+
+}
+
+export type MonthAccount = {
+    index?: number,
+    month: number,
+    day: Account
+}
 
 export type Account = {
     index?: number
     thing: string
-    date: Date
+    day: Date
     money: number
-    type: ExpenseType
+    type?: string
 }
 
 /**

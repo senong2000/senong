@@ -2,6 +2,10 @@
 import { Post } from '@/types/markdown';
 import { formatDate } from '@/utils/date'
 
+import { useTheme } from '@/hooks/useTheme';
+
+const { activeThemeName } = useTheme()
+
 const router = useRouter()
 const route = useRoute()
 
@@ -22,7 +26,8 @@ const routes: Post[] = router.getRoutes()
 </script>
 <template>
     <div class="porn-card">
-        <v-card v-for="route in routes" class="mx-auto mt-8" :key="route.title" @click="router.push(route.path)">
+        <v-card v-for="route in routes" class="mx-auto mt-8" :key="route.title" @click="router.push(route.path)"
+            :theme="activeThemeName">
             <v-img class="porn-card-cover" :lazy-src="route.cover" :src="route.cover" aspect-ratio="16/9" height="512"
                 cover>
                 <template v-slot:placeholder>
@@ -32,7 +37,7 @@ const routes: Post[] = router.getRoutes()
                 </template>
             </v-img>
             <v-card-actions>
-                <v-card-title class="text-black" v-text="route.title"></v-card-title>
+                <v-card-title v-text="route.title"></v-card-title>
                 <span> {{ formatDate(route.date, 'diy', 'MMM D') }} </span>
                 <v-spacer></v-spacer>
                 <v-btn size="large" color="surface-variant" variant="plain" icon="fas fa-forward"></v-btn>

@@ -99,13 +99,16 @@ export default defineConfig({
         }
 
         const webglRegExp = new RegExp('/projects/webgl')
-
         if (route.path === '/404') {
           return {
             ...route,
             name: '404',
             component: '/src/views/error/404.vue'
           }
+        }
+
+        else if (route.path === '/tools/mcskineditor') {
+          console.log('1')
         }
 
         else if (webglRegExp.test(route.path)) {

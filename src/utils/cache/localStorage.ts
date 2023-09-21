@@ -2,7 +2,7 @@
 
 import CacheKey from "@/constants/cacheKey"
 import { type ThemeName } from "@/hooks/useTheme"
-import { Favorites, TodoSpace, Account } from "@/types/projects"
+import { Favorites, TodoSpace, YearAccount } from "@/types/projects"
 class Cache {
   public name: string
 
@@ -82,9 +82,9 @@ export const setFavorites = (favorites: Favorites[]) => {
 }
 
 export const getAccount = () => {
-  return cache.get(CacheKey.ACCOUNT) as Account[]
+  return cache.get(CacheKey.ACCOUNT) as YearAccount[]
 }
-export const setAccount = (favorites: Account[]) => {
+export const setAccount = (favorites: YearAccount[]) => {
   cache.set(CacheKey.ACCOUNT, favorites)
 }
 

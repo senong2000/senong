@@ -117,12 +117,14 @@ class Box {
                 plane.userData.planeId = id++;
                 let texture = this.textureCoordinate(plane.userData.planeId);
                 let imageData = this.texture.getImageData(texture.x, texture.y, 1, 1).data;
-                // console.log(imageData);
-                if (imageData[3] === 255) {
-                    let color = new Color(0);
-                    color.setRGB(imageData[0] / 255, imageData[1] / 255, imageData[2] / 255);
 
+                if (imageData[3] === 255) {
+                    // console.log(imageData);
+                    let color = new Color(0);
+                    color.setRGB(imageData[0] / 255, imageData[1] / 255, imageData[2] / 255, "srgb");
+                    
                     plane.material.color = color;
+
                     if (this.box.userData.type === 'overlay') {
                         plane.material.visible = true;
                         plane.material.opacity = 1;

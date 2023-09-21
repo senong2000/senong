@@ -177,10 +177,6 @@ const initSkineditor = (imageURL?: string) => {
 
 }
 
-// 请求后端 返回base64 图片
-
-const requestSkinURL = () => { }
-
 const setSkinToLocalStorage = () => {
     let imageURL = skineditor.skin.skinCanvas().toDataURL();
     setSkin(imageURL);
@@ -206,6 +202,7 @@ onMounted(() => {
 })
 
 onUpdated(() => {
+    window.addEventListener('unload', setSkinToLocalStorage)
     window.addEventListener('resize', skineditor.onWindowResize);
 })
 
@@ -266,39 +263,76 @@ watch(
 </script>
 
 <template>
-    <v-container>
-        <v-row no-gutters justify="center">
-            <v-card id="skineditor" :theme="activeThemeName">
-                <v-col>
-                    <v-row class="bar-controls" justify="center">
-                        <v-col>
-                            <v-btn class="control upgrade" width="100%">加载皮肤</v-btn>
-                        </v-col>
-                        <v-col>
-                            <v-btn class="control download" width="100%">
-                                下载皮肤</v-btn>
-                        </v-col>
-                        <v-col>
-                            <v-btn class="control save" width="100%" @click="saveSkin">保存皮肤</v-btn>
-                        </v-col>
-                        <v-col>
-                            <v-btn class="control upload" width="100%" @click="uploadSkin">上传皮肤</v-btn>
-                        </v-col>
-                        <v-col>
-                            <v-btn class="control upload" width="100%" @click="resetSkin">重置皮肤</v-btn>
-                        </v-col>
-                    </v-row>
-                </v-col>
+    <v-row no-gutters justify="center">
+        <v-card id="skineditor" :theme="activeThemeName">
+            <v-col>
+                <v-row class="bar-controls" justify="center">
+                    <v-col>
+                        <v-btn class="control upgrade" width="100%">加载皮肤</v-btn>
+                    </v-col>
+                    <v-col>
+                        <v-btn class="control download" width="100%">
+                            下载皮肤</v-btn>
+                    </v-col>
+                    <v-col>
+                        <v-btn class="control save" width="100%" @click="saveSkin">保存皮肤</v-btn>
+                    </v-col>
+                    <v-col>
+                        <v-btn class="control upload" width="100%" @click="uploadSkin">上传皮肤</v-btn>
+                    </v-col>
+                    <v-col>
+                        <v-btn class="control upload" width="100%" @click="resetSkin">重置皮肤</v-btn>
+                    </v-col>
+                </v-row>
+            </v-col>
 
-                <v-col cols="12">
-                    <v-row no-gutters class="skin-controls">
-                        <div id="canvas" ref="canvas"></div>
+            <v-col cols="12">
+                <v-row no-gutters class="skin-controls">
+                    <div id="canvas" ref="canvas"></div>
 
-                        <div id="bodyparts" class="selector">
+                    <div id="bodyparts" class="selector">
+                        <div class="bodyparts">
+                            <span>Body</span>
+                            <div class="bodypart head" data-bodypart="head" data-layer="base"></div>
+                            <div class="bodypart torso" data-bodypart="torso" data-layer="base"></div>
+                            <div class="bodypart arm_left" data-bodypart="left_arm" data-layer="base">
+                            </div>
+                            <div class="bodypart arm_right" data-bodypart="right_arm" data-layer="base">
+                            </div>
+                            <div class="bodypart leg_left" data-bodypart="left_leg" data-layer="base">
+                            </div>
+                            <div class="bodypart leg_right" data-bodypart="right_leg" data-layer="base">
+                            </div>
+                        </div>
+                        <div class="bodyparts">
+                            <span>Overlay</span>
+                            <div class="bodypart head hidden" data-bodypart="head" data-layer="overlay">
+                            </div>
+                            <div class="bodypart torso hidden" data-bodypart="torso" data-layer="overlay">
+                            </div>
+                            <div class="bodypart arm_left hidden" data-bodypart="left_arm" data-layer="overlay">
+                            </div>
+                            <div class="bodypart arm_right hidden" data-bodypart="right_arm" data-layer="overlay">
+                            </div>
+                            <div class="bodypart leg_left hidden" data-bodypart="left_leg" data-layer="overlay">
+                            </div>
+                            <div class="bodypart leg_right hidden" data-bodypart="right_leg" data-layer="overlay">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="toggle-select">
+                        <v-btn class="body-selector">
+                            <v-icon>mdi-Account-Supervisor</v-icon>
+                            Body &amp; Overlay
+                        </v-btn>
+
+                        <div class="selector-overlay" style="display: none;">
                             <div class="bodyparts">
                                 <span>Body</span>
                                 <div class="bodypart head" data-bodypart="head" data-layer="base"></div>
-                                <div class="bodypart torso" data-bodypart="torso" data-layer="base"></div>
+                                <div class="bodypart torso" data-bodypart="torso" data-layer="base">
+                                </div>
                                 <div class="bodypart arm_left" data-bodypart="left_arm" data-layer="base">
                                 </div>
                                 <div class="bodypart arm_right" data-bodypart="right_arm" data-layer="base">
@@ -312,8 +346,7 @@ watch(
                                 <span>Overlay</span>
                                 <div class="bodypart head hidden" data-bodypart="head" data-layer="overlay">
                                 </div>
-                                <div class="bodypart torso hidden" data-bodypart="torso" data-layer="overlay">
-                                </div>
+                                <div class="bodypart torso hidden" data-bodypart="torso" data-layer="overlay"></div>
                                 <div class="bodypart arm_left hidden" data-bodypart="left_arm" data-layer="overlay">
                                 </div>
                                 <div class="bodypart arm_right hidden" data-bodypart="right_arm" data-layer="overlay">
@@ -324,220 +357,176 @@ watch(
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </v-row>
+            </v-col>
 
-                        <div class="toggle-select">
-                            <v-btn class="body-selector">
-                                <v-icon>mdi-Account-Supervisor</v-icon>
-                                Body &amp; Overlay
-                            </v-btn>
 
-                            <div class="selector-overlay" style="display: none;">
-                                <div class="bodyparts">
-                                    <span>Body</span>
-                                    <div class="bodypart head" data-bodypart="head" data-layer="base"></div>
-                                    <div class="bodypart torso" data-bodypart="torso" data-layer="base">
-                                    </div>
-                                    <div class="bodypart arm_left" data-bodypart="left_arm" data-layer="base">
-                                    </div>
-                                    <div class="bodypart arm_right" data-bodypart="right_arm" data-layer="base">
-                                    </div>
-                                    <div class="bodypart leg_left" data-bodypart="left_leg" data-layer="base">
-                                    </div>
-                                    <div class="bodypart leg_right" data-bodypart="right_leg" data-layer="base">
-                                    </div>
-                                </div>
-                                <div class="bodyparts">
-                                    <span>Overlay</span>
-                                    <div class="bodypart head hidden" data-bodypart="head" data-layer="overlay">
-                                    </div>
-                                    <div class="bodypart torso hidden" data-bodypart="torso" data-layer="overlay"></div>
-                                    <div class="bodypart arm_left hidden" data-bodypart="left_arm" data-layer="overlay">
-                                    </div>
-                                    <div class="bodypart arm_right hidden" data-bodypart="right_arm" data-layer="overlay">
-                                    </div>
-                                    <div class="bodypart leg_left hidden" data-bodypart="left_leg" data-layer="overlay">
-                                    </div>
-                                    <div class="bodypart leg_right hidden" data-bodypart="right_leg" data-layer="overlay">
-                                    </div>
-                                </div>
+
+            <v-col cols="12">
+                <v-row no-gutters class="editor-controls d-flex justify-space-between align-center">
+                    <v-btn-toggle v-model="tool" tile group mandatory>
+                        <v-tooltip location="top">
+                            <template v-slot:activator="{ props }">
+                                <v-btn value="brush" icon class="brush tool" data-toggle="tooltip" data-placement="top"
+                                    v-bind="props">
+                                    <v-icon>fas fa-paintbrush</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>画笔</span>
+                        </v-tooltip>
+
+                        <v-tooltip location="top">
+                            <template v-slot:activator="{ props }">
+                                <v-btn value="dropper" icon class="dropper tool" data-toggle="tooltip" data-placement="top"
+                                    v-bind="props">
+                                    <v-icon>fas fa-eye-dropper</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>吸取颜色</span>
+                        </v-tooltip>
+
+                        <v-tooltip location="top">
+                            <template v-slot:activator="{ props }">
+                                <v-btn value="bucket" icon class="bucket tool" data-toggle="tooltip" data-placement="top"
+                                    title="Fill" v-bind="props">
+                                    <v-icon>fas fa-fill</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>填充</span>
+                        </v-tooltip>
+
+                        <v-tooltip location="top">
+                            <template v-slot:activator="{ props }">
+                                <v-btn value="eraser" icon class="eraser tool" data-toggle="tooltip" data-placement="top"
+                                    title="Eraser" v-bind="props">
+                                    <v-icon>fas fa-eraser</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>橡皮擦</span>
+                        </v-tooltip>
+                    </v-btn-toggle>
+
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <div v-bind="props">
+                                <v-btn value="brightness-up" icon variant="text" class="brightness-up" data-toggle="tooltip"
+                                    data-placement="top" title="Increase brightness" :disabled="brightness_up">
+                                    <v-icon>fas fa-lightbulb</v-icon>
+                                </v-btn>
                             </div>
-                        </div>
-                    </v-row>
-                </v-col>
+                        </template>
+                        <span>提高颜色亮度</span>
+                    </v-tooltip>
 
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-btn value="brightness-down" icon variant="text" class="brightness-down" data-toggle="tooltip"
+                                data-placement="top" title="Decrease brightness" v-bind="props" :disabled="brightness_down">
+                                <v-icon>fa-regular fa-lightbulb</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>降低颜色亮度</span>
+                    </v-tooltip>
 
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-btn value="zoom-in" icon variant="text" class="zoom-in" data-toggle="tooltip"
+                                data-placement="top" title="Zoom in" v-bind="props" :disabled="zoom_in">
+                                <v-icon>fas fa-magnifying-glass-plus</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>放大</span>
+                    </v-tooltip>
 
-                <v-col cols="12">
-                    <v-row no-gutters class="editor-controls d-flex justify-space-between align-center">
-                        <v-btn-toggle v-model="tool" tile group mandatory>
-                            <v-tooltip location="top">
-                                <template v-slot:activator="{ props }">
-                                    <v-btn value="brush" icon class="brush tool" data-toggle="tooltip" data-placement="top"
-                                        v-bind="props">
-                                        <v-icon>fas fa-paintbrush</v-icon>
-                                    </v-btn>
-                                </template>
-                                <span>画笔</span>
-                            </v-tooltip>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-btn value="zoom-out" icon variant="text" class="zoom-out" data-toggle="tooltip"
+                                data-placement="top" title="Zoom out" v-bind="props" :disabled="zoom_out">
+                                <v-icon>fas fa-magnifying-glass-minus</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>缩小</span>
+                    </v-tooltip>
 
-                            <v-tooltip location="top">
-                                <template v-slot:activator="{ props }">
-                                    <v-btn value="dropper" icon class="dropper tool" data-toggle="tooltip"
-                                        data-placement="top" v-bind="props">
-                                        <v-icon>fas fa-eye-dropper</v-icon>
-                                    </v-btn>
-                                </template>
-                                <span>吸取颜色</span>
-                            </v-tooltip>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-btn value="move" icon variant="text" class="move" data-toggle="tooltip" data-placement="top"
+                                title="Move skin" v-bind="props">
+                                <v-icon>fas fa-up-down-left-right</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>移动人物</span>
+                    </v-tooltip>
 
-                            <v-tooltip location="top">
-                                <template v-slot:activator="{ props }">
-                                    <v-btn value="bucket" icon class="bucket tool" data-toggle="tooltip"
-                                        data-placement="top" title="Fill" v-bind="props">
-                                        <v-icon>fas fa-fill</v-icon>
-                                    </v-btn>
-                                </template>
-                                <span>填充</span>
-                            </v-tooltip>
+                    <v-tooltip location="top">
+                        <template v-slot:activator="{ props }">
+                            <v-btn value="center" icon variant="text" class="center" data-toggle="tooltip"
+                                data-placement="top" title="Reset view" v-bind="props">
+                                <v-icon>fas fa-arrows-to-dot</v-icon>
+                            </v-btn>
+                        </template>
+                        <span>回到中心</span>
+                    </v-tooltip>
 
-                            <v-tooltip location="top">
-                                <template v-slot:activator="{ props }">
-                                    <v-btn value="eraser" icon class="eraser tool" data-toggle="tooltip"
-                                        data-placement="top" title="Eraser" v-bind="props">
-                                        <v-icon>fas fa-eraser</v-icon>
-                                    </v-btn>
-                                </template>
-                                <span>橡皮擦</span>
-                            </v-tooltip>
-                        </v-btn-toggle>
-
-                        <v-tooltip location="top">
-                            <template v-slot:activator="{ props }">
-                                <div v-bind="props">
-                                    <v-btn value="brightness-up" icon variant="text" class="brightness-up"
-                                        data-toggle="tooltip" data-placement="top" title="Increase brightness"
-                                        :disabled="brightness_up">
-                                        <v-icon>fas fa-lightbulb</v-icon>
-                                    </v-btn>
-                                </div>
-                            </template>
-                            <span>提高颜色亮度</span>
-                        </v-tooltip>
-
-                        <v-tooltip location="top">
-                            <template v-slot:activator="{ props }">
-                                <v-btn value="brightness-down" icon variant="text" class="brightness-down"
-                                    data-toggle="tooltip" data-placement="top" title="Decrease brightness" v-bind="props"
-                                    :disabled="brightness_down">
-                                    <v-icon>far fa-lightbulb</v-icon>
+                    <v-tooltip location="top" class="undo-tooltip">
+                        <template v-slot:activator="{ props }">
+                            <div v-bind="props">
+                                <v-btn value="undo" icon variant="text" class="undo" data-toggle="tooltip"
+                                    data-placement="top" title="Undo" :disabled="undo">
+                                    <v-icon>fas fa-rotate-left</v-icon>
                                 </v-btn>
-                            </template>
-                            <span>降低颜色亮度</span>
-                        </v-tooltip>
+                            </div>
+                        </template>
+                        <span>撤销</span>
+                    </v-tooltip>
 
-                        <v-tooltip location="top">
-                            <template v-slot:activator="{ props }">
-                                <v-btn value="zoom-in" icon variant="text" class="zoom-in" data-toggle="tooltip"
-                                    data-placement="top" title="Zoom in" v-bind="props" :disabled="zoom_in">
-                                    <v-icon>fas fa-magnifying-glass-plus</v-icon>
+                    <v-tooltip location="top" class="redo-tooltip">
+                        <template v-slot:activator="{ props }">
+                            <div v-bind="props">
+                                <v-btn value="redo" icon variant="text" class="redo" data-toggle="tooltip"
+                                    data-placement="top" title="Redo" :disabled="redo">
+                                    <v-icon>fas fa-rotate-right</v-icon>
                                 </v-btn>
-                            </template>
-                            <span>放大</span>
-                        </v-tooltip>
+                            </div>
+                        </template>
+                        <span>重做</span>
+                    </v-tooltip>
+                </v-row>
+            </v-col>
 
-                        <v-tooltip location="top">
-                            <template v-slot:activator="{ props }">
-                                <v-btn value="zoom-out" icon variant="text" class="zoom-out" data-toggle="tooltip"
-                                    data-placement="top" title="Zoom out" v-bind="props" :disabled="zoom_out">
-                                    <v-icon>fas fa-magnifying-glass-minus</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>缩小</span>
-                        </v-tooltip>
+            <v-col cols="12">
+                <v-row no-gutters class="color-controls d-flex justify-space-between align-center">
+                    <ColorPicker v-for="item in colorItems" :key="item.index" :index="item.index" :active="colorIndex"
+                        :InitialColor="item.color.value" @colorIndexChangeEmit="colorIndexChange"
+                        @colorChangeEmit="colorChange">
+                    </ColorPicker>
+                </v-row>
+            </v-col>
 
-                        <v-tooltip location="top">
-                            <template v-slot:activator="{ props }">
-                                <v-btn value="move" icon variant="text" class="move" data-toggle="tooltip"
-                                    data-placement="top" title="Move skin" v-bind="props">
-                                    <v-icon>fas fa-up-down-left-right</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>移动人物</span>
-                        </v-tooltip>
+            <v-col cols="12">
+                <v-row class="model-controls d-flex align-center justify-start">
+                    <v-col cols="4">
+                        <v-select class="" :items="modelItems" label="模型" variant="outlined" v-model="model"
+                            :disabled="modelSelect" @update:modelValue="modelChange"></v-select>
+                    </v-col>
+                    <v-col cols="4">
+                        <v-select class="" :items="poseItems" label="姿势" variant="outlined" v-model="pose"></v-select>
+                    </v-col>
+                    <v-col cols="2">
+                        <v-switch v-model="switchGrid" inset prepend-icon="fas fa-border-all">
+                        </v-switch>
+                    </v-col>
 
-                        <v-tooltip location="top">
-                            <template v-slot:activator="{ props }">
-                                <v-btn value="center" icon variant="text" class="center" data-toggle="tooltip"
-                                    data-placement="top" title="Reset view" v-bind="props">
-                                    <v-icon>fas fa-arrows-to-dot</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>回到中心</span>
-                        </v-tooltip>
+                    <div class="hidden">
+                        <form method="post" enctype="multipart/form-data" action="/" id="upgrade_form">
+                            <input type="file" id="upgrade_file" name="file">
+                        </form>
+                    </div>
 
-                        <v-tooltip location="top" class="undo-tooltip">
-                            <template v-slot:activator="{ props }">
-                                <div v-bind="props">
-                                    <v-btn value="undo" icon variant="text" class="undo" data-toggle="tooltip"
-                                        data-placement="top" title="Undo" :disabled="undo">
-                                        <v-icon>fas fa-rotate-left</v-icon>
-                                    </v-btn>
-                                </div>
-                            </template>
-                            <span>撤销</span>
-                        </v-tooltip>
-
-                        <v-tooltip location="top" class="redo-tooltip">
-                            <template v-slot:activator="{ props }">
-                                <div v-bind="props">
-                                    <v-btn value="redo" icon variant="text" class="redo" data-toggle="tooltip"
-                                        data-placement="top" title="Redo" :disabled="redo">
-                                        <v-icon>fas fa-rotate-right</v-icon>
-                                    </v-btn>
-                                </div>
-                            </template>
-                            <span>重做</span>
-                        </v-tooltip>
-                    </v-row>
-                </v-col>
-
-                <v-col cols="12">
-                    <v-row no-gutters class="color-controls d-flex justify-space-between align-center">
-                        <ColorPicker v-for="item in colorItems" :key="item.index" :index="item.index" :active="colorIndex"
-                            :InitialColor="item.color.value" @colorIndexChangeEmit="colorIndexChange"
-                            @colorChangeEmit="colorChange">
-                        </ColorPicker>
-                    </v-row>
-                </v-col>
-
-                <v-col cols="12">
-                    <v-row class="model-controls d-flex align-center justify-start">
-                        <v-col cols="4">
-                            <v-select class="" :items="modelItems" label="模型" variant="outlined" v-model="model"
-                                :disabled="modelSelect" @update:modelValue="modelChange"></v-select>
-                        </v-col>
-                        <v-col cols="4">
-                            <v-select class="" :items="poseItems" label="姿势" variant="outlined" v-model="pose"></v-select>
-                        </v-col>
-                        <v-col cols="2">
-                            <v-switch v-model="switchGrid" inset prepend-icon="fas fa-border-all">
-                            </v-switch>
-                        </v-col>
-
-                        <div class="hidden">
-                            <form method="post" enctype="multipart/form-data" action="/" id="upgrade_form">
-                                <input type="file" id="upgrade_file" name="file">
-                            </form>
-                        </div>
-
-                    </v-row>
-                </v-col>
-            </v-card>
-        </v-row>
-    </v-container>
+                </v-row>
+            </v-col>
+        </v-card>
+    </v-row>
 </template>
-<style lang="scss" scoped>
-.mcskineditor {
-    width: 60vw;
-}
-</style>
+<style lang="scss" scoped></style>
