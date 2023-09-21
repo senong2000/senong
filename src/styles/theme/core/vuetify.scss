@@ -4,10 +4,13 @@
     background-color: $input-focus-bg-color !important;
 }
 
-
 .side-bar {
     .tab-active {
-        transition: all .3s;
+        transition: all 0.3s;
         border: 0.25rem solid $border-color;
     }
+}
+
+.v-list {
+
 }

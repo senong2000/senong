@@ -11,6 +11,7 @@ declare module 'vue' {
     BlogList: typeof import('./src/components/markdown/BlogList.vue')['default']
     BottomBar: typeof import('./src/layout/website/BottomBar/BottomBar.vue')['default']
     CanvasMain: typeof import('./src/layout/webgl/CanvasMain/CanvasMain.vue')['default']
+    ColorPicker: typeof import('./src/components/ColorPicker.vue')['default']
     DiaryCardList: typeof import('./src/components/markdown/diary/DiaryCardList.vue')['default']
     MainBackground: typeof import('./src/layout/website/AppMain/MainBackground.vue')['default']
     NavigationBar: typeof import('./src/layout/website/NavigationBar/NavigationBar.vue')['default']
@@ -22,7 +23,6 @@ declare module 'vue' {
     SideBar: typeof import('./src/layout/webgl/SideBar/SideBar.vue')['default']
     ToTopButton: typeof import('./src/components/ToTopButton.vue')['default']
     Webgl: typeof import('./src/layout/webgl/index.vue')['default']
-    WebGL: typeof import('./src/layout/webgl/index.vue')['default']
     Website: typeof import('./src/layout/website/index.vue')['default']
     WrapperMarkdown: typeof import('./src/components/wrapper/WrapperMarkdown.vue')['default']
   }

@@ -87,3 +87,12 @@ export const getAccount = () => {
 export const setAccount = (favorites: Account[]) => {
   cache.set(CacheKey.ACCOUNT, favorites)
 }
+
+// 本地保存皮肤
+export const setSkin = (imageURL: string) => {
+  cache.set(CacheKey.MCSKIN, imageURL);
+}
+// 返回皮肤
+export const getSkin = () => {
+  return cache.get(CacheKey.MCSKIN);
+}

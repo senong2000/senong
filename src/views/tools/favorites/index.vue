@@ -182,8 +182,10 @@ const importFavorites = () => {
                     </v-list-item>
 
                 </v-list>
+                <div mt-2>
 
-                <v-row no-gutters :theme="activeThemeName">
+                </div>
+                <v-row no-gutters :theme="activeThemeName" >
                     <v-col v-for="item, idx in favoriteList" :key="idx" cols="4">
                         <v-card :theme="activeThemeName" @click="toUrl(item.url)" class="flex! p-2! h-full" rounded="0">
                             <v-row flex-items-center w-full>
