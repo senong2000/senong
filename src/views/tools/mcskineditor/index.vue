@@ -205,8 +205,17 @@ onMounted(() => {
 
 })
 
+onUpdated(() => {
+    window.addEventListener('resize', skineditor.onWindowResize);
+})
+
+onBeforeRouteLeave(() => {
+    window.removeEventListener('unload', setSkinToLocalStorage);
+    window.removeEventListener('resize', skineditor.onWindowResize);
+})
+
 onUnmounted(() => {
-    window.removeEventListener('unload', setSkinToLocalStorage)
+
 })
 
 watch(

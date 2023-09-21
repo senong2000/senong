@@ -133,6 +133,7 @@ class SkinEditor {
 
     // 进入canvas 点击 识别位置 配合绘画工具 若是皮肤正确位置则进行 绘制操作
     this.canvas.addEventListener('mousedown', (event: MouseEvent) => {
+
       if (event.button === 0) {
         let drawing = this.toolBox.startDrawing(event);
 
@@ -257,6 +258,10 @@ class SkinEditor {
 
   }
 
+  public uninstallListener = () => {
+    window.removeEventListener('resize', this.onWindowResize)
+  }
+
   private initBodyPartListener = () => {
     const bodypart = document.getElementsByClassName("bodypart");
     for (let element of (bodypart as any)) {
@@ -282,11 +287,13 @@ class SkinEditor {
 
 
 
-  private onWindowResize = () => {
+  public onWindowResize = () => {
     // (this.renderer.setSize(this.WIDTH * this.MULTISAMPLING, this.HEIGHT), this.camera.aspect = this.WIDTH / this.HEIGHT, this.camera.updateProjectionMatrix())
     this.countRect();
     this.renderer.setSize(this.WIDTH * this.MULTISAMPLING, this.HEIGHT), this.camera.aspect = this.WIDTH / this.HEIGHT, this.camera.updateProjectionMatrix();
   }
+
+
 
   // 渲染场景
   public render = () => {
@@ -310,7 +317,7 @@ class SkinEditor {
     let width = (document.getElementById("skineditor") as any).offsetWidth;
     // console.log(parseInt(width) - 24)
     if (width != this.WIDTH || height != this.HEIGHT) {
-      this.WIDTH = width - 24;
+      this.WIDTH = width;
       this.HEIGHT = height;
     };
   }
