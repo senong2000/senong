@@ -41,30 +41,20 @@ export type Favorite = {
  * @description account
  */
 
-export type YearAccount = {
+export type DateAccount = {
     index?: number
-    year: string
-    month: MonthAccount[]
-
+    date: string
+    accounts?: Account[]
 }
 
-export type MonthAccount = {
-    index?: number
-    month: string
-    day: DayAccount[]
-}
-
-export type DayAccount = {
-    index?: number
-    day: string
-    account: Account[]
-}
+export type MODE = 'day' | 'week' | 'month' | 'year';
 
 export type Account = {
     index?: number
     thing: string
     money: number
     type?: string
+    mode?: MODE
 }
 
 /**

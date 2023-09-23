@@ -6,7 +6,6 @@ import { useTheme } from '@/hooks/useTheme';
 
 const { activeThemeName } = useTheme()
 
-
 const postRouteRegExp = new RegExp(`^${route.path}`)
 const routes = router.getRoutes()
     .filter(i => postRouteRegExp.test(i.path) && i.meta.frontmatter.date && !i.meta.frontmatter.draft)
@@ -14,7 +13,6 @@ const routes = router.getRoutes()
     .map(i => ({ images: i.meta.frontmatter.images, }))
 
 const images = parseInt(routes[0].images)
-
 
 const imgSrc = `${import.meta.env.VITE_BASE_URL}/images` + route.path.replace(/^\/blog/, '')
 

@@ -1,40 +1,130 @@
 <script lang="ts" setup>
 
-import { YearAccount, MonthAccount, Account, DayAccount } from '@/types/projects';
-import { getAccount } from '@/utils/cache/localStorage';
+import { Account, DateAccount, MODE } from '@/types/projects';
+import { getAccount, setAccount } from '@/utils/cache/localStorage';
 import { formatDate, getDaysInMonth } from '@/utils/date';
+import { useTheme } from '@/hooks/useTheme';
 
-const today = ref(formatDate(new Date(), 'diy', 'DD'))
+const { activeThemeName } = useTheme();
 
-const curMonth = ref(formatDate(new Date(), 'diy', 'MM'))
+const today = formatDate(new Date(), 'diy', 'DD');
 
-const curYear = ref(formatDate(new Date(), 'diy', 'YYYY'))
+const curMonth = formatDate(new Date(), 'diy', 'MM');
 
-const days = getDaysInMonth(parseInt(curYear.value as string), parseInt(curMonth.value as string))
+const curYear = formatDate(new Date(), 'diy', 'YYYY');
 
-const selectedDate = ref(1);
+const days = getDaysInMonth(parseInt(curYear as string), parseInt(curMonth as string));
 
-const yearAccountsRef = ref<YearAccount[]>([]);
+const selectedIndex = ref(0)
 
-const yearAccounts = computed(() => {
-    return yearAccountsRef.value.filter(i => i.year === curYear.value)
+const selectedDay = computed(() => {
+    return selectedIndex.value.toString();
+})
+const selectedMonth = ref(curMonth);
+const selectedYear = ref(curYear);
+
+const accountDialog = ref(false);
+
+const dateAccountsRef = ref<DateAccount[]>([]);
+
+const selectedDate = computed(() => {
+    return `${selectedYear.value} ${selectedMonth.value} ${selectedDay.value}`
 })
 
-const monthAccounts: Ref<MonthAccount[]> = computed(() => {
-    return yearAccounts.value ? yearAccounts.value[0].month.filter(i => i.month === curMonth.value) : [];
+const selectedAccounts = computed(() => {
+    return dateAccountsRef.value.find(i => i.date.toString() === selectedDate.value) as DateAccount;
 })
 
-const dayAccounts: Ref<DayAccount[]> = computed(() => {
-    return monthAccounts.value ? monthAccounts.value[0].day.filter(i => i.day === today.value) : [];
+const accounts = computed(() => {
+    return selectedAccounts.value ? reactive(selectedAccounts.value.accounts as Account[]).filter(account => account.mode === 'day') : [];
 })
 
-const accounts: Ref<Account[]> = computed(() => {
-    return dayAccounts.value ? dayAccounts.value[0].account.map((i, idx) => ({
-        index: idx,
-        thing: i.thing,
-        moneny: i.money,
-        type: i.type
-    })) : [];
+const modeDayAccounts = computed(() => {
+    return reactive(dateAccountsRef.value.flatMap(i => {
+        return i.accounts?.filter(account => account.mode === 'day');
+    }) as Account[]);
+})
+
+const modeWeekAccounts = computed(() => {
+    return reactive((dateAccountsRef.value.flatMap(i => {
+        return i.accounts?.filter(account => account.mode === 'week');
+    }) as Account[]));
+})
+
+const modeMonthAccounts = computed(() => {
+    return reactive((dateAccountsRef.value.flatMap(i => {
+        return i.accounts?.filter(account => account.mode === 'month');
+    }) as Account[]));
+})
+
+const modeYearAccounts = computed(() => {
+    return reactive((dateAccountsRef.value.flatMap(i => {
+        return i.accounts?.filter(account => account.mode === 'year');
+    }) as Account[]));
+})
+
+const modeMoney = ref('year');
+
+const yearMoney = computed(() => {
+    return modeYearAccounts.value.reduce((sum, account) => {
+        return sum + parseInt(account.money.toString());
+    }, 0) as number;
+})
+const monthMoney = computed(() => {
+    return modeMonthAccounts.value.reduce((sum, account) => {
+        return sum + parseInt(account.money.toString());
+    }, 0) as number;
+})
+const weekMoney = computed(() => {
+    return modeWeekAccounts.value.reduce((sum, account) => {
+        return sum + parseInt(account.money.toString());
+    }, 0) as number;
+})
+const dayMoney = computed(() => {
+    return accounts.value.reduce((sum, account) => {
+        return sum + parseInt(account.money.toString());
+    }, 0) as number;
+})
+
+const totalMoney = computed(() => {
+    let total = 0;
+    if (modeMoney.value === 'year') {
+        total += yearMoney.value;
+        total += monthMoney.value;
+        total += weekMoney.value;
+        total += dayMoney.value;
+
+    }
+    else if (modeMoney.value === 'month') {
+        total += monthMoney.value;
+        total += weekMoney.value;
+        total += dayMoney.value;
+    }
+
+    else if (modeMoney.value === 'week') {
+        total += weekMoney.value;
+        total += dayMoney.value;
+    }
+
+    else if (modeMoney.value === 'day') {
+        total += dayMoney.value;
+    }
+    return total;
+})
+
+type AllAcounts = {
+    money: number
+    mode: string
+    accounts: Account[]
+}
+
+const allAccounts = computed(() => {
+    const tempAccount = reactive<AllAcounts[]>([]);
+    modeYearAccounts.value.length > 0 ? tempAccount.push({ money: yearMoney.value, mode: 'Year', accounts: modeYearAccounts.value }) : [];
+    modeMonthAccounts.value.length > 0 ? tempAccount.push({ money: monthMoney.value, mode: 'Month', accounts: modeMonthAccounts.value }) : [];
+    modeWeekAccounts.value.length > 0 ? tempAccount.push({ money: weekMoney.value, mode: 'Week', accounts: modeWeekAccounts.value }) : [];
+    accounts.value.length > 0 ? tempAccount.push({ money: dayMoney.value, mode: 'Day', accounts: accounts.value }) : [];
+    return tempAccount;
 })
 
 
@@ -43,12 +133,83 @@ onMounted(() => {
 })
 
 const initAccounts = () => {
-    getAccount() && getAccount().length > 0 ? yearAccountsRef.value = getAccount() : [];
+    getAccount() && getAccount().length > 0 ? dateAccountsRef.value = getAccount() : [];
+
+    selectedIndex.value = parseInt(today as string);
 }
 
-const addAccount = () => {
+const thing = ref<string>();
+const money = ref<string>();
+const type = ref<string>();
+const mode = ref<string>();
+
+const types = computed(() => {
+    console.log(accounts)
+    if (accounts) return accounts.value.map(i => i.type);
+});
+
+const modes = ['day', 'week', 'month', 'year'];
+
+const rules = {
+    required: (value: any) => !!value || 'Required.',
+}
+
+const addAccountDate = () => {
+    if (dateAccountsRef.value.findIndex(i => i.date === selectedDate.value) === -1) {
+        const tempDateAccounts = {
+            date: selectedDate.value as string,
+            accounts: []
+        }
+
+        dateAccountsRef.value.push(tempDateAccounts)
+    }
+}
+
+const addAccount = async () => {
+
+    const tempAccount = {
+        thing: thing.value as string,
+        money: parseInt(money.value as string),
+        type: type.value as string,
+        mode: mode.value as MODE
+    }
+
+    await addAccountDate();
+
+    selectedAccounts.value.accounts?.unshift(tempAccount)
+
+    setAccount(dateAccountsRef.value)
+
+    thing.value = '';
+    money.value = '';
+    type.value = '';
+    mode.value = '';
+
+    accountDialog.value = false;
 
 }
+
+const updateAccount = () => {
+
+    setAccount(dateAccountsRef.value)
+
+}
+
+
+const delAccountdialog = ref(false);
+const delAccount = (item: Account) => {
+
+    const index = selectedAccounts.value.accounts?.indexOf(item) as number;
+
+    if (index > -1) {
+        selectedAccounts.value.accounts?.splice(index, 1);
+    }
+
+    setAccount(dateAccountsRef.value)
+
+    delAccountdialog.value = false
+
+};
 
 
 </script>
@@ -58,17 +219,136 @@ const addAccount = () => {
             <v-col cols="12">
                 {{ curYear }} {{ curMonth }}
             </v-col>
-            <v-tabs v-model="selectedDate" align-tabs="start" selected-class="active-type" hide-slider show-arrows
-                center-active>
-                <v-tab v-for="i, idx in days" :key="idx" :value="i">
-                    {{ i }}
-                </v-tab>
-            </v-tabs>
+            <v-col cols="12">
+                <v-tabs v-model="selectedIndex" align-tabs="start" selected-class="active-type" hide-slider show-arrows
+                    center-active :theme="activeThemeName">
+                    <v-tab v-for="i, idx in days" :key="idx" :value="i">
+                        {{ i }}
+                    </v-tab>
+                </v-tabs>
+            </v-col>
+            <v-col cols="12" flex flex-items-center>
+                <span uppercase mr-4>Money</span>
+                <span>{{ totalMoney }}</span>
+                <v-spacer></v-spacer>
+
+                <v-dialog v-model="accountDialog" persistent class="w-128" :theme="activeThemeName">
+                    <template v-slot:activator="{ props }">
+                        <v-btn icon variant="text" v-bind="props">
+                            <v-icon>fas fa-plus</v-icon>
+                        </v-btn>
+                    </template>
+                    <v-card>
+                        <v-card-title>
+                            <span class="text-h5">Account</span>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-container>
+                                <v-row>
+                                    <v-col cols="12">
+                                        <v-text-field v-model="thing" variant="solo" label="THING" :rules="[rules.required]"
+                                            clearable></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-text-field v-model="money" variant="solo" label="MONEY" :rules="[rules.required]"
+                                            clearable></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-combobox v-model="type" :items="types" variant="solo" label="TYPE"
+                                            clearable></v-combobox>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-autocomplete v-model="mode" :items="modes" variant="solo" label="MODE"
+                                            clearable></v-autocomplete>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn variant="text" @click="accountDialog = false">
+                                Close
+                            </v-btn>
+                            <v-btn variant="text" @click="addAccount">
+                                SAVE
+                            </v-btn>
+                        </v-card-actions>
+
+                    </v-card>
+                </v-dialog>
+            </v-col>
+            <v-col cols="12">
+                <div class="accounts" v-for="accounts in allAccounts">
+                    <div my-4>
+                        <span text-6 mr-4>{{ accounts.mode }}</span>
+                        <span>{{ accounts.money }}</span>
+                    </div>
+
+                    <v-card rounded="0" v-for="item in accounts.accounts" :key="(item.index as number)"
+                        :theme="activeThemeName">
+
+                        <div class="thing-list-content-body px-4 py-2 flex flex-items-center">
+                            <v-text-field v-model="item.thing" @input="updateAccount" variant="solo"
+                                hide-details="auto"></v-text-field>
+                            <v-icon mx-4>fas fa-coins</v-icon>
+                            <v-text-field v-model="item.money" @input="updateAccount" variant="solo"
+                                hide-details="auto"></v-text-field>
+                            <v-menu location="bottom" transition="slide-y-transition">
+                                <template v-slot:activator="{ props }">
+                                    <v-btn variant="plain" v-bind="props">
+                                        <v-icon size="x-large">fas fa-ellipsis</v-icon>
+                                    </v-btn>
+                                </template>
+                                <v-list>
+                                    <v-list-item value="delete">
+                                        <v-list-item-title>
+                                            <v-btn variant="plain">
+                                                <v-icon>fas fa-trash</v-icon>
+                                                <v-dialog v-model="delAccountdialog" activator="parent" width="auto">
+                                                    <v-card flex flex-items-center flex-justify-center>
+                                                        <v-card-text m-4>
+                                                            确定删除?
+                                                        </v-card-text>
+                                                        <v-card-actions m-4>
+                                                            <v-btn color="primary" variant="tonal"
+                                                                @click="delAccountdialog = false">No</v-btn>
+                                                            <v-btn color="primary" variant="tonal"
+                                                                @click="delAccount(item)">
+                                                                Yes</v-btn>
+                                                        </v-card-actions>
+                                                    </v-card>
+                                                </v-dialog>
+                                            </v-btn>
+                                        </v-list-item-title>
+                                    </v-list-item>
+                                </v-list>
+                            </v-menu>
+                        </div>
+                        <v-divider></v-divider>
+                    </v-card>
+                </div>
+
+            </v-col>
         </v-row>
     </div>
 </template>
-<style lang="scss" scoped>
+<style lang="scss" >
 .account {
     width: 60vw;
+
+    .active-type {
+        font-size: 2rem;
+        color: $SuccessColor-default;
+        transition: all .3s;
+    }
+
+    .thing-list-content-body {
+        .v-field--variant-solo {
+            background: none;
+            box-shadow: none;
+            transition: all .3s;
+
+        }
+    }
 }
 </style>

@@ -31,6 +31,7 @@ const types = computed(() => {
 })
 
 const favorites = computed(() => {
+    console.log(typeTab.value)
     if (typeTab.value === 'ALL') {
         return favoritesRef.value.map((i, idx) => ({
             index: idx,
@@ -145,18 +146,20 @@ const importFavorites = () => {
                                     <v-container>
                                         <v-row>
                                             <v-col cols="12">
-                                                <v-text-field v-model="title" variant="solo" label="TITLE"></v-text-field>
+                                                <v-text-field v-model="title" variant="solo" label="TITLE"
+                                                    clearable></v-text-field>
                                             </v-col>
                                             <v-col cols="12">
-                                                <v-text-field v-model="desc" variant="solo" label="DESC"></v-text-field>
+                                                <v-text-field v-model="desc" variant="solo" label="DESC"
+                                                    clearable></v-text-field>
                                             </v-col>
                                             <v-col cols="12">
                                                 <v-text-field v-model="url" variant="solo" label="URL"
-                                                    :rules="[rules.required]"></v-text-field>
+                                                    :rules="[rules.required]" clearable></v-text-field>
                                             </v-col>
                                             <v-col cols="12">
-                                                <v-combobox v-model="type" :items="types" variant="solo"
-                                                    label="TYPE"></v-combobox>
+                                                <v-combobox v-model="type" :items="types" variant="solo" label="TYPE"
+                                                    clearable></v-combobox>
                                             </v-col>
 
                                         </v-row>
@@ -185,7 +188,7 @@ const importFavorites = () => {
                 <div mt-2>
 
                 </div>
-                <v-row no-gutters :theme="activeThemeName" >
+                <v-row no-gutters :theme="activeThemeName">
                     <v-col v-for="item, idx in favoriteList" :key="idx" cols="4">
                         <v-card :theme="activeThemeName" @click="toUrl(item.url)" class="flex! p-2! h-full" rounded="0">
                             <v-row flex-items-center w-full>

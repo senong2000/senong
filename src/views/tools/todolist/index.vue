@@ -217,6 +217,8 @@ const updateTodo = (item: TodoList) => {
         todoSpace.value.todolist[index].completedate = new Date()
     }
 
+    console.log(item)
+    
     setTodoSpaces(todoSpaceList.value)
 
 }
@@ -329,30 +331,6 @@ const displayDatePickersOverlay = (item: TodoList) => {
                     <v-checkbox-btn v-model="item.complete" @input="updateTodo(item)"></v-checkbox-btn>
                     <v-textarea v-model="item.todo" @input="updateTodo(item)" variant="solo" hide-details="auto" clearable
                         auto-grow rows="1"></v-textarea>
-                </div>
-                <v-card-actions>
-                    <span flex flex-justify-center flex-items-center>
-                        <v-icon size="x-small" px-4>fa-solid fa-hourglass-start</v-icon>
-                        {{ formatDate(item.createdate, 'dynamic') }}
-                    </span>
-
-                    <span v-if="item.complete" flex flex-justify-center flex-items-center>
-                        <v-icon size="x-small" px-4>fa-solid fa-hourglass-end</v-icon>
-                        {{ item.completedate ? formatDate(item.completedate, 'dynamic') : null }}
-                    </span>
-
-                    <span v-if="item.complete" flex flex-justify-center flex-items-center>
-                        <v-icon size="x-small" px-4>fa-solid fa-check</v-icon>
-                        {{ item.completedate ? diffDate(item.completedate, item.createdate) : null }}
-                    </span>
-
-                    <v-spacer></v-spacer>
-
-                    <span v-if="item.etc" flex flex-justify-center flex-items-center>
-                        <v-icon size="x-small" px-4>fa-solid fa-clock</v-icon>
-                        {{ item.etc ? formatDate(item.etc, 'diy', 'MMM D') : null }} -
-                        {{ item.etc ? diffDate(item.etc, item.createdate) : null }}
-                    </span>
                     <v-menu location="bottom" transition="slide-y-transition">
                         <template v-slot:activator="{ props }">
                             <v-btn variant="plain" v-bind="props">
@@ -389,6 +367,31 @@ const displayDatePickersOverlay = (item: TodoList) => {
                             </v-list-item>
                         </v-list>
                     </v-menu>
+                </div>
+                <v-card-actions>
+                    <span flex flex-justify-center flex-items-center>
+                        <v-icon size="x-small" px-4>fa-solid fa-hourglass-start</v-icon>
+                        {{ formatDate(item.createdate, 'dynamic') }}
+                    </span>
+
+                    <span v-if="item.complete" flex flex-justify-center flex-items-center>
+                        <v-icon size="x-small" px-4>fa-solid fa-hourglass-end</v-icon>
+                        {{ item.completedate ? formatDate(item.completedate, 'dynamic') : null }}
+                    </span>
+
+                    <span v-if="item.complete" flex flex-justify-center flex-items-center>
+                        <v-icon size="x-small" px-4>fa-solid fa-check</v-icon>
+                        {{ item.completedate ? diffDate(item.completedate, item.createdate) : null }}
+                    </span>
+
+                    <v-spacer></v-spacer>
+
+                    <span v-if="item.etc" flex flex-justify-center flex-items-center>
+                        <v-icon size="x-small" px-4>fa-solid fa-clock</v-icon>
+                        {{ item.etc ? formatDate(item.etc, 'diy', 'MMM D') : null }} -
+                        {{ item.etc ? diffDate(item.etc, item.createdate) : null }}
+                    </span>
+
                 </v-card-actions>
                 <v-divider></v-divider>
             </v-card>
