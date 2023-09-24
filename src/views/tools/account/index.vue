@@ -140,13 +140,32 @@ const initAccounts = () => {
 
 const thing = ref<string>();
 const money = ref<string>();
-const type = ref<string>();
+const type = ref<accountType>();
 const mode = ref<string>();
 
-const types = computed(() => {
-    console.log(accounts)
-    if (accounts) return accounts.value.map(i => i.type);
-});
+type accountType = {
+    name: string
+    icon: string
+}
+const types: accountType[] = [
+    { name: 'game', icon: 'fas fa-gamepad' },
+    { name: 'clothes', icon: 'fas fa-shirt' },
+    { name: 'medical', icon: 'fas fa-briefcase-medical' },
+    { name: 'study', icon: 'fas fa-book' },
+    { name: 'sports', icon: 'fas fa-dumbbell' },
+    { name: 'dinner party', icon: 'fas fa-utensils ' },
+    { name: 'travel', icon: 'fas fa-map-location' },
+    { name: 'network', icon: 'fas fa-wifi' },
+    { name: 'food', icon: 'fas fa-bowl-food' },
+    { name: 'commuting', icon: 'fas fa-bus-simple' },
+    { name: 'rent', icon: 'fas fa-house' },
+    { name: 'phone', icon: 'fas fa-mobile' }
+]
+
+const getTypeIcon = (name: string) => {
+    const type = types.find(t => t.name === name);
+    return type ? type.icon : 'fas fa-clipboard-question';
+}
 
 const modes = ['day', 'week', 'month', 'year'];
 
@@ -166,11 +185,10 @@ const addAccountDate = () => {
 }
 
 const addAccount = async () => {
-
     const tempAccount = {
         thing: thing.value as string,
         money: parseInt(money.value as string),
-        type: type.value as string,
+        type: (type.value as accountType).name as string,
         mode: mode.value as MODE
     }
 
@@ -182,7 +200,7 @@ const addAccount = async () => {
 
     thing.value = '';
     money.value = '';
-    type.value = '';
+    type.value = { name: '', icon: '' };
     mode.value = '';
 
     accountDialog.value = false;
@@ -253,13 +271,28 @@ const delAccount = (item: Account) => {
                                         <v-text-field v-model="money" variant="solo" label="MONEY" :rules="[rules.required]"
                                             clearable></v-text-field>
                                     </v-col>
-                                    <v-col cols="12">
-                                        <v-combobox v-model="type" :items="types" variant="solo" label="TYPE"
-                                            clearable></v-combobox>
+                                    <v-col cols="4">
+                                        <v-select v-model="type" :items="types" variant="solo" label="TYPE">
+                                            <template v-slot:selection="{ item }">
+                                                <v-icon>
+                                                    {{ item.props.value.icon }}
+                                                </v-icon>
+                                            </template>
+
+                                            <template v-slot:item="{ index, props, item }">
+                                                <div v-bind="props" :key="index" flex flex-justify-center flex-items-center
+                                                    w-full>
+                                                    <v-btn w-full>
+                                                        <v-icon :icon="(item.raw as accountType).icon"
+                                                            size="x-large"></v-icon>
+                                                    </v-btn>
+                                                </div>
+                                            </template>
+                                        </v-select>
                                     </v-col>
-                                    <v-col cols="12">
-                                        <v-autocomplete v-model="mode" :items="modes" variant="solo" label="MODE"
-                                            clearable></v-autocomplete>
+                                    <v-col cols="8">
+                                        <v-autocomplete v-model="mode" :items="modes" variant="solo"
+                                            label="MODE"></v-autocomplete>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -279,8 +312,9 @@ const delAccount = (item: Account) => {
             </v-col>
             <v-col cols="12">
                 <div class="accounts" v-for="accounts in allAccounts">
-                    <div my-4>
+                    <div my-4 flex flex-items-center>
                         <span text-6 mr-4>{{ accounts.mode }}</span>
+                        <v-icon mx-4>fas fa-coins</v-icon>
                         <span>{{ accounts.money }}</span>
                     </div>
 
@@ -288,6 +322,7 @@ const delAccount = (item: Account) => {
                         :theme="activeThemeName">
 
                         <div class="thing-list-content-body px-4 py-2 flex flex-items-center">
+                            <v-icon mx-4>{{ getTypeIcon(item.type as string) }}</v-icon>
                             <v-text-field v-model="item.thing" @input="updateAccount" variant="solo"
                                 hide-details="auto"></v-text-field>
                             <v-icon mx-4>fas fa-coins</v-icon>
