@@ -201,7 +201,9 @@ const addTodo = (event: KeyboardEvent) => {
             index: idx,
             todo: i.todo,
             createdate: i.createdate,
-            complete: i.complete
+            complete: i.complete,
+            completedate: i.completedate,
+            etc: i.etc
         }))
 
         setTodoSpaces(todoSpaceList.value)
@@ -218,7 +220,7 @@ const updateTodo = (item: TodoList) => {
     }
 
     console.log(item)
-    
+
     setTodoSpaces(todoSpaceList.value)
 
 }

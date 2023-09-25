@@ -2,23 +2,23 @@
 
 import { Account, DateAccount, MODE } from '@/types/projects';
 import { getAccount, setAccount } from '@/utils/cache/localStorage';
-import { formatDate, getDaysInMonth } from '@/utils/date';
+import { getDaysInMonth } from '@/utils/date';
 import { useTheme } from '@/hooks/useTheme';
 
 const { activeThemeName } = useTheme();
 
-const today = formatDate(new Date(), 'diy', 'DD');
+const today = new Date().getDate();
 
-const curMonth = formatDate(new Date(), 'diy', 'MM');
+const curMonth = new Date().getMonth() + 1;
 
-const curYear = formatDate(new Date(), 'diy', 'YYYY');
+const curYear = new Date().getFullYear();
 
-const days = getDaysInMonth(parseInt(curYear as string), parseInt(curMonth as string));
+const days = getDaysInMonth(curYear, curMonth);
 
 const selectedIndex = ref(0)
 
 const selectedDay = computed(() => {
-    return selectedIndex.value.toString();
+    return selectedIndex.value;
 })
 const selectedMonth = ref(curMonth);
 const selectedYear = ref(curYear);
@@ -27,11 +27,11 @@ const accountDialog = ref(false);
 const dateAccountsRef = ref<DateAccount[]>([]);
 
 const selectedDate = computed(() => {
-    return new Date(`${selectedYear.value} ${selectedMonth.value} ${selectedDay.value}`);
+    return new Date(`${selectedYear.value} ${selectedMonth.value} ${selectedDay.value}`)
 })
 
 const selectedAccounts = computed(() => {
-    return dateAccountsRef.value.find(i => i.date === selectedDate.value) as DateAccount;
+    return dateAccountsRef.value.find(i => new Date(i.date).toLocaleString() === selectedDate.value.toLocaleString()) as DateAccount;
 })
 
 const accounts = computed(() => {
@@ -40,8 +40,7 @@ const accounts = computed(() => {
 
 const modeDayAccounts = computed(() => {
     return reactive(dateAccountsRef.value.flatMap(i => {
-        if (formatDate(i.date, 'diy', 'MM') === curMonth)
-            return i.accounts?.filter(account => account.mode === 'day');
+        return i.accounts?.filter(account => account.mode === 'day');
     }) as Account[]);
 })
 
@@ -88,7 +87,7 @@ const dayMoney = computed(() => {
 
 const monthTotalMoney = computed(() => {
     return dateAccountsRef.value.flat().reduce((sum, i) => {
-        if (formatDate(i.date, 'diy', 'MM') === curMonth) {
+        if (new Date(i.date).getMonth() + 1 === curMonth) {
             return sum + (i.accounts as Account[]).reduce((sum, account) => {
                 return sum + parseFloat(account.money.toString());
             }, 0) as number;
@@ -148,7 +147,9 @@ onMounted(() => {
 const initAccounts = () => {
     getAccount() && getAccount().length > 0 ? dateAccountsRef.value = getAccount() : [];
 
-    selectedIndex.value = parseInt(today as string);
+    selectedIndex.value = today;
+
+    console.log(today, curMonth, curYear)
 }
 
 const thing = ref<string>();
@@ -187,8 +188,7 @@ const rules = {
 }
 
 const addAccountDate = () => {
-    if (dateAccountsRef.value.findIndex(i => i.date === selectedDate.value) === -1) {
-        console.log(1)
+    if (dateAccountsRef.value.findIndex(i => new Date(i.date).toLocaleString() === selectedDate.value.toLocaleString()) === -1) {
         const tempDateAccounts = {
             date: selectedDate.value,
             accounts: []
