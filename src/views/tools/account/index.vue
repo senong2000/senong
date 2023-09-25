@@ -15,11 +15,7 @@ const curYear = new Date().getFullYear();
 
 const days = getDaysInMonth(curYear, curMonth);
 
-const selectedIndex = ref(0)
-
-const selectedDay = computed(() => {
-    return selectedIndex.value;
-})
+const selectedDay = ref(today);
 const selectedMonth = ref(curMonth);
 const selectedYear = ref(curYear);
 const accountDialog = ref(false);
@@ -147,9 +143,6 @@ onMounted(() => {
 const initAccounts = () => {
     getAccount() && getAccount().length > 0 ? dateAccountsRef.value = getAccount() : [];
 
-    selectedIndex.value = today;
-
-    console.log(today, curMonth, curYear)
 }
 
 const thing = ref<string>();
@@ -256,7 +249,7 @@ const views = ref('account');
                 {{ curYear }} {{ curMonth }}
             </v-col>
             <v-col cols="12">
-                <v-tabs v-model="selectedIndex" align-tabs="start" selected-class="active-type" hide-slider show-arrows
+                <v-tabs v-model="selectedDay" align-tabs="start" selected-class="active-type" hide-slider show-arrows
                     center-active :theme="activeThemeName">
                     <v-tab v-for="i, idx in days" :key="idx" :value="i">
                         {{ i }}
@@ -385,8 +378,8 @@ const views = ref('account');
             </v-col>
 
             <v-col cols="12" class="slide-enter-50" v-if="views === 'chart'">
+                <span mx-2>Month Sum Money:</span>
                 <v-icon mx-1>fas fa-coins</v-icon>
-                <span mx-2>Month:</span>
                 {{ monthTotalMoney }}
             </v-col>
         </v-row>
