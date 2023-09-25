@@ -22,17 +22,16 @@ const selectedDay = computed(() => {
 })
 const selectedMonth = ref(curMonth);
 const selectedYear = ref(curYear);
-
 const accountDialog = ref(false);
 
 const dateAccountsRef = ref<DateAccount[]>([]);
 
 const selectedDate = computed(() => {
-    return `${selectedYear.value} ${selectedMonth.value} ${selectedDay.value}`
+    return new Date(`${selectedYear.value} ${selectedMonth.value} ${selectedDay.value}`);
 })
 
 const selectedAccounts = computed(() => {
-    return dateAccountsRef.value.find(i => i.date.toString() === selectedDate.value) as DateAccount;
+    return dateAccountsRef.value.find(i => i.date === selectedDate.value) as DateAccount;
 })
 
 const accounts = computed(() => {
@@ -41,7 +40,8 @@ const accounts = computed(() => {
 
 const modeDayAccounts = computed(() => {
     return reactive(dateAccountsRef.value.flatMap(i => {
-        return i.accounts?.filter(account => account.mode === 'day');
+        if (formatDate(i.date, 'diy', 'MM') === curMonth)
+            return i.accounts?.filter(account => account.mode === 'day');
     }) as Account[]);
 })
 
@@ -84,6 +84,19 @@ const dayMoney = computed(() => {
     return accounts.value.reduce((sum, account) => {
         return sum + parseFloat(account.money.toString());
     }, 0) as number;
+})
+
+const monthTotalMoney = computed(() => {
+    return dateAccountsRef.value.flat().reduce((sum, i) => {
+        if (formatDate(i.date, 'diy', 'MM') === curMonth) {
+            return sum + (i.accounts as Account[]).reduce((sum, account) => {
+                return sum + parseFloat(account.money.toString());
+            }, 0) as number;
+        } else {
+            return sum;
+        }
+    }, 0) as number;
+
 })
 
 const totalMoney = computed(() => {
@@ -175,8 +188,9 @@ const rules = {
 
 const addAccountDate = () => {
     if (dateAccountsRef.value.findIndex(i => i.date === selectedDate.value) === -1) {
+        console.log(1)
         const tempDateAccounts = {
-            date: selectedDate.value as string,
+            date: selectedDate.value,
             accounts: []
         }
 
@@ -368,7 +382,12 @@ const views = ref('account');
                         <v-divider></v-divider>
                     </v-card>
                 </div>
+            </v-col>
 
+            <v-col cols="12" class="slide-enter-50" v-if="views === 'chart'">
+                <v-icon mx-1>fas fa-coins</v-icon>
+                <span mx-2>Month:</span>
+                {{ monthTotalMoney }}
             </v-col>
         </v-row>
     </div>

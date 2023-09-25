@@ -43,7 +43,7 @@ export type Favorite = {
 
 export type DateAccount = {
     index?: number
-    date: string
+    date: date
     accounts?: Account[]
 }
 
