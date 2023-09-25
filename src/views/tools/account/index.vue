@@ -67,22 +67,22 @@ const modeMoney = ref('year');
 
 const yearMoney = computed(() => {
     return modeYearAccounts.value.reduce((sum, account) => {
-        return sum + parseInt(account.money.toString());
+        return sum + parseFloat(account.money.toString());
     }, 0) as number;
 })
 const monthMoney = computed(() => {
     return modeMonthAccounts.value.reduce((sum, account) => {
-        return sum + parseInt(account.money.toString());
+        return sum + parseFloat(account.money.toString());
     }, 0) as number;
 })
 const weekMoney = computed(() => {
     return modeWeekAccounts.value.reduce((sum, account) => {
-        return sum + parseInt(account.money.toString());
+        return sum + parseFloat(account.money.toString());
     }, 0) as number;
 })
 const dayMoney = computed(() => {
     return accounts.value.reduce((sum, account) => {
-        return sum + parseInt(account.money.toString());
+        return sum + parseFloat(account.money.toString());
     }, 0) as number;
 })
 
@@ -187,7 +187,7 @@ const addAccountDate = () => {
 const addAccount = async () => {
     const tempAccount = {
         thing: thing.value as string,
-        money: parseInt(money.value as string),
+        money: parseFloat(money.value as string),
         type: (type.value as accountType).name as string,
         mode: mode.value as MODE
     }
@@ -204,6 +204,8 @@ const addAccount = async () => {
     mode.value = '';
 
     accountDialog.value = false;
+
+    views.value = 'account';
 
 }
 
@@ -230,6 +232,8 @@ const delAccount = (item: Account) => {
 };
 
 
+const views = ref('account');
+
 </script>
 <template>
     <div class="account">
@@ -246,8 +250,10 @@ const delAccount = (item: Account) => {
                 </v-tabs>
             </v-col>
             <v-col cols="12" flex flex-items-center>
-                <span uppercase mr-4>Money</span>
-                <span>{{ totalMoney }}</span>
+                <v-tabs v-model="views">
+                    <v-tab value="account">account</v-tab>
+                    <v-tab value="chart">chart</v-tab>
+                </v-tabs>
                 <v-spacer></v-spacer>
 
                 <v-dialog v-model="accountDialog" persistent class="w-128" :theme="activeThemeName">
@@ -310,7 +316,7 @@ const delAccount = (item: Account) => {
                     </v-card>
                 </v-dialog>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="slide-enter-50" v-if="views === 'account'">
                 <div class="accounts" v-for="accounts in allAccounts">
                     <div my-4 flex flex-items-center>
                         <span text-6 mr-4>{{ accounts.mode }}</span>
