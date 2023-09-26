@@ -323,7 +323,7 @@ const views = ref('account');
                     </v-card>
                 </v-dialog>
             </v-col>
-            <v-col cols="12" class="slide-enter-50" v-if="views === 'account'">
+            <v-col cols="12" v-if="views === 'account'">
                 <div class="accounts" v-for="accounts in allAccounts">
                     <div my-4 flex flex-items-center>
                         <span text-6 mr-4>{{ accounts.mode }}</span>
@@ -377,7 +377,7 @@ const views = ref('account');
                 </div>
             </v-col>
 
-            <v-col cols="12" class="slide-enter-50" v-if="views === 'chart'">
+            <v-col  my-4 cols="12" class="slide-enter-50" v-if="views === 'chart'">
                 <span mx-2>Month Sum Money:</span>
                 <v-icon mx-1>fas fa-coins</v-icon>
                 {{ monthTotalMoney }}

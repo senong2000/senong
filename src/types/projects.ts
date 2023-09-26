@@ -71,13 +71,14 @@ export type DogShit = {
  * @description schedule
  */
 
-enum ScheduleMode { once, daliy, weekly, monthly, yearly }
+type ScheduleMode = 'once' | 'daliy' | 'weekly' | 'monthly' | 'yearly'
 
 export type Schedule = {
     index?: number
     schedule: string
-    date: Date
-    time: Date
-    complete: Boolean
-    mode: ScheduleMode
+    completeData?: Date[]
+    createdDate: Date
+    startTime: string
+    endTime: string
+    mode?: ScheduleMode
 }

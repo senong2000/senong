@@ -2,7 +2,7 @@
 
 import CacheKey from "@/constants/cacheKey"
 import { type ThemeName } from "@/hooks/useTheme"
-import { Favorites, TodoSpace, YearAccount } from "@/types/projects"
+import { Favorites, TodoSpace, DateAccount, Schedule } from "@/types/projects"
 class Cache {
   public name: string
 
@@ -82,9 +82,9 @@ export const setFavorites = (favorites: Favorites[]) => {
 }
 
 export const getAccount = () => {
-  return cache.get(CacheKey.ACCOUNT) as YearAccount[]
+  return cache.get(CacheKey.ACCOUNT) as DateAccount[]
 }
-export const setAccount = (favorites: YearAccount[]) => {
+export const setAccount = (favorites: DateAccount[]) => {
   cache.set(CacheKey.ACCOUNT, favorites)
 }
 
@@ -95,4 +95,11 @@ export const setSkin = (imageURL: string) => {
 // 返回皮肤
 export const getSkin = () => {
   return cache.get(CacheKey.MCSKIN);
+}
+
+export const getSchedule = () => {
+  return cache.get(CacheKey.SCHEDULE) as Schedule[]
+}
+export const setSchedule = (favorites: Schedule[]) => {
+  cache.set(CacheKey.SCHEDULE, favorites)
 }
