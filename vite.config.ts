@@ -97,7 +97,7 @@ export default defineConfig({
         { dir: 'src/views/blog/**/', baseRoute: '/blog' },
         { dir: 'src/views/blog/secret/', baseRoute: '/blog/secret' },
         { dir: 'src/views/blog/secret/porn/**/', baseRoute: '/blog/secret/porn' },
-        { dir: 'src/views/projects/webgl', baseRoute: '/projects/webgl' },
+        { dir: 'src/views/projects/webgl/shader', baseRoute: '/projects/webgl/shader' },
         { dir: 'src/views/error/', baseRoute: '' },
       ],
       extendRoute(route) {

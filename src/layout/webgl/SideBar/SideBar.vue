@@ -16,7 +16,8 @@ const webglTab = ref(0)
 const webglInput = ref('')
 
 onMounted(() => {
-    webglTab.value = webgls.value.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[3]) > -1 ? webgls.value.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[3]) + 1 : 0
+    webglTab.value = webgls.value.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[4]) > -1 ? webgls.value.findIndex(i => i.title.toLocaleLowerCase() === route.path.split('/')[4]) + 1 : 0
+
 })
 
 const toWebGL = (item: webgl) => {
@@ -43,9 +44,6 @@ webglsRef.value = router.getRoutes()
         title: i.title,
         route: i.route
     }))
-
-console.log(webglsRef.value)
-
 webglsRef.value = [{ index: 0, title: 'home', route: '/projects/webgl' }, ...webglsRef.value]
 
 const webgls = computed(() => {
