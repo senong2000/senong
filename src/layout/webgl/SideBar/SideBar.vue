@@ -27,10 +27,11 @@ const backToProjects = () => {
     router.push('/projects')
 }
 
-let webglsRef = ref<webgl[]>([])
+let webglsRef = ref<any[]>([])
 webglsRef.value = router.getRoutes()
-    .filter(i => i.path.startsWith(`/projects/webgl/`)).map(i => ({
-        title: (i.name as string).split("-")[2],
+    .filter(i => i.path.startsWith(`/projects/webgl/`))
+    .map(i => ({
+        title: (i.name as string).split("-")[3],
         route: i.path
     }))
     .sort((a, b) => {

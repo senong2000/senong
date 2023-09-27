@@ -2,7 +2,8 @@
   "compilerOptions": {
     "typeRoots": [
       "./node_modules/@types", // 默认值
-      "./src/types"
+      "./src/types",
+      "vite-plugin-glsl/ext"
     ],
     "target": "ESNext",
     "useDefineForClassFields": true,

@@ -22,7 +22,7 @@ export class ThreeCanvas {
     private camera!: PerspectiveCamera;
 
 
-    constructor(canvas: HTMLElement) {
+    constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         ThreeCanvas.instance = this;
     }
@@ -57,6 +57,10 @@ export class ThreeCanvas {
         this.camera.position.y = 5;
         this.camera.position.z = 5;
         this.camera.lookAt(new Vector3(0, 0, 0));
+    }
+
+    public setCameraPos(x: number, y: number, z: number) {
+        this.camera.position.set(x, y, z);
     }
 
     private initRenderer() {
@@ -202,7 +206,7 @@ export class ThreeCanvas {
         };
 
         this.gui = new GUI();
-        
+
         document.querySelector('.canvas')!.appendChild(this.gui.domElement);
         this.gui.domElement.style.position = 'absolute';
         this.gui.domElement.style.top = '0';
@@ -253,10 +257,10 @@ export class ThreeCanvas {
 
         this.scene.add(this.axesHelper);
 
-        this.axesHelper.visible = true;
+        this.axesHelper.visible = false;
 
         const params = {
-            showAxesHelper: true,
+            showAxesHelper: false,
         };
 
         this.gui.add(params, 'showAxesHelper').name('Axes Helper').onChange((value) => {
@@ -274,10 +278,10 @@ export class ThreeCanvas {
 
         this.scene.add(this.gridHelper);
 
-        this.gridHelper.visible = true;
+        this.gridHelper.visible = false;
 
         const params = {
-            showGridHelper: true,
+            showGridHelper: false,
         };
 
         this.gui.add(params, 'showGridHelper').name('Grid Helper').onChange((value) => {

@@ -28,6 +28,8 @@ import MarkdownItEmoji from 'markdown-it-emoji';
 
 import { bundledLanguages, getHighlighter } from 'shikiji'
 
+import glsl from 'vite-plugin-glsl';
+
 // ts-expect-error missing types
 import MarkdownItToc from 'markdown-it-table-of-contents';
 import { slugify } from './scripts/slugify'
@@ -58,6 +60,19 @@ export default defineConfig({
       autoImport: true,
     }),
 
+    glsl({
+      include: [                   // Glob pattern, or array of glob patterns to import
+        '**/*.glsl', '**/*.wgsl',
+        '**/*.vert', '**/*.frag',
+        '**/*.vs', '**/*.fs'
+      ],
+      exclude: undefined,          // Glob pattern, or array of glob patterns to ignore
+      warnDuplicatedImports: true, // Warn if the same chunk was imported multiple times
+      defaultExtension: 'glsl',    // Shader suffix when no extension is specified
+      compress: false,             // Compress output shader code
+      watch: true,                 // Recompile shader on change
+    }),
+
 
     AutoImport({
       imports: ['vue', '@vueuse/core', 'vue-router', 'pinia', '@vueuse/head'],
@@ -82,7 +97,7 @@ export default defineConfig({
         { dir: 'src/views/blog/**/', baseRoute: '/blog' },
         { dir: 'src/views/blog/secret/', baseRoute: '/blog/secret' },
         { dir: 'src/views/blog/secret/porn/**/', baseRoute: '/blog/secret/porn' },
-        { dir: 'src/views/projects/webgl/**/', baseRoute: '/projects/webgl/' },
+        { dir: 'src/views/projects/webgl', baseRoute: '/projects/webgl' },
         { dir: 'src/views/error/', baseRoute: '' },
       ],
       extendRoute(route) {
