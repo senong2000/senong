@@ -216,9 +216,12 @@ class SkinEditor {
 
         // console.log(event.target.result)
 
+        console.log(this.skin.object)
         this.scene.remove(this.skin.object);
-
+        console.log(this.scene)
         let imageURL = event.target.result
+
+        console.log(imageURL)
 
         this.initSkin(imageURL);
 
@@ -301,7 +304,7 @@ class SkinEditor {
   /**
  * @description 逐帧渲染 frame(帧)
  */
-  private frameByFrame = () => {
+  public frameByFrame = () => {
     requestAnimationFrame(this.frameByFrame);
     this.orbitControls.update();
     this.render();
@@ -345,7 +348,7 @@ class SkinEditor {
       this.toolBox.setCtx(this.skin.skinCtx);
       this.modelChangeTool = new ModelChangeTool(this, this.scene, this.skin, this.toolBox);
       // 开始渲染
-      this.frameByFrame();
+      this.render();
 
       // 初始化模型默认动作
       this.initPoses();
@@ -522,7 +525,7 @@ class SkinEditor {
     // console.log(this.skin.curModel)
     let imageUrl;
 
-    // this.scene.remove(this.skin.object);
+    this.scene.remove(this.skin.object);
 
     if (this.skin.curModel === 'Steve') {
       imageUrl = this.DEFAULT_SKIN_URL

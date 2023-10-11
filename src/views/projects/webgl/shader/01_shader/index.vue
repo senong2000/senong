@@ -68,6 +68,7 @@ const initShader = () => {
     const geometry = new SphereGeometry(radius, segments, rings);
 
     displacement = new Float32Array(geometry.attributes.position.count);
+    
     noise = new Float32Array(geometry.attributes.position.count);
 
     for (let i = 0; i < displacement.length; i++) {

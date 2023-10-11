@@ -44,7 +44,6 @@ const undo = ref(true);
 const redoHistoryLength = ref<number>(0);
 const redo = ref(true);
 
-
 const color = ref<string>('');
 const colorIndex = ref<number>(0);
 // 随机产生颜色
@@ -158,6 +157,8 @@ const initSkineditor = (imageURL?: string) => {
             console.log(val);
             modelSelect.value = val;
         })
+
+        
 
     })
 
