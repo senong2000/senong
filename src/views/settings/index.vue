@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useTheme } from '@/hooks/useTheme';
-import { TodoSpace } from '@/types/todolist';
+import { TodoSpace } from '@/types/projects';
 import { getTodoSpaces } from "@/utils/cache/localStorage"
 
 const { activeThemeName } = useTheme()

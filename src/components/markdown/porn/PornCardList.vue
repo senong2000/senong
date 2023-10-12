@@ -23,6 +23,7 @@ const routes: Post[] = router.getRoutes()
         cover: `${import.meta.env.VITE_BASE_URL}` + i.meta.frontmatter.cover,
     }))
 
+console.log(routes)
 </script>
 <template>
     <div class="porn-card">
