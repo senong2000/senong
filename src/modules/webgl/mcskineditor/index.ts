@@ -21,8 +21,8 @@ class SkinEditor {
   public SKIN_WIDTH = 64; // 皮肤宽度
   public SKIN_HEIGHT = 64; // 皮肤宽度
   public SKIN_LEGACY_HEIGHT = 32; // 标准高度
-  public DEFAULT_SKIN_URL = "/images/skin/default_skin.png"; // 默认皮肤
-  public ALEX_SKIN_URL = "/images/skin/alex.png"; // alex
+  public DEFAULT_SKIN_URL = `${import.meta.env.VITE_BASE_URL}` + "/images/skin/default_skin.png"; // 默认皮肤
+  public ALEX_SKIN_URL = `${import.meta.env.VITE_BASE_URL}` + "/images/skin/alex.png"; // alex
   private SKIN_URL: string = ''; // 用户上传的皮肤
   private SKIN_IMAGE: any; // 用户上传的皮肤
   private SCROLLABLE_BORDER_FACTOR = 1 / 16;
@@ -117,7 +117,7 @@ class SkinEditor {
 
   private initListener() {
     // 随浏览器窗口大小发生变化
-    window.addEventListener("resize", this.onWindowResize);
+    // window.addEventListener("resize", this.onWindowResize);
 
     // canvas
     this.initCanvasListener();
@@ -213,19 +213,9 @@ class SkinEditor {
       // 上传图片读取成功回调函数
       // 这里传给后端
       reader.onload = (event: any) => {
-
-        // console.log(event.target.result)
-
-        console.log(this.skin.object)
         this.scene.remove(this.skin.object);
-        console.log(this.scene)
         let imageURL = event.target.result
-
-        console.log(imageURL)
-
         this.initSkin(imageURL);
-
-
       };
 
       reader.readAsDataURL(file);
@@ -287,14 +277,28 @@ class SkinEditor {
   }
 
 
+  // 计算canvas 宽 高
+  private countRect() {
+
+    let width = (document.getElementById("skineditor") as any).offsetWidth;
+    // let height = this.mobileVersion() ? 460 : 490;
+    let height = 490;
+    
+
+    if (width != this.WIDTH || height != this.HEIGHT) {
+      this.WIDTH = width;
+      this.HEIGHT = height;
+    };
+
+  }
 
   public onWindowResize = () => {
     // (this.renderer.setSize(this.WIDTH * this.MULTISAMPLING, this.HEIGHT), this.camera.aspect = this.WIDTH / this.HEIGHT, this.camera.updateProjectionMatrix())
     this.countRect();
     this.renderer.setSize(this.WIDTH * this.MULTISAMPLING, this.HEIGHT), this.camera.aspect = this.WIDTH / this.HEIGHT, this.camera.updateProjectionMatrix();
+
+    this.render();
   }
-
-
 
   // 渲染场景
   public render = () => {
@@ -308,20 +312,9 @@ class SkinEditor {
     requestAnimationFrame(this.frameByFrame);
     this.orbitControls.update();
     this.render();
+    
   }
 
-  // 计算canvas 宽 高
-  private countRect() {
-    // const height = this.mobileVersion() ? 460 : 490;
-
-    let height = 490;
-    let width = (document.getElementById("skineditor") as any).offsetWidth;
-    // console.log(parseInt(width) - 24)
-    if (width != this.WIDTH || height != this.HEIGHT) {
-      this.WIDTH = width;
-      this.HEIGHT = height;
-    };
-  }
 
   // 判断用户端
   private mobileVersion = () => {
@@ -453,7 +446,7 @@ class SkinEditor {
         }
         this.skin.bodyparts[r].overlay.grid.box.visible = this.isInSkinGrid && this.skin.bodyparts[r].overlay.visible;
       }
-      // this.render();
+      this.render();
     }
 
     if (type === 'touch') {
@@ -495,7 +488,8 @@ class SkinEditor {
   // 判断部分模型 是否显示
   public toggleBodyPart = (bodypart: string, type: string, HIDDEN: boolean) => {
     // @ts-ignore
-    this.skin[bodypart][type].toggleVisibility(HIDDEN)
+    this.skin[bodypart][type].toggleVisibility(HIDDEN);
+    this.render();
   };
 
   // 判断Grid 是否启用
@@ -506,11 +500,13 @@ class SkinEditor {
   // 切换模型动作
   public changeStance = (val: any) => {
     this.skin.apply(this.Poses[val]);
+    this.render();
   }
 
   // 切换模型
   public changeModel = (val: any) => {
     this.modelChangeTool.changeModel(val);
+    this.render()
   }
 
   // 切换画板 当前颜色

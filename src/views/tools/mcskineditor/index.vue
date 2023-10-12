@@ -148,6 +148,8 @@ const initSkineditor = (imageURL?: string) => {
 
     skineditor.initSkin(imageURL);
 
+    // skineditor.frameByFrame();
+
     skineditor.initSkinLoaded((curModel: string, curTool: string) => {
         tool.value = curTool;
         model.value = curModel;
@@ -157,9 +159,6 @@ const initSkineditor = (imageURL?: string) => {
             console.log(val);
             modelSelect.value = val;
         })
-
-        
-
     })
 
 
