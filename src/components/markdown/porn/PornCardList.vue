@@ -24,6 +24,7 @@ const routes: Post[] = router.getRoutes()
     }))
 
 console.log(routes)
+
 </script>
 <template>
     <div class="porn-card">

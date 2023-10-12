@@ -9,10 +9,6 @@ const { isRain, toggleRain } = useRainFx()
 
 const router = useRouter()
 
-const logo = `${import.meta.env.VITE_BASE_URL}` + '/logo.png';
-
-console.log(logo);
-
 const toPages = (path: string) => {
     router.push(`${path}`)
 }
