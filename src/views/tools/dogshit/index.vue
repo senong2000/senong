@@ -7,7 +7,6 @@ const random = () => {
     const randomNumber = Math.floor((random - Math.floor(random)) * 100) + 1;
 
     alert(randomNumber);
-
     // return randomNumber;
 }
 
