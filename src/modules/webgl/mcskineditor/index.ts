@@ -506,7 +506,7 @@ class SkinEditor {
   // 切换模型
   public changeModel = (val: any) => {
     this.modelChangeTool.changeModel(val);
-    this.render()
+    this.render();
   }
 
   // 切换画板 当前颜色
