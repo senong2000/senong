@@ -494,11 +494,14 @@ watch(
             </v-col>
 
             <v-col cols="12">
-                <v-row no-gutters class="color-controls d-flex justify-space-between align-center">
-                    <ColorPicker v-for="item in colorItems" :key="item.index" :index="item.index" :active="colorIndex"
-                        :InitialColor="item.color.value" @colorIndexChangeEmit="colorIndexChange"
-                        @colorChangeEmit="colorChange">
-                    </ColorPicker>
+                <v-row no-gutters>
+                    <v-col cols="2" v-for="item in colorItems"
+                        class="color-controls flex flex-justify-center flex-items-center" h-3rem>
+                        <ColorPicker :key="item.index" :index="item.index" :active="colorIndex"
+                            :InitialColor="item.color.value" @colorIndexChangeEmit="colorIndexChange"
+                            @colorChangeEmit="colorChange">
+                        </ColorPicker>
+                    </v-col>
                 </v-row>
             </v-col>
 

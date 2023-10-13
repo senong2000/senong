@@ -259,6 +259,12 @@ class SkinEditor {
     document.querySelector('.center')?.addEventListener('mousedown', (event: any) => {
       this.backToCenter();
     })
+    document.querySelector('.zoom-in')?.addEventListener('mousedown', (event: any) => {
+      this.zoomIn();
+    })
+    document.querySelector('.zoom-out')?.addEventListener('mousedown', (event: any) => {
+      this.zoomOut();
+    })
   }
 
   public uninstallListener = () => {
@@ -307,7 +313,9 @@ class SkinEditor {
   public onWindowResize = () => {
     // (this.renderer.setSize(this.WIDTH * this.MULTISAMPLING, this.HEIGHT), this.camera.aspect = this.WIDTH / this.HEIGHT, this.camera.updateProjectionMatrix())
     this.countRect();
-    this.renderer.setSize(this.WIDTH * this.MULTISAMPLING, this.HEIGHT), this.camera.aspect = this.WIDTH / this.HEIGHT, this.camera.updateProjectionMatrix();
+    this.renderer.setSize(this.WIDTH * this.MULTISAMPLING, this.HEIGHT);
+    this.camera.aspect = this.WIDTH / this.HEIGHT;
+    this.camera.updateProjectionMatrix();
 
     this.render();
   }
@@ -558,11 +566,17 @@ class SkinEditor {
   }
 
   public zoomIn = () => {
-
+    if (this.camera.zoom > 1.5) return
+    this.camera.zoom += 0.1;
+    this.camera.updateProjectionMatrix();
+    this.render();
   }
 
   public zoomOut = () => {
-
+    if (this.camera.zoom < 0.5) return
+    this.camera.zoom -= 0.1;
+    this.camera.updateProjectionMatrix();
+    this.render();
   }
 }
 

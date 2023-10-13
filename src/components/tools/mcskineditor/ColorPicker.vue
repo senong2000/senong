@@ -4,10 +4,9 @@ import Bus from '@/utils/Bus';
 import { ref, computed, toRefs, watch, onMounted, onUnmounted } from 'vue';
 import { useTheme } from "@/hooks/useTheme"
 
-
+const { activeThemeName } = useTheme()
 
 const menu = ref(false);
-const themeName = useTheme()
 
 // 接受父传子
 const props = defineProps({
@@ -52,11 +51,11 @@ const swatchStyle = computed(() => {
     return {
         backgroundColor: color.value,
         cursor: 'pointer',
-        height: ACTIVE.value ? '48px' : '32px',
-        width: ACTIVE.value ? '48px' : '32px',
-        borderRadius: menu.value ? '50%' : '4px',
-        border: ACTIVE.value ? '2px solid #0C83FF' : '',
-        transition: 'border-radius 200ms ease-in-out'
+        height: ACTIVE.value ? '3rem' : '2rem',
+        width: ACTIVE.value ? '3rem' : '2rem',
+        borderRadius: menu.value ? '50%' : '50%',
+        border: ACTIVE.value ? '' : '',
+        transition: 'all 300ms ease-in-out'
     }
 })
 
@@ -71,15 +70,8 @@ onUnmounted(() => {
 watch(
     () => [ACTIVE.value, color.value, menu.value],
     ([newActive, newColor, newMenu], [oldActive, oldColor, oldMenu]) => {
-        if (newActive !== oldActive) {
-            // console.log();
-        }
-        // if (newColor !== oldColor) {
-
-        // }
         if (ACTIVE.value === true && newMenu === false) {
             colorChangeEmit();
-            // console.log(index?.value,color.value);
         }
     },)
 
@@ -87,9 +79,8 @@ watch(
 
 <template>
     <div id="colorPicker">
-
         <v-menu v-model="menu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false"
-            :theme="`${themeName}`">
+            :theme="activeThemeName">
             <template v-slot:activator="{ props }">
                 <div :style="swatchStyle" v-bind="props" @click="colorIndexChange"></div>
             </template>
