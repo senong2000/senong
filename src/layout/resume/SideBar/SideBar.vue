@@ -2,7 +2,6 @@
 import { useTheme } from '@/hooks/useTheme';
 const { activeThemeName, toggleDark, isDark } = useTheme()
 
-const route = useRoute()
 const router = useRouter()
 
 onMounted(() => {

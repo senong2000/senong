@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { useTheme } from '@/hooks/useTheme';
+
+const { activeThemeName } = useTheme();
 
 const random = () => {
     const date = new Date();
@@ -13,7 +16,7 @@ const random = () => {
 </script>
 <template>
     <div class="dogshit">
-        <v-btn @click="random" w-full h-full>
+        <v-btn @click="random" w-full h-full :theme="activeThemeName">
             dogshit
         </v-btn>
     </div>

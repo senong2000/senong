@@ -36,7 +36,7 @@ export const hasKey = (ele: any, cls: any, key: any) => {
  * @param cls 
  */
 export const addClass = (ele: any, cls: any) => {
-    
+
     ele.classList.add(cls);
     // console.log(ele,cls)
 }
@@ -130,3 +130,43 @@ export const offset = (ele: any) => {
 
     return result;
 }
+
+/**
+ * @description 防抖函数
+ * @param func 
+ * @param delay 
+ * @returns 
+ */
+
+export const debounce = (func: Function, delay: number) => {
+    let timer: ReturnType<typeof setTimeout>;
+    return (...args: any[]) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            func(...args);
+        }, delay);
+    };
+};
+
+/**
+ * @description 节流函数
+ * @param func 
+ * @param delay 
+ * @returns 
+ */
+export const throttle = (func: Function, delay: number) => {
+    let timer: ReturnType<typeof setTimeout>;
+    let lastTime = 0;
+    return (...args: any[]) => {
+        const currentTime = Date.now();
+        if (currentTime - lastTime > delay) {
+            func(...args);
+            lastTime = currentTime;
+        } else {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func(...args);
+            }, delay);
+        }
+    };
+};

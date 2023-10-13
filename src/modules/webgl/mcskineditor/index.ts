@@ -12,6 +12,7 @@ import { ModelChangeTool } from './ModelChangeTool';
 import { ToolBox } from './ToolBox';
 import { setSkin } from '@/utils/cache/localStorage';
 import { base64ToBlob, download, resizedCanvas } from '@/utils/skin/canvas';
+import { debounce, throttle } from '@/utils/js/index'
 
 class SkinEditor {
   public WEBGL = WebGL.isWebGLAvailable();
@@ -86,7 +87,7 @@ class SkinEditor {
     this.camera.position.x = 0;
     this.camera.position.y = 0;
     this.camera.position.z = 50;
-    this.camera.lookAt(new Vector3(0, 0, 0));
+
   }
 
   private initRenderer() {
@@ -112,6 +113,8 @@ class SkinEditor {
       this.renderer.domElement
     );
 
+    this.orbitControls.saveState();
+
     this.orbitControls.addEventListener('change', this.render);
   }
 
@@ -124,6 +127,9 @@ class SkinEditor {
 
     // bodypart
     this.initBodyPartListener();
+
+    // tools
+    this.initToolsListener();
 
   }
 
@@ -249,6 +255,12 @@ class SkinEditor {
 
   }
 
+  private initToolsListener = () => {
+    document.querySelector('.center')?.addEventListener('mousedown', (event: any) => {
+      this.backToCenter();
+    })
+  }
+
   public uninstallListener = () => {
     window.removeEventListener('resize', this.onWindowResize)
   }
@@ -283,7 +295,7 @@ class SkinEditor {
     let width = (document.getElementById("skineditor") as any).offsetWidth;
     // let height = this.mobileVersion() ? 460 : 490;
     let height = 490;
-    
+
 
     if (width != this.WIDTH || height != this.HEIGHT) {
       this.WIDTH = width;
@@ -305,14 +317,23 @@ class SkinEditor {
     this.renderer.render(this.scene, this.camera);
   };
 
+
+  frameHandle: number = 0;
   /**
  * @description 逐帧渲染 frame(帧)
  */
-  public frameByFrame = () => {
-    requestAnimationFrame(this.frameByFrame);
+  private frameByFrame = () => {
+    this.frameHandle = requestAnimationFrame(() => this.frameByFrame());
     this.orbitControls.update();
     this.render();
-    
+  }
+
+  /**
+   *  @description 停止逐帧渲染
+   */
+  stopFrame() {
+    cancelAnimationFrame(this.frameHandle);
+    this.frameHandle = 0;
   }
 
 
@@ -530,6 +551,18 @@ class SkinEditor {
     }
 
     this.initSkin(imageUrl);
+  }
+
+  public backToCenter = () => {
+    this.orbitControls.reset();
+  }
+
+  public zoomIn = () => {
+
+  }
+
+  public zoomOut = () => {
+
   }
 }
 

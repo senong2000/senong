@@ -25,11 +25,11 @@ const toPages = (path: string) => {
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn variant="plain" @click="toPages('/blog')">
-            <v-icon><i class="fas fa-clipboard"></i></v-icon>
+            <v-icon>fas fa-file</v-icon>
             <v-tooltip text="Blog" activator="parent" location="bottom"></v-tooltip>
         </v-btn>
         <v-btn variant="plain" @click="toPages('/resume')">
-            <v-icon>fas fa-file</v-icon>
+            <v-icon><i class="fas fa-portrait"></i></v-icon>
             <v-tooltip text="Resume" activator="parent" location="bottom"></v-tooltip>
         </v-btn>
         <v-btn variant="plain" @click="toPages('/projects')">
