@@ -11,7 +11,7 @@ onMounted(() => {
 <template>
     <div class="resume-layout">
         <ResumeMain></ResumeMain>
-        <SideBar></SideBar>
+        <ResumeSideBar></ResumeSideBar>
     </div>
 </template>
 <style lang="scss" scoped>

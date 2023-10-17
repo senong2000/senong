@@ -141,7 +141,7 @@ export default defineConfig({
         }
         else if (resumeRegExp.test(route.path)) {
           return {
-            path:'/resume',
+            path: '/resume',
             component: '/src/layout/resume/index.vue',
             children: [
               {
