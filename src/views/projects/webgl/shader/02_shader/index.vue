@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 import { ThreeCanvas } from '@/hooks/useThreeCanvas'
-import { BoxGeometry, BufferGeometry, DirectionalLight, HemisphereLight, Mesh, MeshBasicMaterial, MeshStandardMaterial, ShaderMaterial, SphereGeometry } from 'three';
+import { BufferGeometry, DirectionalLight, HemisphereLight, Mesh, MeshStandardMaterial, ShaderMaterial, SphereGeometry } from 'three';
 
 import vertexShaderSource from './vertex.glsl';
 import fragmentShaderSource from './fragment.glsl';

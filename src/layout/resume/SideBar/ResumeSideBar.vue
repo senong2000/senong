@@ -3,14 +3,29 @@ import { useTheme } from '@/hooks/useTheme';
 const { activeThemeName, toggleDark, isDark } = useTheme()
 
 const router = useRouter()
+const route = useRoute()
+
+type webgl = {
+    index?: number
+    title: string
+    route: string
+}
+
+const resumeTab = ref(0)
+
+const resumeInput = ref('')
+
+console.log(route)
+
+const back = () => {
+    router.push('/')
+}
 
 onMounted(() => {
 
 })
 
-const back = () => {
-    router.push('/')
-}
+
 
 </script>
 <template>
@@ -30,7 +45,7 @@ const back = () => {
 
                     </template>
                     <v-divider></v-divider>
-                    
+
                 </v-navigation-drawer>
                 <v-main style="height:100vh"></v-main>
             </v-layout>
