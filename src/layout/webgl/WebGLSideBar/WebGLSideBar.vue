@@ -79,27 +79,29 @@ const searchWebGL = () => {
                             <v-btn variant="plain" @click="toggleDark">
                                 <v-icon :icon="`${isDark ? 'fas fa-moon' : 'fas fa-sun'}`"></v-icon>
                             </v-btn>
+                            <v-text-field placeholder="webgl" variant="solo" hide-details="auto" v-model="webglInput"
+                                @input="searchWebGL" @click:clear="searchWebGL" clearable persistent-clear persistent-hint>
+                                <template v-slot:append-inner>
+                                    <v-icon icon="fas fa-magnifying-glass" size="small" @click="searchWebGL"></v-icon>
+                                </template>
+                            </v-text-field>
+                            <div class="d-flex flex-row">
+                                <v-tabs w-full v-model="webglTab" direction="vertical" align-tabs="start"
+                                    selected-class="tab-active" hide-slider p-4>
+                                    <v-tab v-for="item, idx in webgls" :key="idx" @click="toWebGL(item)" :value="idx + 1"
+                                        class="my-2 b-rd-4!">
+                                        <span>{{ item.title }}</span>
+                                    </v-tab>
+                                </v-tabs>
+                            </div>
+
                         </div>
                     </template>
 
-                    <v-text-field placeholder="webgl" variant="solo" hide-details="auto" v-model="webglInput"
-                        @input="searchWebGL" @click:clear="searchWebGL" clearable persistent-clear persistent-hint>
-                        <template v-slot:append-inner>
-                            <v-icon icon="fas fa-magnifying-glass" size="small" @click="searchWebGL"></v-icon>
-                        </template>
-                    </v-text-field>
-                    
+
+
                     <v-divider></v-divider>
 
-                    <div class="d-flex flex-row">
-                        <v-tabs w-full v-model="webglTab" direction="vertical" align-tabs="start"
-                            selected-class="tab-active" hide-slider p-4>
-                            <v-tab v-for="item, idx in webgls" :key="idx" @click="toWebGL(item)" :value="idx + 1"
-                                class="my-2 b-rd-4!">
-                                <span>{{ item.title }}</span>
-                            </v-tab>
-                        </v-tabs>
-                    </div>
 
 
 
