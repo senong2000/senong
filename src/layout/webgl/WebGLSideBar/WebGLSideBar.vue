@@ -93,6 +93,8 @@ const searchWebGL = () => {
 
                     <v-divider></v-divider>
 
+123213  
+
                     <div class="d-flex flex-row">
                         <v-tabs w-full v-model="webglTab" direction="vertical" align-tabs="start"
                             selected-class="tab-active" hide-slider p-4>
@@ -103,6 +105,8 @@ const searchWebGL = () => {
                             </v-tab>
                         </v-tabs>
                     </div>
+
+
 
                 </v-navigation-drawer>
                 <v-main style="height:100vh"></v-main>
