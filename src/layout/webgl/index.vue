@@ -10,7 +10,7 @@ onMounted(() => {
 </script>
 <template>
     <div class="webgl-layout">
-        <WebglSideBar></WebglSideBar>
+        <WebGLSideBar></WebGLSideBar>
         <CanvasMain></CanvasMain>
     </div>
 </template>
