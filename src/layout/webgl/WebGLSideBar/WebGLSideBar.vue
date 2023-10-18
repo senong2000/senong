@@ -58,8 +58,6 @@ console.log('webgls:', webgls.value)
 const getWebGLs = webglsRef.value;
 
 const searchWebGL = () => {
-
-
     if (webglInput.value === null) {
         webglsRef.value = getWebGLs
     } else {
@@ -83,16 +81,18 @@ const searchWebGL = () => {
                             </v-btn>
                         </div>
 
-                        <v-text-field placeholder="webgl" variant="solo" hide-details="auto" v-model="webglInput"
+                        <!-- <v-text-field placeholder="webgl" variant="solo" hide-details="auto" v-model="webglInput"
                             @input="searchWebGL" @click:clear="searchWebGL" clearable persistent-clear persistent-hint>
                             <template v-slot:append-inner>
                                 <v-icon icon="fas fa-magnifying-glass" size="small" @click="searchWebGL"></v-icon>
                             </template>
-                        </v-text-field>
+                        </v-text-field> -->
 
 
                     </template>
+
                     <v-divider></v-divider>
+
                     <div class="d-flex flex-row">
                         <v-tabs w-full v-model="webglTab" direction="vertical" align-tabs="start"
                             selected-class="tab-active" hide-slider p-4>
@@ -103,6 +103,7 @@ const searchWebGL = () => {
                             </v-tab>
                         </v-tabs>
                     </div>
+
                 </v-navigation-drawer>
                 <v-main style="height:100vh"></v-main>
             </v-layout>
