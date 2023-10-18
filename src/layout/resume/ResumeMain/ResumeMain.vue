@@ -20,7 +20,7 @@ const key = computed(() => {
     </div>
 </template>
 <style lang="scss" scoped>
-.canvas-main {
+.resume-main {
     display: flex;
     width: 100%;
 }

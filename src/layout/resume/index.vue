@@ -10,15 +10,15 @@ onMounted(() => {
 </script>
 <template>
     <div class="resume-layout">
-        <ResumeMain></ResumeMain>
         <ResumeSideBar></ResumeSideBar>
+        <ResumeMain></ResumeMain>
     </div>
 </template>
 <style lang="scss" scoped>
 // 样式格式化
 @import "/src/styles/mixins.scss";
 
-.webgl-layout {
+.resume-layout {
     @include clearfix;
     width: 100vw;
     min-height: 100vh;

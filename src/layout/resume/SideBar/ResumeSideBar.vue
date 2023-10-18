@@ -5,24 +5,31 @@ const { activeThemeName, toggleDark, isDark } = useTheme()
 const router = useRouter()
 const route = useRoute()
 
-type webgl = {
+type resume = {
     index?: number
     title: string
     route: string
 }
 
-const resumeTab = ref(0)
+const resumeTab = ref(0);
 
-const resumeInput = ref('')
+onMounted(() => {
 
-console.log(route)
+})
+
+const toResume = (item: resume) => {
+    router.push(`${item.route}`)
+}
 
 const back = () => {
     router.push('/')
 }
 
-onMounted(() => {
+let resumesRef = ref<any[]>([])
 
+
+const resumes = computed(() => {
+    return resumesRef.value;
 })
 
 
@@ -45,6 +52,16 @@ onMounted(() => {
 
                     </template>
                     <v-divider></v-divider>
+                    <div class="d-flex flex-row">
+                        <v-tabs w-full v-model="resumeTab" direction="vertical" align-tabs="start"
+                            selected-class="tab-active" hide-slider p-4>
+                            <v-tab v-for="item, idx in resumes" :key="idx" @click="toResume(item)" :value="idx + 1"
+                                class="my-2 b-rd-4!">
+                                <span>{{ item.title }}</span>
+                                {{ }}
+                            </v-tab>
+                        </v-tabs>
+                    </div>
 
                 </v-navigation-drawer>
                 <v-main style="height:100vh"></v-main>

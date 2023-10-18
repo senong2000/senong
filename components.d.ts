@@ -23,7 +23,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SecretList: typeof import('./src/components/markdown/SecretList.vue')['default']
-    SideBar: typeof import('./src/layout/webgl/SideBar/SideBar.vue')['default']
     ToTopButton: typeof import('./src/components/ToTopButton.vue')['default']
     Webgl: typeof import('./src/layout/webgl/index.vue')['default']
     WebglSideBar: typeof import('./src/layout/webgl/SideBar/WebglSideBar.vue')['default']

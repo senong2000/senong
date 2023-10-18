@@ -50,6 +50,10 @@ const webgls = computed(() => {
     return webglsRef.value;
 })
 
+console.log('router',router.getRoutes())
+
+console.log('webgls:',webgls.value)
+
 const getWebGLs = webglsRef.value;
 
 const searchWebGL = () => {

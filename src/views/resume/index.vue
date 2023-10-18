@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import { useTheme } from '@/hooks/useTheme';
-const { activeThemeName } = useTheme()
 
 </script>
 <template>
-    <div class="resume" :theme="activeThemeName">
-        resume
+    <div class="resume-index" w-full flex flex-items-center flex-justify-center>
+        <span text-64>Resume</span>
     </div>
 </template>
 <style lang="scss" scoped></style>

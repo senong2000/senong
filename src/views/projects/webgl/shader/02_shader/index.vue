@@ -39,7 +39,7 @@ const initThreeCanvas = () => {
 
         threeCanvas.addObject(mesh);
 
-        threeCanvas.setCameraPos(100, 100, 100)
+        threeCanvas.setCameraPos(16, 16, 16)
 
         threeCanvas.animation(() => {
             threeCanvas.updateStats();
