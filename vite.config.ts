@@ -114,7 +114,7 @@ export default defineConfig({
         }
 
 
-        // console.log(route.path)
+        console.log(route.path)
 
         const webglRegExp = new RegExp('/projects/webgl')
 

@@ -27,12 +27,32 @@ const back = () => {
 
 let resumesRef = ref<any[]>([])
 
+resumesRef.value = router.getRoutes()
+    .filter(i => i.path.startsWith(`/resume/`))
+    .map(i => ({
+        title: (i.name as string).split("-")[1],
+        route: i.path
+    }))
+    .sort((a, b) => {
+        const numA = parseFloat(a.title);
+        const numB = parseFloat(b.title);
+        return numA - numB;
+    }).map((i, idx) => ({
+        index: idx,
+        title: i.title.split("_")[1],
+        route: i.route
+    }))
+
+resumesRef.value = [{ index: 0, title: 'Introduce', route: '/resume' }, ...resumesRef.value]
+
 
 const resumes = computed(() => {
     return resumesRef.value;
 })
 
+console.log('router', router.getRoutes())
 
+console.log('resumes:', resumes.value)
 
 </script>
 <template>
