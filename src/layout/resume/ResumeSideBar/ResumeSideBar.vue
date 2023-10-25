@@ -3,8 +3,6 @@ import { useTheme } from '@/hooks/useTheme';
 const { activeThemeName, toggleDark, isDark } = useTheme()
 
 const router = useRouter()
-const route = useRoute()
-
 type resume = {
     index?: number
     title: string
