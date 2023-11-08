@@ -28,7 +28,7 @@ const toPages = (path: string) => {
             <v-icon>fas fa-file</v-icon>
             <v-tooltip text="Blog" activator="parent" location="bottom"></v-tooltip>
         </v-btn>
-        <v-btn variant="plain" @click="toPages('/resume')">
+        <v-btn variant="plain" @click="toPages('/resume/00_introduce')">
             <v-icon><i class="fas fa-portrait"></i></v-icon>
             <v-tooltip text="Resume" activator="parent" location="bottom"></v-tooltip>
         </v-btn>

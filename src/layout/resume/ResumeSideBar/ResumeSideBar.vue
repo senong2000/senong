@@ -41,7 +41,7 @@ resumesRef.value = router.getRoutes()
         route: i.route
     }))
 
-resumesRef.value = [{ index: 0, title: 'Introduce', route: '/resume' }, ...resumesRef.value]
+resumesRef.value = [...resumesRef.value]
 
 
 const resumes = computed(() => {
@@ -76,7 +76,6 @@ console.log('resumes:', resumes.value)
                             <v-tab v-for="item, idx in resumes" :key="idx" @click="toResume(item)" :value="idx + 1"
                                 class="my-2 b-rd-4!">
                                 <span>{{ item.title }}</span>
-                                {{ }}
                             </v-tab>
                         </v-tabs>
                     </div>
