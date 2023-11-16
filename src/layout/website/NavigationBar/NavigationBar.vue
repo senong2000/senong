@@ -25,24 +25,29 @@ const toPages = (path: string) => {
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn variant="plain" @click="toPages('/blog')">
-            <v-icon>fas fa-file</v-icon>
-            <v-tooltip text="Blog" activator="parent" location="bottom"></v-tooltip>
+            <!-- <v-icon>fas fa-file</v-icon> -->
+            <!-- <v-tooltip text="Blog" activator="parent" location="bottom"></v-tooltip> -->
+            Blog
         </v-btn>
         <v-btn variant="plain" @click="toPages('/resume/00_introduce')">
-            <v-icon><i class="fas fa-portrait"></i></v-icon>
-            <v-tooltip text="Resume" activator="parent" location="bottom"></v-tooltip>
+            <!-- <v-icon><i class="fas fa-portrait"></i></v-icon>
+            <v-tooltip text="Resume" activator="parent" location="bottom"></v-tooltip> -->
+            Resume
         </v-btn>
         <v-btn variant="plain" @click="toPages('/projects')">
-            <v-icon><i class="fas fa-project-diagram"></i></v-icon>
-            <v-tooltip text="Projects" activator="parent" location="bottom"></v-tooltip>
+            <!-- <v-icon><i class="fas fa-project-diagram"></i></v-icon> -->
+            <!-- <v-tooltip text="Projects" activator="parent" location="bottom"></v-tooltip> -->
+            Projects
         </v-btn>
         <v-btn variant="plain" @click="toPages('/tools')">
-            <v-icon>fas fa-tools</v-icon>
-            <v-tooltip text="Tools" activator="parent" location="bottom"></v-tooltip>
+            <!-- <v-icon>fas fa-tools</v-icon> -->
+            <!-- <v-tooltip text="Tools" activator="parent" location="bottom"></v-tooltip> -->
+            Tools
         </v-btn>
-        <v-btn variant="plain" @click="toPages('settings')">
-            <v-icon>fas fa-gear</v-icon>
-            <v-tooltip text="Settings" activator="parent" location="bottom"></v-tooltip>
+        <v-btn variant="plain" @click="toPages('/settings')">
+            <!-- <v-icon>fas fa-gear</v-icon> -->
+            <!-- <v-tooltip text="Settings" activator="parent" location="bottom"></v-tooltip> -->
+            Settings
         </v-btn>
         <v-btn variant="plain" @click="toggleRain">
             <v-icon :icon="`${isRain ? 'fas fa-droplet' : 'fas fa-droplet-slash'}`"></v-icon>
@@ -54,4 +59,5 @@ const toPages = (path: string) => {
         </v-btn>
     </v-toolbar>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

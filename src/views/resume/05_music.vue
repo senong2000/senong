@@ -6,4 +6,5 @@
         <span text-64>Music</span>
     </div>
 </template>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

@@ -7,6 +7,8 @@ git add .
 
 git commit -m "chore: update static pages"
 
+git pull
+
 @REM git remote add gitee-me https://gitee.com/senong/me.git 
 
 @REM git push -u gitee-me main
