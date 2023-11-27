@@ -33,31 +33,38 @@ const languages = returnData(introduce, 'languages');
 
 </script>
 <template>
-  <div class="resume-introduce" w-full flex m-y-16 m-x-64>
-    <v-col cols="3" class="resume-introduce-base">
-      <v-row class="avatar" mr-4>
-        <v-avatar size="96" image="/avatar.png"></v-avatar>
+  <div class="resume-introduce" w-full mx-8 my-16>
+    <div class="resume-introduce-base" pr-16>
+      <v-row class="avatar" pb-2>
+        <v-avatar size="80" image="/avatar.png"></v-avatar>
       </v-row>
 
-      <v-row class="name" flex flex-col>
-        <span class="name-zh" font-size-8 font-bold>{{ name.data.zh }}</span>
+      <v-row class="name" flex pb-2>
+        <span class="name-zh" mr-2 font-size-6 font-bold>{{ name.data.zh }}</span>
         <span class="name-en" font-size-6 font-bold>{{ name.data.en }}</span>
       </v-row>
-      <v-row pb-4>
+      <v-row pb-2>
         <span class="gender" pr-2>{{ gender.data }}</span>
         <span class="age">{{ age.data }}</span>
       </v-row>
 
-      <v-row class="QQ">{{ contact.data.QQ }}</v-row>
-      <v-row class="outlook">{{ contact.data.outlook }}</v-row>
-      <v-row class="github" pb-4>{{ contact.data.github }}</v-row>
+      <v-row flex flex-col pb-2>
+        <span class="QQ" font-size-4>{{ contact.data.email.qq }}</span>
+        <span class="outlook" font-size-4>{{ contact.data.email.outlook }}</span>
+        <span class="github" font-size-4 underline underline-dashed underline-offset-4>
+          <a :href="contact.data.github" target="_blank">
+            {{ contact.data.github }}
+          </a>
+        </span>
+      </v-row>
 
-      <v-row class="reside">
+      <v-row class="reside" pb-2>
         <span>{{ reside.data }}</span>
       </v-row>
-    </v-col>
+    </div>
 
-    <v-col cols="9" class="resume-introduce-body">
+    <div class="resume-introduce-body">
+
       <v-row class="about">
         <div class="resume-title">About</div>
       </v-row>
@@ -66,12 +73,20 @@ const languages = returnData(introduce, 'languages');
           {{ item }}
         </div>
       </v-row>
-      <v-row class="work_exp">
+      <v-row class="workExp">
         <div class="resume-title">Work Experience</div>
       </v-row>
       <v-row p-2 flex-col>
         <div my-2 v-for="item, index in work_exp.data" :key="index">
-          {{ item }}
+          <div>
+            <span class="workExp-where">{{ item.where }}</span>
+            <span class="career">{{ item.career }}</span>
+          </div>
+          <div>
+            <span class="time">{{ item.start }} - {{ item.end }}</span>
+            <span class="location">| {{ item.location }}</span>
+          </div>
+          <li v-for="x, index in item.work" :key="index">{{ x }}</li>
         </div>
       </v-row>
       <v-row class="education">
@@ -79,15 +94,31 @@ const languages = returnData(introduce, 'languages');
       </v-row>
       <v-row p-2 flex-col>
         <div my-2 v-for="item, index in education.data" :key="index">
-          {{ item }}
+          <div>
+            <span class="school">{{ item.school }}</span>
+            <span class="edu">{{ item.edu }}</span>
+
+          </div>
+          <div>
+            <span class="time">{{ item.start }} - {{ item.end }}</span>
+            <span class="major">| {{ item.major }}</span>
+            <span class="gpa">GPA:{{ item.gpa }}</span>
+          </div>
+          <div>
+
+          </div>
         </div>
       </v-row>
       <v-row class="stacks">
         <div class="resume-title">Stacks</div>
       </v-row>
-      <v-row p-2 flex-col>
-        <div my-2 v-for="item, index in stacks.data" :key="index">
-          {{ item }}
+      <v-row p-2 class="stack-table">
+        <div my-2 v-for="item, index in stacks.data" :key="index" flex>
+          <div class="stack">{{ item.class }}</div>
+          <span v-for="x, index in item.data" :key="index" class="stack-item">
+            {{ x }}
+            <span v-if="index !== item.data.length - 1">,</span>
+          </span>
         </div>
       </v-row>
       <!-- <v-row class="projects">
@@ -102,17 +133,132 @@ const languages = returnData(introduce, 'languages');
         <div class="resume-title">Languages</div>
       </v-row>
       <v-row p-2>
-        <span pr-2 v-for="item, index in languages.data" :key="index"> {{ item }} </span>
+        <span font-bold pr-2 v-for="item, index in languages.data" :key="index"> {{ item }} </span>
       </v-row>
-    </v-col>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
+@media (min-width:64rem) {
+  /* 在宽度大于等于 1024px 的设备上应用的样式 */
+}
+
+@media (min-width: 48rem) and (max-width: 64rem) {
+  /* 在宽度介于 768px 和 1023px 之间的设备上应用的样式 */
+}
+
+@media (min-width:64rem) {
+
+  /* 在宽度大于 768px */
+  .resume-introduce {
+    display: flex;
+    justify-content: center;
+    min-width: 8rem;
+
+    .resume-introduce-base {
+      min-width: 16rem;
+    }
+
+    .resume-introduce-body {
+      max-width: 36rem;
+      min-width: 18rem;
+    }
+  }
+
+}
+
+@media (max-width: 64rem) {
+
+  /* 在宽度小于等于 767px 的设备上应用的样式 */
+  .resume-introduce {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .resume-introduce-base {
+      margin-bottom: 2rem;
+
+    }
+
+    .resume-introduce-body {}
+  }
+}
+
 .resume-introduce-body {
   .resume-title {
-    padding: 0.25rem 0.75rem;
+    padding: .25rem .75rem;
     font-size: 1rem;
-    border-radius: 0.25rem;
+    border-radius: .25rem;
+  }
+
+  .workExp-where {
+    text-decoration: dashed underline;
+    text-underline-offset: .25rem;
+    margin-right: .5rem;
+    margin-bottom: .25rem;
+    font-weight: 600;
+  }
+
+  .career {
+    color: grey;
+  }
+
+  .time {
+    margin-right: .5rem;
+    color: grey;
+    font-size: .875rem;
+  }
+
+  .location {
+    color: grey;
+    font-size: .875rem;
+  }
+
+  .school {
+    text-decoration: dashed underline;
+    text-underline-offset: .25rem;
+    margin-right: .5rem;
+    margin-bottom: .25rem;
+    font-weight: 600;
+  }
+
+  .edu {
+    color: grey;
+    margin-right: .5rem;
+  }
+
+  .major {
+    margin-right: .5rem;
+    color: grey;
+    font-size: .875rem;
+  }
+
+  .gpa {
+    color: grey;
+    font-size: .875rem;
+  }
+
+  .time {
+    margin-right: .5rem;
+    color: grey;
+    font-size: .875rem;
+  }
+
+  .stack-table {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stack {
+    width: 7rem;
+    font-weight: 600;
+    text-align: right;
+    margin-right: .5rem;
+  }
+
+  .stack-item {
+    margin-right: .5rem;
   }
 }
 </style>

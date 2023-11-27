@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url';
 import { basename, dirname, resolve } from 'node:path'
 // 引入Unocss
 import Unocss from 'unocss/vite';
-import { presetUno, presetAttributify, presetIcons } from 'unocss'
 
 // page
 import Pages from 'vite-plugin-pages';
@@ -112,7 +111,6 @@ export default defineConfig({
           // 处理其他文件
           route.meta = Object.assign(route.meta || {}, { frontmatter: {} })
         }
-
 
         // console.log(route.path)
 
@@ -271,10 +269,10 @@ export default defineConfig({
   },
 
   server: {
-    port: 8080, //启动端口
+    port: 11111, //启动端口
     hmr: {
       host: '127.0.0.1',
-      port: 8080
+      port: 11111
     },
     // 设置 https 代理
     proxy: {

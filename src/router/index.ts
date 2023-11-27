@@ -161,7 +161,6 @@ import { setupRouterScroller } from 'vue-router-better-scroller'
 // vue-router 手动引入方式
 // unplugin-pages 自动引入方式
 
-
 virtualRoutes.push({ path: '/:path(.*)', redirect: '/404' })
 
 // console.log(virtualRoutes)

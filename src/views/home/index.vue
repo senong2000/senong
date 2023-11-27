@@ -43,12 +43,24 @@ const platformsArray = [
 
 
 ]
+
+const language = 'zh';
+
 </script>
 
 <template>
     <div class="home mt-4 ">
         <div class="introduce slide-enter">
-            <div class="preface">
+            <div class="preface zh" v-if="language === 'zh'">
+                <div>你好，我是 <span font-size-8>Senong</span> , 一个普通的上班族。</div>
+                <div>我的名字来源于一条名叫蜃的中国龙，它代表着海市蜃楼，一切都是空灵、飘渺、虚幻的。
+                </div>
+                <div>通常，我喜欢创造带我的思想的东西，体验新事物。</div>
+                <div>最近，我想成为一名独立创作人，开发出有自己个性的作品，并可以流传到下一代。</div>
+                <div>目前，我正在努力学习更多不同类型的领域，以扩大我的知识水平，积累知识，无怨无悔地向前迈进</div>
+                <div>最后，我想表达的是，从现在起，这个网站将被用来记录我的成长，并与每一个需要它的梦想追求人分享有用的知识。</div>
+            </div>
+            <div class="preface en" v-else>
                 <div>Hi, I'm <span font-size-8>Senong</span> , an ordinary office worker.</div>
                 <div>My name comes from a Chinese dragon named Shen Long, which represents a mirage and everything is
                     ethereal.
@@ -63,7 +75,7 @@ const platformsArray = [
                     useful knowledge with every dream builder who needs it.</div>
             </div>
             <div class="platforms">
-                <div font-size-4>other platforms :</div>
+                <div font-size-4>其他平台</div>
                 <v-item-group>
                     <v-item v-for="item, index in  platformsArray " :key="index">
                         <v-btn :prepend-icon="item.icon" variant="plain" :href="item.link" target="_blank" size="x-large">

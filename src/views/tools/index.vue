@@ -53,6 +53,10 @@ const tools: Tool[] = [
 
 ]
 
+const toWindow = (url: string) => {
+    window.open(url);
+}
+
 </script>
 <template>
     <div class="tools" flex m-4>
@@ -60,7 +64,8 @@ const tools: Tool[] = [
             <v-col cols="6" v-for="item, idx in tools" :key="idx">
                 <div flex h-full>
                     <v-card :ripple="true" :theme="activeThemeName" variant="outlined"
-                        @click="router.push(`${route.path}/${item.route}`)" class="flex! w-full p-4! m-2!">
+                        @click="item.route === 'mcskineditor' ? toWindow('http://mcse.josenong.top') : router.push(`${route.path}/${item.route}`)"
+                        class="flex! w-full p-4! m-2!">
                         <v-icon size="x-large" class="h-full! ml-4 mr-8">{{ item.icon }}</v-icon>
                         <div flex flex-col>
                             <span uppercase>{{ item.title }}</span>
