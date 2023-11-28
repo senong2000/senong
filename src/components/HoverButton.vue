@@ -19,10 +19,7 @@ onUnmounted(() => {
 // 监听滚动事件
 const handleScroll = () => {
     const scrollTop = document.documentElement.scrollTop
-    const scrollHeight = document.documentElement.scrollHeight
-    console.log(scrollHeight)
     showBackToTop.value = scrollTop > 512
-    showBackTo.value = scrollTop >= scrollHeight -64
 }
 
 const toTop = () => {
