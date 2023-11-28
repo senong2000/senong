@@ -21,7 +21,7 @@ onUnmounted(() => {
         <AppMain />
         <MainBackground />
         <BottomBar />
-        <ToTopButton />
+        <HoverButton />
     </div>
 </template>
 <style lang="scss" scoped>
