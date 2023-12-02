@@ -116,8 +116,6 @@ export default defineConfig({
 
         const webglRegExp = new RegExp('/projects/webgl')
 
-        const resumeRegExp = new RegExp('/resume')
-
 
         if (route.path === '/404') {
           return {
@@ -130,17 +128,6 @@ export default defineConfig({
           return {
             path: '/webgl',
             component: '/src/layout/webgl/index.vue',
-            children: [
-              {
-                ...route,
-              },
-            ],
-          }
-        }
-        else if (resumeRegExp.test(route.path)) {
-          return {
-            path: '/resume',
-            component: '/src/layout/resume/index.vue',
             children: [
               {
                 ...route,

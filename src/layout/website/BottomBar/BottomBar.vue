@@ -1,62 +1,57 @@
 <script lang="ts" setup>
 
 import { useTheme } from '@/hooks/useTheme';
-import { VOtpInput } from 'vuetify/labs/components';
 
-const route = useRoute()
 const router = useRouter()
-
-const code = ref('')
-const loading = ref(false)
-const codeOverlay = ref<boolean>(false)
-
-const onFinish = () => {
-    loading.value = true
-
-    setTimeout(() => {
-        loading.value = false
-        codeOverlay.value = false
-        if (code.value === '000221') {
-            code.value = ''
-            router.push('/blog/secret');
-        }
-
-    }, 2000)
-}
-
-const overlay = () => {
-    if (route.name === 'blog') codeOverlay.value = !codeOverlay.value
+const toSecret = () => {
+    router.push('/blog/secret');
 }
 
 const { activeThemeName } = useTheme()
 
 
-
 </script>
 <template>
-    <footer class="footer prose flex">
-        <span class="text-sm op50 ">2023 - PRESENT © <span @click="overlay" pointer-events-auto
-                cursor-default>Senong</span></span>
-        <div class="flex-auto" />
-
-        <v-overlay flex flex-items-center flex-justify-center class="code-overlay" v-model="codeOverlay"
-            :theme="activeThemeName">
-            <v-otp-input v-model="code" :loading="loading" @finish="onFinish" variant="solo" class="code-overlay-input"
-                autofocus ></v-otp-input>
-        </v-overlay>
+    <footer class="footer">
+        <v-card :theme="activeThemeName">
+            <v-chip variant="text">
+                <span @click="toSecret">
+                    <span font-size-2>2023 </span> - ∞
+                </span>
+            </v-chip>
+            <v-btn variant="plain" size="small" href="https://beian.miit.gov.cn/" target="_blank">@Senong</v-btn>
+            <v-btn variant="plain" size="small" href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2023134767号-1</v-btn>
+        </v-card>
     </footer>
 </template>
 <style lang="scss" scoped>
 .footer {
     position: fixed;
     bottom: 0;
-    right: 0;
-    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
 
     .code-overlay {
         z-index: 999;
+    }
 
-        &-input {}
+    .v-card {
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .v-chip {
+        padding: 0;
+        margin: 0 .5rem;
+    }
+
+    .v-btn {
+        background-color: transparent !important;
+        padding: 0;
+        margin: 0 0.5rem;
     }
 }
 </style>

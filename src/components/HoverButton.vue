@@ -30,6 +30,7 @@ const toTop = () => {
 }
 
 const backTo = () => {
+    console.log(route)
     router.push(route.path.split('/').slice(0, -1).join('/') || baseUrl)
 }
 </script>
@@ -43,7 +44,7 @@ const backTo = () => {
             </div>
         </transition>
         <transition name="fade" mode="out-in">
-            <div class="backTo" v-show="showBackTo" ml-4>
+            <div class="backTo" v-show="showBackTo" ml-4 v-if="route.path !== '/'">
                 <v-btn icon variant="tonal" size="small" @click="backTo">
                     <v-icon icon="fas fa-rotate-left"></v-icon>
                 </v-btn>
